@@ -58,23 +58,3 @@ void	debug_shell(t_shell *sh)
 	printf("WD   : %s.\n", sh->wd);
 	printf("I    : %d.\n", sh->i);
 }
-
-void	handle_cmd(t_shell *sh, char **env)
-{
-	//attention il faut aussi s'occuper des excecutables!!
-	if (!ft_strcmp(sh->cmd, "echo"))
-		return (handle_echo(sh));
-	if (!ft_strcmp(sh->cmd, "cd"))
-		return (handle_cd(sh));
-	if (!ft_strcmp(sh->cmd, "pwd"))
-		return (handle_pwd(sh));
-	if (!ft_strcmp(sh->cmd, "exit"))
-		return (exit(0));
-	if (!ft_strcmp(sh->cmd, "unset"))
-		return ;
-	if (!ft_strcmp(sh->cmd, "env"))
-		return (handle_env(sh, env));
-	if (!ft_strcmp(sh->cmd, "export"))
-		return ;
-	ft_printf("\x1b[38;2;255;235;202mzsh: command not found: %s\n\x1b[38;2;30;30;30m", sh->cmd);
-}

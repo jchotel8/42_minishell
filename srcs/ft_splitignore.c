@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-static size_t	ft_count(char *s, char c)
+static size_t	ft_countignore(char *s, char c)
 {
 	size_t	count;
 	size_t	i;
@@ -30,32 +30,40 @@ static size_t	ft_count(char *s, char c)
 	{
 		if (s[i] == '"')
 			inside = 1 - inside;
-		if (!inside && s[i] == c && s[i + 1] && s[i + 1] != c)
+		else if (!inside && s[i] == c && s[i + 1] && s[i + 1] != c)
 			count++;
 		i++;
 	}
 	return (count);
 }
 
-char			**ft_split(char const *s, char c)
+char				**prep_ignore(int *inside, char *s, size_t *nb_words, char c)
+{
+	char			**splitted;
+
+	*inside = 0;
+	if (!s)
+		return (0);
+	*nb_words = ft_countignore((char *)s, c);
+	if (!(splitted = (char **)malloc(sizeof(char *) * (*nb_words + 1))))
+		return (0);
+	return (splitted);
+}
+
+char			**ft_splitignore(char const *s, char c)
 {
 	size_t			nbwords;
 	char			*ptr;
 	char			**splitted;
 	int					inside;
 
-	i = 0;
-	if (!s)
+	if (!(splitted = prep_ignore(&inside, (char*)s, &nbwords, c)))
 		return (0);
-	nbwords = ft_count((char *)s, c);
-	if (!(splitted = (char **)malloc(sizeof(char *) * (nbwords + 1))))
-		return (0);
-	ptr = (char *)s;
+	ptr = (char*)s;
 	while (*s)
 	{
-		if (*s == '"')
-			inside = 1 - inside;
-		if (*s == c)
+		inside = (*s == '"' ? 1 - inside : inside);
+		if (!inside && *s == c)
 		{
 			if (ptr != s)
 				*(splitted++) = ft_substr(ptr, 0, s - ptr);

@@ -12,13 +12,12 @@ void prep_arg(t_shell *sh)
 		sh->read = ft_strjoin(sh->read, next);
 		free(next);
 	}
-	sh->lines = ft_split(sh->read, '"');
 }
 
 void parsing_read(t_shell *sh)
 {
 	prep_arg(sh);
-	//sh->lines = ft_split(sh->read, ';');
+	sh->lines = ft_splitignore(sh->read, ';');
 	//free(sh->read);
 }
 
@@ -29,7 +28,7 @@ void parsing_line(t_shell *sh)
 
 	i = 0;
 	len = 0;
-	sh->arg = ft_split(sh->lines[sh->i], ' ');
+	sh->arg = ft_splitignore(sh->lines[sh->i], ' ');
 	sh->cmd = sh->arg[0];
 	sh->arg = (sh->arg[1] ? &sh->arg[1] : NULL);
 }
