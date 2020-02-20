@@ -16,12 +16,13 @@ int	main(int ac, char **av, char **env)
 		{
 			next_shell(sh);
 			parsing_read(sh);
-			while (sh->lines[sh->i])
-			{
-				parsing_line(sh);
-				handle_cmd(sh, env);
-				sh->i++;
-			}
+			debug_shell(sh);
+			//while (sh->lines[sh->i])
+			//{
+			//	parsing_line(sh);
+			//	handle_cmd(sh, env);
+			//	sh->i++;
+			//}
 			ft_printf(PROMPT, "MY MINISHELL");
 		}
 		printf("last read : \"%s\"\n", sh->read);

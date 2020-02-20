@@ -18,11 +18,11 @@ void	handle_echo(t_shell *sh)
 	{
 		tmp = sh->arg[i];
 		sh->arg[i] = ft_strtrim(sh->arg[i], "\"");
+		ft_printf("\x1b[38;2;255;235;202m%s", sh->arg[i]);
 		//printf("p sh->arg[i] : %s\n", sh->arg[i]);
 		//printf("p str_trim : %s\n", str);
 		//printf("p sh->arg[i] : %s\n", "salut\ncava");
 		free(tmp);
-		ft_printf("\x1b[38;2;255;235;202m%s ", sh->arg[i]);
 		i++;
 	}
 	if (!flag_n)

@@ -30,6 +30,7 @@ SRCS =  ./ft_memset.c \
 		./ft_isprint.c \
 		./ft_toupper.c \
 		./ft_tolower.c \
+		./ft_strcount.c \
 		./ft_strchr.c \
 		./ft_strrchr.c \
 		./ft_strncmp.c \
@@ -81,7 +82,7 @@ clean:
 	@rm -f ${OBJS} ${OBJS_B}
 	@echo "\033[1;31mLibft : Removing .o files\033[0;0m"
 
-bclean: 
+bclean:
 	@rm -f ${NAME}
 	@echo "\033[1;31mLibft : Removing binary file\033[0;0m"
 
