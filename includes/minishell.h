@@ -31,6 +31,9 @@ typedef struct	s_shell
 	char		**env;
 }				t_shell;
 
+//UTILITIES
+char	**ft_splitignore(char const *s, char c);
+
 //HANDLE_SH
 t_shell	*init_shell();
 void 	next_shell(t_shell *sh);
@@ -46,6 +49,6 @@ void	handle_pwd(t_shell *sh);
 void	handle_cd(t_shell *sh);
 void	handle_echo(t_shell *sh);
 void	handle_env(t_shell *sh, char **env);
-void	handle_bin(t_shell *sh);
+void	handle_bin(t_shell *sh, char **env);
 
 #endif

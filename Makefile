@@ -19,7 +19,9 @@ SRCSC		= libs/gnl/get_next_line.c\
 			  srcs/handle_cd.c\
 			  srcs/handle_echo.c\
 			  srcs/handle_env.c\
-			  srcs/parsing.c
+				srcs/handle_bin.c\
+			  srcs/parsing.c\
+			  srcs/ft_splitignore.c
 SRCSH		= includes/get_next_line.h\
 			  includes/minishell.h
 OBJS		= $(SRCSC:%.c=%.o)
@@ -44,11 +46,11 @@ $(NAME):	${OBJS} ${SRCSH}
 
 bonus:		${NAME}
 
-run:		
+run:
 			@make
 			@./minishell
 
-clean:		
+clean:
 			@make clean -C libs/libft
 			@make clean -C libs/ft_printf
 			@rm -f ${OBJS}
