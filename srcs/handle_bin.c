@@ -12,15 +12,25 @@
 
 #include "../includes/minishell.h"
 
+char **ft_array_add_front(char **array, void *data)
+{
+	t_list *list; 
+	list = ft_array_to_lst(array);
+	ft_lstadd_front(&list, ft_lstnew(data));
+	return (ft_lst_to_array(list));
+
+}
+
 void	ft_find_cmd(t_shell *sh, char **paths)
 {
 	int			i;
 	char		*cmd;
-	char		*argv[] = {sh->cmd, "-la", NULL};	//à remplacer par sh->arg, avec sh->arg[0] = cmd et sh->arg[last] = NULL
+	char		**argv;	//à remplacer par sh->arg, avec sh->arg[0] = cmd et sh->arg[last] = NULL
 	struct stat	buf;
 	pid_t		child;
 
 	i = 0;
+	argv = ft_array_add_front(sh->arg, sh->cmd);
 	while (paths[i])
 	{
 		cmd = ft_strjoin(paths[i], "/");

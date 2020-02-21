@@ -14,6 +14,7 @@ LAST STEPS DONE :
 		- ft_list_get -> à faire (pas forcément pour ce projet)
 
 NEXT STEPS ON SCHEDULE :
+- regrouper le fichier handle_unset into handle_env
 - traiter les cas particuliers pour chacune des commandes /!\ echo dans ohmyzsh a un comportement diff (@llaurent, @fkorki-, @mbrignol)
 - commencer les pipes
 	- il s'agit de rediriger la sortie standard de la cmd vers l'entrée standard de la deuxième etc..
