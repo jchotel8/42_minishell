@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 16:05:57 by jchotel           #+#    #+#             */
-/*   Updated: 2020/02/21 02:37:55 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/02/21 05:21:30 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@ typedef struct	s_shell
 
 //UTILITIES
 char	**ft_splitignore(char const *s, char c);
+void	ft_list_print(t_list *ptr, int flag);
+t_list	*ft_lstcrea(int i, ...);
+t_list	*ft_array_to_lst(char **array);
+char	**ft_lst_to_array(t_list *lst);
+void	ft_print_array(char **array, char *text, int flag);
+void	test_utils(void);
 
 //HANDLE_SH
 t_shell	*init_shell();

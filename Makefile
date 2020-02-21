@@ -6,7 +6,7 @@
 #    By: jchotel <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/04 11:15:39 by jchotel           #+#    #+#              #
-#    Updated: 2020/01/23 11:27:51 by jchotel          ###   ########.fr        #
+#    Updated: 2020/02/21 05:22:20 by jchotel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 #srcs/handle_bin.c
@@ -19,9 +19,10 @@ SRCSC		= libs/gnl/get_next_line.c\
 			  srcs/handle_cd.c\
 			  srcs/handle_echo.c\
 			  srcs/handle_env.c\
-				srcs/handle_bin.c\
+			  srcs/handle_bin.c\
 			  srcs/parsing.c\
-			  srcs/ft_splitignore.c
+			  srcs/ft_splitignore.c\
+			  srcs/utils_list.c
 SRCSH		= includes/get_next_line.h\
 			  includes/minishell.h
 OBJS		= $(SRCSC:%.c=%.o)
@@ -36,7 +37,7 @@ all:		${NAME}
 	@gcc ${FLAGS} -c $< -o ${<:.c=.o}
 
 $(NAME):	${OBJS} ${SRCSH}
-			@make -C libs/libft
+			@make bonus -C libs/libft
 			@make -C libs/ft_printf
 			@gcc ${FLAGS} ${OBJS} ${LIBS} -o ${NAME}
 			@echo "\033[1;32m┌─┐┬ ┬┌─┐┌─┐┌─┐┌─┐┌─┐"

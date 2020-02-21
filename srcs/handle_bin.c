@@ -6,18 +6,17 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 20:36:01 by jchotel           #+#    #+#             */
-/*   Updated: 2020/02/21 02:19:45 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/02/21 04:12:37 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ft_find_cmd(t_shell *sh, char **paths)
+void	ft_find_cmd(t_shell *sh, char **paths, char **env)
 {
 	int			i;
 	char		*cmd;
-	char		*argv[] = {sh->cmd, NULL};	//plus tard il faudra sh->arg ici (avec cmd inclu en sh->arg[0] ou tel quel ?)
-	char		*envp[] = {NULL};			//je crois que oui, man execve, comme dans main (int ac, char **argv - avec argv[0] = a.out
+	char		*argv[] = {sh->cmd, "-la", NULL};	//à remplacer par sh->arg, avec sh->arg[0] = cmd et sh->arg[last] = NULL
 	struct stat	buf;
 	pid_t		child;
 
@@ -26,7 +25,7 @@ void	ft_find_cmd(t_shell *sh, char **paths)
 	{
 		cmd = ft_strjoin(paths[i], "/");
 		cmd = ft_strjoin(cmd, sh->cmd);
-		if (!stat(cmd, &buf))	//stat = trouver le fichier && signal = verifer les droits
+		if (!stat(cmd, &buf))	//stat = trouver le fichier && signal = verifier les droits
 			break ;
 		i++;
 	}
@@ -36,8 +35,8 @@ void	ft_find_cmd(t_shell *sh, char **paths)
 	{
 		if (!(child = fork()))
 		{
-			ft_printf("exec : %d\n", execve(cmd, argv, envp));
-			//exit(1); pas sure de l'utilité de ca
+			ft_printf("exec : %d\n", execve(cmd, argv, env));
+		//	//exit(1); pas sure de l'utilité de ca
 		}
 		wait(&child);
 	}
@@ -54,7 +53,7 @@ void	handle_bin(t_shell *sh, char **env)
 		if (!ft_strncmp(env[i], "PATH=", 5))
 		{
 			possible_paths = ft_split(env[i] + 5, ':');
-			ft_find_cmd(sh, possible_paths);
+			ft_find_cmd(sh, possible_paths, env);
 		}
 		i++;
 	}

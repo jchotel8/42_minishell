@@ -2,6 +2,19 @@
 *******************************  42.MINISHELL  *******************************
 ***********************************************************************jchotel
 
+NEXT STEPS ON SCHEDULE :
+- ajouter unset
+	- faire une liste chainée de env (permet de supprimer des maillons)
+	- cette liste doit être créer dans l'init de sh, et ne doit pas être reset entre 2 cmds
+	- modifier env pour afficher la liste (cf la fonction dans libasm)
+	- a quel moment est-ce qu'on a besoin de env ? dans bin, il s'agit alors d'un tableau ?
+- liste chainée
+	- ft_list_print
+	- ft_array_to_list
+	- ft_list_to_array
+	- ft_print_array //dans débug et dans env il faudra utiliser cette fonction
+
+
 TIPS AVANT PUSH --------------------------------------------------------------
 	- Cat dev random, ctr c (demander à @mcraipea/maxime craipeau ou Jérome durand)
 
