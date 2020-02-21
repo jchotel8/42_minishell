@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 05:02:01 by jchotel           #+#    #+#             */
-/*   Updated: 2020/02/21 05:39:34 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/02/21 07:37:28 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,38 @@ void	ft_print_array(char **array, char *text, int flag)
 	}
 }
 
+void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)())
+{
+	t_list	*remove;
+	t_list	*current;
+
+	current = *begin_list;
+	while (current && current->next)
+	{
+		if ((*cmp)(current->next->content, data_ref) == 0)
+		{
+			remove = current->next;
+			current->next = current->next->next;
+			free(remove);
+		}
+		current = current->next;
+	}
+	current = *begin_list;
+	if (current && (*cmp)(current->content, data_ref) == 0)
+	{
+		*begin_list = current->next;
+		free(current);
+	}
+}
+
+int		ft_strncmp_auto(char *s1, char *s2)
+{
+	return (ft_strncmp(s1, s2, strlen(s2)));
+}
+
 void	test_utils(void)
 {
-	t_list *list = ft_lstcrea(3, "arg1", "arg2", "arg3");
+	t_list *list = ft_lstcrea(3, "arg1", "pasarg2", "arg3");
 	ft_printf("LIST W/ INFO.........\n");
 	ft_list_print(list, 1);
 	ft_printf("LIST.........\n");
@@ -110,4 +139,11 @@ void	test_utils(void)
 	ft_list_print(new, 1);
 	ft_printf("LIST.........\n");
 	ft_list_print(new, 0);
+	ft_printf("LIST REMOVE IF.........\n");
+	ft_printf("strcmp.........\n");
+	printf("same : %d\tdiff : %d\n", ft_strcmp("arg", "arg"), ft_strcmp("arg1", "arg"));
+	ft_printf("strncmp.........\n");
+	printf("same : %d\tdiff : %d\n", ft_strncmp("arg", "arg", 2), ft_strncmp("arg1", "arg", 4));
+	ft_list_remove_if(&list, &"arg", ft_strncmp_auto);
+	ft_list_print(list, 0);
 }

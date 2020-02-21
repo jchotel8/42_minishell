@@ -6,7 +6,7 @@
 #    By: jchotel <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/04 11:15:39 by jchotel           #+#    #+#              #
-#    Updated: 2020/02/21 05:22:20 by jchotel          ###   ########.fr        #
+#    Updated: 2020/02/21 05:27:40 by jchotel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 #srcs/handle_bin.c
@@ -20,6 +20,7 @@ SRCSC		= libs/gnl/get_next_line.c\
 			  srcs/handle_echo.c\
 			  srcs/handle_env.c\
 			  srcs/handle_bin.c\
+			  srcs/handle_unset.c\
 			  srcs/parsing.c\
 			  srcs/ft_splitignore.c\
 			  srcs/utils_list.c

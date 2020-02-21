@@ -6,13 +6,13 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 20:36:01 by jchotel           #+#    #+#             */
-/*   Updated: 2020/02/21 04:12:37 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/02/21 06:50:51 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ft_find_cmd(t_shell *sh, char **paths, char **env)
+void	ft_find_cmd(t_shell *sh, char **paths)
 {
 	int			i;
 	char		*cmd;
@@ -30,31 +30,31 @@ void	ft_find_cmd(t_shell *sh, char **paths, char **env)
 		i++;
 	}
 	if (!paths[i])
-		ft_printf("\x1b[38;2;255;235;202mzsh: command not found: %s\n\x1b[38;2;30;30;30m", sh->cmd);
+		ft_printf("\x1b[38;2;255;235;202mzsh: command not found: %s\n", sh->cmd);
 	else
 	{
 		if (!(child = fork()))
 		{
-			ft_printf("exec : %d\n", execve(cmd, argv, env));
+			ft_printf("\x1b[38;2;255;235;202mexec : %d\n", execve(cmd, argv, ft_lst_to_array(sh->env)));
 		//	//exit(1); pas sure de l'utilité de ca
 		}
 		wait(&child);
 	}
 }
 
-void	handle_bin(t_shell *sh, char **env)
+void	handle_bin(t_shell *sh)
 {
-	int		i;
 	char	**possible_paths;
+	t_list	*tmp;
 
-	i = 0;
-	while (env[i])
+	tmp = sh->env;
+	while (tmp)
 	{
-		if (!ft_strncmp(env[i], "PATH=", 5))
+		if (!ft_strncmp(tmp->content, "PATH=", 5))
 		{
-			possible_paths = ft_split(env[i] + 5, ':');
-			ft_find_cmd(sh, possible_paths, env);
+			possible_paths = ft_split(tmp->content + 5, ':');
+			ft_find_cmd(sh, possible_paths);
 		}
-		i++;
+		tmp = tmp->next;
 	}
 }

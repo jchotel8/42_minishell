@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 02:28:33 by jchotel           #+#    #+#             */
-/*   Updated: 2020/02/21 05:59:48 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/02/21 06:48:23 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,6 @@ void	debug_shell(t_shell *sh)
 	printf("CMD\t: %s.\n", sh->cmd);
 	ft_print_array(sh->arg, "ARG\t:", 1);
 	printf("WD\t: %s.\n", sh->wd);
-	printf("LINE\t: %d.\n\033[0;0m\x1b[38;2;255;235;202m", sh->i_line);
+	printf("LINE\t: %d.\n", sh->i_line);
+	printf("\033[0;0m\x1b[38;2;255;235;202m");
 }

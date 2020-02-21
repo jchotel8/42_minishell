@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 16:05:57 by jchotel           #+#    #+#             */
-/*   Updated: 2020/02/21 05:57:31 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/02/21 08:01:08 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct	s_shell
 	char		**arg;
 	char		wd[PATH_MAX];
 	int			i_line;
-	char		**env;
+	t_list		*env;
 }				t_shell;
 
 //UTILITIES
@@ -39,6 +39,8 @@ t_list	*ft_array_to_lst(char **array);
 char	**ft_lst_to_array(t_list *lst);
 void	ft_print_array(char **array, char *text, int flag);
 void	test_utils(void);
+int		ft_strncmp_auto(char *s1, char *s2);
+void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)());
 
 //HANDLE_SH
 t_shell	*init_shell();
@@ -55,7 +57,9 @@ char	*get_wd(t_shell *sh);
 void	handle_pwd(t_shell *sh);
 void	handle_cd(t_shell *sh);
 void	handle_echo(t_shell *sh);
-void	handle_env(t_shell *sh, char **env);
-void	handle_bin(t_shell *sh, char **env);
+void	handle_env(t_shell *sh);
+void	handle_bin(t_shell *sh);
+void	handle_unset(t_shell *sh);
+void	handle_export(t_shell *sh);
 
 #endif
