@@ -1,8 +1,12 @@
 ******************************************************************************
 *******************************  42.MINISHELL  *******************************
-***********************************************************************jchotel
+************************************************************jchotel & fde-fram
 
 LAST STEPS DONE :
+
+- gestion des pipes
+	- pour l'instant, utilisation d'un fichier pipe.txt plutot que stdin et stdout
+
 - ajouter unset
 	- faire une liste chainée de env (permet de manipuler des maillons)
 	- cette liste doit être créée dans l'init de sh, et ne doit pas être reset entre 2 cmds
@@ -13,6 +17,8 @@ LAST STEPS DONE :
 		- ft_list_remove_if
 		- ft_list_get -> à faire (pas forcément pour ce projet)
 
+
+
 NEXT STEPS ON SCHEDULE :
 - regrouper le fichier handle_unset into handle_env
 - traiter les cas particuliers pour chacune des commandes /!\ echo dans ohmyzsh a un comportement diff (@llaurent, @fkorki-, @mbrignol)
@@ -22,6 +28,8 @@ NEXT STEPS ON SCHEDULE :
 - commencer les >> <
 - wesh il se passe quoi avec le parsing si jai : echo "Félix dit \"Bonjour\" d'une voie triste"
 												ou echo "les \'\"\' c'est la vie <3"
+	-> Rien de special, les antislash ne sont pas interpretes comme caractere d'echappement. cf \0,  \n...
+	-> et donc il va falloir le faire
 
 
 
@@ -55,11 +63,11 @@ GENERAL INFOS ----------------------------------------------------------------
 
 . BIN ........................................................................
 	- path absolu ?
-	- problème de couleurs d'affichage
 
 . ECHO .......................................................................
 	- les caractères spéciaux ne sont pas correctement interprétés /!\ c'est pas à cause de ohmyzsh ?
 	- finir l'option -n
+	- caractères d'echappement
 
 . UNSET ......................................................................
 	- del un maillon de env

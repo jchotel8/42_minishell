@@ -24,11 +24,15 @@ typedef struct	s_shell
 {
 	char		*read;
 	char		**lines;
+	char		**tasks;
 	char		*cmd;
 	char		**arg;
 	char		wd[PATH_MAX];
 	int			i_line;
+	int			i_task;
 	t_list		*env;
+	int			pipefd;
+
 }				t_shell;
 
 //UTILITIES
@@ -38,6 +42,7 @@ t_list	*ft_lstcrea(int i, ...);
 t_list	*ft_array_to_lst(char **array);
 char	**ft_lst_to_array(t_list *lst);
 void	ft_print_array(char **array, char *text, int flag);
+char 	**ft_array_add_front(char **array, void *data);
 void	test_utils(void);
 int		ft_strncmp_auto(char *s1, char *s2);
 void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)());
@@ -45,11 +50,13 @@ void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)());
 //HANDLE_SH
 t_shell	*init_shell();
 void	debug_shell(t_shell *sh);
+void	next_shell_task(t_shell *sh);
 void	next_shell_line(t_shell *sh);
 void	next_shell_cmd(t_shell *sh); //->utilités ?
 
 //PARSING
 void	parsing_read(t_shell *sh);
+void	parsing_task(t_shell *sh);
 void	parsing_line(t_shell *sh);
 
 //HANDLE
