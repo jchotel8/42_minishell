@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 02:28:33 by jchotel           #+#    #+#             */
-/*   Updated: 2020/02/21 02:28:38 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/02/21 05:59:48 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_shell	*init_shell(void)
 	return (sh);
 }
 
-void	next_shell(t_shell *sh)
+void	next_shell_line(t_shell *sh)
 {
 	sh->cmd = 0;
 	sh->arg = 0;
@@ -37,7 +37,7 @@ void	next_shell(t_shell *sh)
 	sh->i_line = 0;
 }
 
-void	reset_shell(t_shell *sh)
+void	next_shell_cmd(t_shell *sh)
 {
 	sh->cmd = 0;
 	sh->arg = 0;
@@ -48,23 +48,11 @@ void	reset_shell(t_shell *sh)
 
 void	debug_shell(t_shell *sh)
 {
-	int i;
-
-	i = 0;
 	printf("\x1b[38;2;70;70;70m..............\n");
-	printf("READ : %s.\n", sh->read);
-	while (sh->lines && sh->lines[i])
-	{
-		printf("LINE : [%d] %s.\n", i, sh->lines[i]);
-		i++;
-	}
-	printf("CMD  : %s.\n", sh->cmd);
-	i = 0;
-	while (sh->arg && sh->arg[i])
-	{
-		printf("ARG  : [%d] %s.\n", i, sh->arg[i]);
-		i++;
-	}
-	printf("WD   : %s.\n", sh->wd);
-	printf("I    : %d.\n", sh->i_line);
+	printf("READ\t: %s.\n", sh->read);
+	ft_print_array(sh->lines, "LINES\t:", 1);
+	printf("CMD\t: %s.\n", sh->cmd);
+	ft_print_array(sh->arg, "ARG\t:", 1);
+	printf("WD\t: %s.\n", sh->wd);
+	printf("LINE\t: %d.\n\033[0;0m\x1b[38;2;255;235;202m", sh->i_line);
 }

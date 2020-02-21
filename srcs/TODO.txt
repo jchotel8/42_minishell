@@ -12,7 +12,7 @@ NEXT STEPS ON SCHEDULE :
 	- ft_list_print
 	- ft_array_to_list
 	- ft_list_to_array
-	- ft_print_array //dans débug et dans env il faudra utiliser cette fonction
+	- ft_print_array //à uti
 
 
 TIPS AVANT PUSH --------------------------------------------------------------

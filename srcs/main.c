@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 02:12:08 by jchotel           #+#    #+#             */
-/*   Updated: 2020/02/21 05:42:21 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/02/21 05:48:36 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	handle_cmd(t_shell *sh, char **env)
 		return (handle_bin(sh, env));
 }
 
-int		main()//int ac, char **av, char **env)
+int		main(int ac, char **av, char **env)
 {
 	t_shell	*sh;
 
@@ -44,12 +44,12 @@ int		main()//int ac, char **av, char **env)
 		sh->env = env;
 		while (get_next_line(0, &sh->read) > 0)
 		{
-			next_shell(sh);
+			next_shell_line(sh);
 			parsing_read(sh);
 			while (sh->lines[sh->i_line])
 			{
 				parsing_line(sh);
-				//debug_shell(sh);
+				debug_shell(sh);
 				handle_cmd(sh, env);
 				sh->i_line++;
 			}

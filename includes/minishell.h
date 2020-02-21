@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 16:05:57 by jchotel           #+#    #+#             */
-/*   Updated: 2020/02/21 05:21:30 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/02/21 05:57:31 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void	test_utils(void);
 
 //HANDLE_SH
 t_shell	*init_shell();
-void 	next_shell(t_shell *sh);
 void	debug_shell(t_shell *sh);
-void	reset_shell(t_shell *sh);
+void	next_shell_line(t_shell *sh);
+void	next_shell_cmd(t_shell *sh); //->utilités ?
 
 //PARSING
 void	parsing_read(t_shell *sh);
