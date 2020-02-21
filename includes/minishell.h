@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 16:05:57 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/21 16:36:59 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/02/21 02:04:47 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include "../libs/libft/libft.h"
 # include "../libs/ft_printf/includes/printf.h"
 
-#define PROMPT "\x1b[38;2;232;212;98m✦ %s\033[0;0m \x1b[38;2;232;72;119m➜  \x1b[38;2;255;235;202m"
+#define PROMPT "\x1b[38;2;232;212;98m✦ %s \033[0;0m\x1b[38;2;232;72;119m(%s) ➜  \x1b[38;2;255;235;202m"
 
 typedef struct	s_shell
 {

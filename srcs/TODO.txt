@@ -1,10 +1,43 @@
-ECHO :
-- les caractères spéciaux ne sont pas correctement interprétés
-- finir l'option -n
-- retester : parfois un même argument est affiché plusieurs fois
+******************************************************************************
+*******************************  42.MINISHELL  *******************************
+***********************************************************************jchotel
 
-GENERAL :
-- les " doivent toujours être par deux
-- les ' peuvent être seules si dans "
-- le parsing ; ne doit pas se faire si compris entre " 
-	ex : echo "ca va ; echo 1"		!=		echo "ca va" ; echo 1
+TIPS AVANT PUSH --------------------------------------------------------------
+- Cat dev random, ctr c (demander à @mcraipea/maxime craipeau ou Jérome durand)
+
+GENERAL INFOS ----------------------------------------------------------------
+. SUBJECT ....................................................................
+	fork -
+	wait,
+	waitpid,
+	wait3,
+	wait4,
+	signal - autorise la manipulation d'un process
+	kill,
+	exit,
+	getcwd - récupérer le path du working directory (pwd)
+	chdir,
+	stat - regarder l’état d’un fichier (prend en paramètre le chemin de ce fichier et une structure stat buff) (man 2)
+	lstat,
+	fstat,
+	execve - doit être compris entre un fork et un wait
+	dup,
+	dup2,
+	pipe,
+	opendir,
+	readdir,
+	closedir,
+	strerror,
+	errno
+
+. ECHO .......................................................................
+	- les caractères spéciaux ne sont pas correctement interprétés /!\ c'est pas à cause de ohmyzsh ?
+/!\	- finir l'option -n
+
+. PIPES ......................................................................
+	- https://stackoverflow.com/questions/43030966/pipe-chaining-in-my-own-shell-implementation
+
+CORRECTIONS TEST -------------------------------------------------------------
+	- les " doivent toujours être par deux
+	- les ' peuvent être seules si dans "
+	- le parsing ; ne doit pas se faire si compris entre "

@@ -19,7 +19,6 @@ void	handle_cmd(t_shell *sh, char **env)
 		return ;
 	else
 		return (handle_bin(sh, env));
-	ft_printf("\x1b[38;2;255;235;202mzsh: command not found: %s\n\x1b[38;2;30;30;30m", sh->cmd);
 }
 
 int	main(int ac, char **av, char **env)
@@ -30,7 +29,7 @@ int	main(int ac, char **av, char **env)
 	{
 		av[1] = 0;
 		sh = init_shell();
-		ft_printf(PROMPT, "MY MINISHELL");
+		ft_printf(PROMPT, "MINISHELL", "file");
 		sh->env = env;
 		while (get_next_line(0, &sh->read) > 0)
 		{
@@ -39,11 +38,11 @@ int	main(int ac, char **av, char **env)
 			while (sh->lines[sh->i])
 			{
 				parsing_line(sh);
-				debug_shell(sh);
+				//debug_shell(sh);
 				handle_cmd(sh, env);
 				sh->i++;
 			}
-			ft_printf(PROMPT, "MY MINISHELL");
+			ft_printf(PROMPT, "MINISHELL", "file");
 		}
 		printf("last read : \"%s\"\n", sh->read);
 		free(sh->read);
