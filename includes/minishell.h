@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 16:05:57 by jchotel           #+#    #+#             */
-/*   Updated: 2020/02/21 02:04:51 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/02/21 02:37:55 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,9 @@ void	reset_shell(t_shell *sh);
 //PARSING
 void	parsing_read(t_shell *sh);
 void	parsing_line(t_shell *sh);
-void	handle_cmd(t_shell *sh, char **env);
 
+//HANDLE
+char	*get_wd(t_shell *sh);
 void	handle_pwd(t_shell *sh);
 void	handle_cd(t_shell *sh);
 void	handle_echo(t_shell *sh);

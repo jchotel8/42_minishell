@@ -3,7 +3,7 @@
 ***********************************************************************jchotel
 
 TIPS AVANT PUSH --------------------------------------------------------------
-- Cat dev random, ctr c (demander à @mcraipea/maxime craipeau ou Jérome durand)
+	- Cat dev random, ctr c (demander à @mcraipea/maxime craipeau ou Jérome durand)
 
 GENERAL INFOS ----------------------------------------------------------------
 . SUBJECT ....................................................................
@@ -30,9 +30,18 @@ GENERAL INFOS ----------------------------------------------------------------
 	strerror,
 	errno
 
+. BIN ........................................................................
+	- path absolu ?
+
 . ECHO .......................................................................
 	- les caractères spéciaux ne sont pas correctement interprétés /!\ c'est pas à cause de ohmyzsh ?
-/!\	- finir l'option -n
+	- finir l'option -n
+
+. UNSET ......................................................................
+	- del un maillon de env : il est préférable de mettre dans une liste chainée pour manipuler
+
+. EXPORT .....................................................................
+	- à faire
 
 . PIPES ......................................................................
 	- https://stackoverflow.com/questions/43030966/pipe-chaining-in-my-own-shell-implementation

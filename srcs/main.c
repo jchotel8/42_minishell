@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 02:12:08 by jchotel           #+#    #+#             */
-/*   Updated: 2020/02/21 02:31:15 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/02/21 03:26:16 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	handle_cmd(t_shell *sh, char **env)
 {
-	//attention il faut aussi s'occuper des excecutables!!
 	if (!ft_strcmp(sh->cmd, "echo"))
 		return (handle_echo(sh));
 	if (!ft_strcmp(sh->cmd, "cd"))
@@ -41,7 +40,7 @@ int		main(int ac, char **av, char **env)
 	{
 		av[1] = 0;
 		sh = init_shell();
-		ft_printf(PROMPT, "MINISHELL", "file");
+		ft_printf(PROMPT, "MINISHELL", get_wd(sh));
 		sh->env = env;
 		while (get_next_line(0, &sh->read) > 0)
 		{
@@ -54,7 +53,7 @@ int		main(int ac, char **av, char **env)
 				handle_cmd(sh, env);
 				sh->i_line++;
 			}
-			ft_printf(PROMPT, "MINISHELL", "file");
+			ft_printf(PROMPT, "MINISHELL", get_wd(sh));
 		}
 		printf("last read : \"%s\"\n", sh->read);
 		free(sh->read);
