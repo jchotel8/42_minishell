@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/21 02:31:27 by jchotel           #+#    #+#             */
+/*   Updated: 2020/02/21 02:35:45 by jchotel          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
-void prep_arg(t_shell *sh)
+void	prep_arg(t_shell *sh)
 {
-	char *next;
+	char	*next;
 
 	while (ft_strcount(sh->read, '"') % 2)
 	{
@@ -14,21 +26,21 @@ void prep_arg(t_shell *sh)
 	}
 }
 
-void parsing_read(t_shell *sh)
+void	parsing_read(t_shell *sh)
 {
 	prep_arg(sh);
 	sh->lines = ft_splitignore(sh->read, ';');
-	//free(sh->read);
+	free(sh->read);
 }
 
-void parsing_line(t_shell *sh)
+void	parsing_line(t_shell *sh)
 {
-	int i;
-	int len;
+	int	i;
+	int	len;
 
 	i = 0;
 	len = 0;
-	sh->arg = ft_splitignore(sh->lines[sh->i], ' ');
+	sh->arg = ft_splitignore(sh->lines[sh->i_line], ' ');
 	sh->cmd = sh->arg[0];
 	sh->arg = (sh->arg[1] ? &sh->arg[1] : NULL);
 }

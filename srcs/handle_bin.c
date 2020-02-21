@@ -6,27 +6,28 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 20:36:01 by jchotel           #+#    #+#             */
-/*   Updated: 2020/02/21 01:58:05 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/02/21 02:19:45 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
-void ft_find_cmd(t_shell *sh, char **paths)
+void	ft_find_cmd(t_shell *sh, char **paths)
 {
-	int i;
-	char *cmd;
-	char *argv[] = {sh->cmd , NULL}; //plus tard il faudra sh->arg ici (avec cmd inclu en sh->arg[0] ou tel quel ?)
-	char *envp[] = {NULL};			//je crois que oui, man execve, comme dans main (int ac, char **argv - avec argv[0] = a.out
-	struct stat buf;
-	pid_t child;
+	int			i;
+	char		*cmd;
+	char		*argv[] = {sh->cmd, NULL};	//plus tard il faudra sh->arg ici (avec cmd inclu en sh->arg[0] ou tel quel ?)
+	char		*envp[] = {NULL};			//je crois que oui, man execve, comme dans main (int ac, char **argv - avec argv[0] = a.out
+	struct stat	buf;
+	pid_t		child;
 
 	i = 0;
 	while (paths[i])
 	{
 		cmd = ft_strjoin(paths[i], "/");
 		cmd = ft_strjoin(cmd, sh->cmd);
-		if (!stat(cmd, &buf)) //stat = trouver le fichier && signal = verifer les droits
-			break;
+		if (!stat(cmd, &buf))	//stat = trouver le fichier && signal = verifer les droits
+			break ;
 		i++;
 	}
 	if (!paths[i])
@@ -42,13 +43,13 @@ void ft_find_cmd(t_shell *sh, char **paths)
 	}
 }
 
-void handle_bin(t_shell *sh, char **env)
+void	handle_bin(t_shell *sh, char **env)
 {
 	int		i;
 	char	**possible_paths;
 
 	i = 0;
-	while(env[i])
+	while (env[i])
 	{
 		if (!ft_strncmp(env[i], "PATH=", 5))
 		{

@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_sh.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/21 02:28:33 by jchotel           #+#    #+#             */
+/*   Updated: 2020/02/21 02:28:38 by jchotel          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
-t_shell	*init_shell()
+t_shell	*init_shell(void)
 {
-	t_shell *sh;
+	t_shell	*sh;
 
 	if (!(sh = malloc(sizeof(struct s_shell))))
 		return (NULL);
@@ -12,9 +24,7 @@ t_shell	*init_shell()
 	sh->arg = 0;
 	if (!(getcwd(sh->wd, sizeof(sh->wd))))
 		printf("failed to init WD\n");
-	sh->i = 0;
-	//if (!getwd(sh->wd))
-	//	printf("failed\n");
+	sh->i_line = 0;
 	return (sh);
 }
 
@@ -24,7 +34,7 @@ void	next_shell(t_shell *sh)
 	sh->arg = 0;
 	if (!(getcwd(sh->wd, sizeof(sh->wd))))
 		printf("failed to init WD\n");
-	sh->i = 0;
+	sh->i_line = 0;
 }
 
 void	reset_shell(t_shell *sh)
@@ -33,7 +43,7 @@ void	reset_shell(t_shell *sh)
 	sh->arg = 0;
 	if (!(getcwd(sh->wd, sizeof(sh->wd))))
 		printf("failed to init WD\n");
-	sh->i++;
+	sh->i_line++;
 }
 
 void	debug_shell(t_shell *sh)
@@ -56,5 +66,5 @@ void	debug_shell(t_shell *sh)
 		i++;
 	}
 	printf("WD   : %s.\n", sh->wd);
-	printf("I    : %d.\n", sh->i);
+	printf("I    : %d.\n", sh->i_line);
 }

@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 16:05:57 by jchotel           #+#    #+#             */
-/*   Updated: 2020/02/21 02:04:47 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/02/21 02:04:51 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct	s_shell
 	char		*cmd;
 	char		**arg;
 	char		wd[PATH_MAX];
-	int			i;
+	int			i_line;
 	char		**env;
 }				t_shell;
 

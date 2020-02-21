@@ -6,7 +6,7 @@
 /*   By: jchotel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 09:31:43 by jchotel           #+#    #+#             */
-/*   Updated: 2019/11/09 14:22:04 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/02/21 02:15:34 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static size_t	ft_countignore(char *s, char c)
 {
 	size_t	count;
 	size_t	i;
-	int			inside;
+	int		inside;
 
 	i = 0;
 	inside = 0;
@@ -37,7 +37,7 @@ static size_t	ft_countignore(char *s, char c)
 	return (count);
 }
 
-char				**prep_ignore(int *inside, char *s, size_t *nb_words, char c)
+char			**prep_ignore(int *inside, char *s, size_t *nb_words, char c)
 {
 	char			**splitted;
 
@@ -52,10 +52,10 @@ char				**prep_ignore(int *inside, char *s, size_t *nb_words, char c)
 
 char			**ft_splitignore(char const *s, char c)
 {
-	size_t			nbwords;
-	char			*ptr;
-	char			**splitted;
-	int					inside;
+	size_t	nbwords;
+	char	*ptr;
+	char	**splitted;
+	int		inside;
 
 	if (!(splitted = prep_ignore(&inside, (char*)s, &nbwords, c)))
 		return (0);

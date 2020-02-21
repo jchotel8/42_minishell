@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/21 02:12:08 by jchotel           #+#    #+#             */
+/*   Updated: 2020/02/21 02:31:15 by jchotel          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 void	handle_cmd(t_shell *sh, char **env)
@@ -21,7 +33,7 @@ void	handle_cmd(t_shell *sh, char **env)
 		return (handle_bin(sh, env));
 }
 
-int	main(int ac, char **av, char **env)
+int		main(int ac, char **av, char **env)
 {
 	t_shell	*sh;
 
@@ -35,12 +47,12 @@ int	main(int ac, char **av, char **env)
 		{
 			next_shell(sh);
 			parsing_read(sh);
-			while (sh->lines[sh->i])
+			while (sh->lines[sh->i_line])
 			{
 				parsing_line(sh);
 				//debug_shell(sh);
 				handle_cmd(sh, env);
-				sh->i++;
+				sh->i_line++;
 			}
 			ft_printf(PROMPT, "MINISHELL", "file");
 		}
