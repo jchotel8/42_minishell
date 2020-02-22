@@ -12,6 +12,16 @@
 
 #include "../includes/minishell.h"
 
+void	start_shell_line(t_shell *sh)
+{
+	sh->cmd = 0;
+	sh->arg = 0;
+	if (!(getcwd(sh->wd, sizeof(sh->wd))))
+		printf("failed to init WD\n");
+	sh->i_task = 0;
+	sh->i_line = 0;
+}
+
 t_shell	*init_shell(void)
 {
 	t_shell	*sh;
@@ -21,12 +31,7 @@ t_shell	*init_shell(void)
 	sh->read = 0;
 	sh->tasks = 0;
 	sh->lines = 0;
-	sh->cmd = 0;
-	sh->arg = 0;
-	if (!(getcwd(sh->wd, sizeof(sh->wd))))
-		printf("failed to init WD\n");
-	sh->i_line = 0;
-	sh->i_task = 0;
+	start_shell_line(sh);
 	return (sh);
 }
 
@@ -36,21 +41,11 @@ void	next_shell_line(t_shell *sh)
 	sh->arg = 0;
 	if (!(getcwd(sh->wd, sizeof(sh->wd))))
 		printf("failed to init WD\n");
-	sh->i_task = 0;
-	sh->i_line = 0;
-}
-
-void	next_shell_task(t_shell *sh)
-{
-	sh->cmd = 0;
-	sh->arg = 0;
-	if (!(getcwd(sh->wd, sizeof(sh->wd))))
-		printf("failed to init WD\n");
 	sh->i_line++;
 	sh->i_task = 0;
 }
 
-void	next_shell_cmd(t_shell *sh)
+void	next_shell_task(t_shell *sh)
 {
 	sh->cmd = 0;
 	sh->arg = 0;

@@ -58,7 +58,7 @@ void	handle_line(t_shell *sh)
 		else
 			handle_cmd(sh);
 		wait(NULL);
-		next_shell_cmd(sh);
+		next_shell_task(sh);
 	}
 }
 
@@ -75,12 +75,12 @@ int		main(int ac, char **av, char **env)
 		while (get_next_line(0, &sh->read) > 0)
 		{
 			parsing_read(sh);
-			next_shell_line(sh);
+			start_shell_line(sh);
 			while (sh->lines[sh->i_line])
 			{
 				parsing_line(sh);
 				handle_line(sh);
-				next_shell_task(sh);
+				next_shell_line(sh);
 			}
 			ft_printf(PROMPT, "MINISHELL", get_wd(sh));
 		}

@@ -52,7 +52,7 @@ t_shell	*init_shell();
 void	debug_shell(t_shell *sh);
 void	next_shell_task(t_shell *sh);
 void	next_shell_line(t_shell *sh);
-void	next_shell_cmd(t_shell *sh); //->utilités ?
+void	start_shell_line(t_shell *sh); //->utilités ?
 
 //PARSING
 void	parsing_read(t_shell *sh);
