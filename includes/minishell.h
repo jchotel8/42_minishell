@@ -31,7 +31,7 @@ typedef struct	s_shell
 	int			i_line;
 	int			i_task;
 	t_list		*env;
-	int			pipefd;
+	int			pipefd[2];
 
 }				t_shell;
 

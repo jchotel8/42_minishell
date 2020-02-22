@@ -34,25 +34,22 @@ void	handle_cmd(t_shell *sh)
 
 void	handle_line(t_shell *sh)
 {
-	char	nomfichier[2];
-	nomfichier[1] = '\0';
-	nomfichier[0] = '0';
 	while (sh->tasks[sh->i_task])
 	{
 		parsing_task(sh);
-		if (sh->i_task)
-			sh->arg = ft_array_add_front(sh->arg, nomfichier);
 		debug_shell(sh);
-		nomfichier[0] = '0' + sh->i_task;
 		if (sh->tasks[sh->i_task + 1])
 		{
-			sh->pipefd = open(nomfichier, O_RDWR | O_TRUNC | O_CREAT, 00777);
+			pipe(sh->pipefd);
 			if (!(fork()))
 			{
-				dup2(sh->pipefd, 1);
+				dup2(sh->pipefd[1], 1);
+				close(sh->pipefd[0]);
 				handle_cmd(sh);
 				exit(1);
 			}
+			dup2(sh->pipefd[0], 0);
+			//close(sh->pipefd[1]);
 			ft_printf("piping du resultat en cours...\n");
 		}
 		else
