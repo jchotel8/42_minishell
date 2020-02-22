@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-void	option_cmd(t_shell *sh)
+void	handle_cmd(t_shell *sh)
 {
 	if (!ft_strcmp(sh->cmd, "echo"))
 		return (handle_echo(sh));
@@ -34,31 +34,32 @@ void	option_cmd(t_shell *sh)
 
 void	handle_line(t_shell *sh)
 {
-	int			pipefd[2];
+	char	nomfichier[2];
+	nomfichier[1] = '\0';
+	nomfichier[0] = '0';
 	while (sh->tasks[sh->i_task])
 	{
 		parsing_task(sh);
 		if (sh->i_task)
-			sh->arg = ft_array_add_front(sh->arg, "pipe.txt");
+			sh->arg = ft_array_add_front(sh->arg, nomfichier);
 		debug_shell(sh);
+		nomfichier[0] = '0' + sh->i_task;
 		if (sh->tasks[sh->i_task + 1])
 		{
-			pipe(pipefd);
-			pipefd[0] = open("pipe.txt", O_RDWR | O_TRUNC, 00777);
-			if (!fork())
+			sh->pipefd = open(nomfichier, O_RDWR | O_TRUNC | O_CREAT, 00777);
+			if (!(fork()))
 			{
-				dup2(pipefd[0], 1);
-				option_cmd(sh);
-				close(pipefd[0]);
+				dup2(sh->pipefd, 1);
+				handle_cmd(sh);
 				exit(1);
 			}
 			ft_printf("piping du resultat en cours...\n");
-			sh->pipefd = pipefd[0];
 		}
 		else
-			option_cmd(sh);
+			handle_cmd(sh);
 		next_shell_cmd(sh);
 	}
+	wait(tout le monde);
 }
 
 int		main(int ac, char **av, char **env)

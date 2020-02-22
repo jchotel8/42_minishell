@@ -27,10 +27,9 @@ void	ft_exec_cmd(t_shell *sh, char *cmd)
 	{
 		ft_printf("\x1b[38;2;255;235;202m");
 		execve(cmd, sh->arg, ft_lst_to_array(sh->env));
-		if(sh->i_task)
-			close(sh->pipefd);
 	}
-	wait(NULL);
+	/*if(sh->i_task)
+		close(sh->pipefd); je sais pas si c'est utile*/
 }
 
 void	ft_find_cmd(t_shell *sh, char **paths)
