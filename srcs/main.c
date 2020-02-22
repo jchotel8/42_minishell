@@ -57,9 +57,9 @@ void	handle_line(t_shell *sh)
 		}
 		else
 			handle_cmd(sh);
+		wait(NULL);
 		next_shell_cmd(sh);
 	}
-	wait(tout le monde);
 }
 
 int		main(int ac, char **av, char **env)
