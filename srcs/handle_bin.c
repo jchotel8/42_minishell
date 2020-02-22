@@ -14,23 +14,32 @@
 
 char **ft_array_add_front(char **array, void *data)
 {
-	t_list *list; 
+	t_list *list;
 	list = ft_array_to_lst(array);
 	ft_lstadd_front(&list, ft_lstnew(data));
+	/* penser a tout free*/
 	return (ft_lst_to_array(list));
+}
 
+void	ft_exec_cmd(t_shell *sh, char *cmd)
+{
+	if (!fork())
+	{
+		ft_printf("\x1b[38;2;255;235;202m");
+		execve(cmd, sh->arg, ft_lst_to_array(sh->env));
+	}
+	/*if(sh->i_task)
+		close(sh->pipefd); je sais pas si c'est utile*/
 }
 
 void	ft_find_cmd(t_shell *sh, char **paths)
 {
 	int			i;
 	char		*cmd;
-	char		**argv;	//à remplacer par sh->arg, avec sh->arg[0] = cmd et sh->arg[last] = NULL
 	struct stat	buf;
-	pid_t		child;
 
 	i = 0;
-	argv = ft_array_add_front(sh->arg, sh->cmd);
+	sh->arg = ft_array_add_front(sh->arg, sh->cmd);
 	while (paths[i])
 	{
 		cmd = ft_strjoin(paths[i], "/");
@@ -41,15 +50,8 @@ void	ft_find_cmd(t_shell *sh, char **paths)
 	}
 	if (!paths[i])
 		ft_printf("\x1b[38;2;255;235;202mzsh: command not found: %s\n", sh->cmd);
-	else
-	{
-		if (!(child = fork()))
-		{
-			ft_printf("\x1b[38;2;255;235;202mexec : %d\n", execve(cmd, argv, ft_lst_to_array(sh->env)));
-		//	//exit(1); pas sure de l'utilité de ca
-		}
-		wait(&child);
-	}
+	wait(NULL);
+	ft_exec_cmd(sh, cmd);
 }
 
 void	handle_bin(t_shell *sh)

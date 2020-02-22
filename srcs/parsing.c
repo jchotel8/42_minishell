@@ -35,12 +35,17 @@ void	parsing_read(t_shell *sh)
 
 void	parsing_line(t_shell *sh)
 {
+	sh->tasks = ft_splitignore(sh->lines[sh->i_line], '|');
+}
+
+void	parsing_task(t_shell *sh)
+{
 	int	i;
 	int	len;
 
 	i = 0;
 	len = 0;
-	sh->arg = ft_splitignore(sh->lines[sh->i_line], ' ');
+	sh->arg = ft_splitignore(sh->tasks[sh->i_task], ' ');
 	sh->cmd = sh->arg[0];
 	sh->arg = (sh->arg[1] ? &sh->arg[1] : NULL);
 }

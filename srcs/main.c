@@ -32,6 +32,36 @@ void	handle_cmd(t_shell *sh)
 		return (handle_bin(sh));
 }
 
+void	handle_line(t_shell *sh)
+{
+	char	nomfichier[2];
+	nomfichier[1] = '\0';
+	nomfichier[0] = '0';
+	while (sh->tasks[sh->i_task])
+	{
+		parsing_task(sh);
+		if (sh->i_task)
+			sh->arg = ft_array_add_front(sh->arg, nomfichier);
+		debug_shell(sh);
+		nomfichier[0] = '0' + sh->i_task;
+		if (sh->tasks[sh->i_task + 1])
+		{
+			sh->pipefd = open(nomfichier, O_RDWR | O_TRUNC | O_CREAT, 00777);
+			if (!(fork()))
+			{
+				dup2(sh->pipefd, 1);
+				handle_cmd(sh);
+				exit(1);
+			}
+			ft_printf("piping du resultat en cours...\n");
+		}
+		else
+			handle_cmd(sh);
+		wait(NULL);
+		next_shell_task(sh);
+	}
+}
+
 int		main(int ac, char **av, char **env)
 {
 //	test_utils();
@@ -44,19 +74,17 @@ int		main(int ac, char **av, char **env)
 		sh->env = ft_array_to_lst(env);
 		while (get_next_line(0, &sh->read) > 0)
 		{
-			next_shell_line(sh);
 			parsing_read(sh);
+			start_shell_line(sh);
 			while (sh->lines[sh->i_line])
 			{
 				parsing_line(sh);
-				debug_shell(sh);
-				handle_cmd(sh);
-				sh->i_line++;
+				handle_line(sh);
+				next_shell_line(sh);
 			}
 			ft_printf(PROMPT, "MINISHELL", get_wd(sh));
 		}
 		printf("last read : \"%s\"\n", sh->read);
 		free(sh->read);
 	}
-
 }
