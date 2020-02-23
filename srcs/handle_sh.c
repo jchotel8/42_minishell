@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 02:28:33 by jchotel           #+#    #+#             */
-/*   Updated: 2020/02/21 06:48:23 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/02/23 19:56:43 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ void	debug_shell(t_shell *sh)
 	printf("READ\t: %s.\n", sh->read);
 	ft_print_array(sh->lines, "LINES\t:", 1);
 	ft_print_array(sh->tasks, "TASKS\t:", 1);
-	printf("CMD\t: %s.\n", sh->cmd[0]);
+	if (sh->cmd)
+		printf("CMD\t: %s.\n", sh->cmd[0]);
 	ft_print_array(sh->arg, "ARG\t:", 1);
 	printf("WD\t: %s.\n", sh->wd);
 	printf("LINE\t: %d.\n", sh->i_line);

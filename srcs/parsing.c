@@ -6,13 +6,13 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 02:31:27 by jchotel           #+#    #+#             */
-/*   Updated: 2020/02/21 02:35:45 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/02/23 20:03:09 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	prep_arg(t_shell *sh)
+void	prep_read(t_shell *sh)
 {
 	char	*next;
 
@@ -28,7 +28,7 @@ void	prep_arg(t_shell *sh)
 
 void	parsing_read(t_shell *sh)
 {
-	prep_arg(sh);
+	prep_read(sh);
 	sh->lines = ft_splitignore(sh->read, ';');
 	free(sh->read);
 }
@@ -46,6 +46,5 @@ void	parsing_task(t_shell *sh)
 	i = 0;
 	len = 0;
 	sh->cmd = ft_splitignore(sh->tasks[sh->i_task], ' ');
-	sh->arg = sh->cmd + 1;
-	//sh->arg = (sh->arg[1] ? &sh->arg[1] : NULL);
+	sh->arg = (sh->cmd[1] ? &sh->cmd[1] : NULL);
 }

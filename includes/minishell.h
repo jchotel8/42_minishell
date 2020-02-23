@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 16:05:57 by jchotel           #+#    #+#             */
-/*   Updated: 2020/02/21 08:01:08 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/02/23 20:17:12 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ typedef struct	s_shell
 	int			i_line;
 	int			i_task;
 	t_list		*env;
-	int			pipefd[2];
 
 }				t_shell;
 
@@ -46,6 +45,7 @@ char 	**ft_array_add_front(char **array, void *data);
 void	test_utils(void);
 int		ft_strncmp_auto(char *s1, char *s2);
 void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)());
+int		ft_tabsize(char **tab);
 
 //HANDLE_SH
 t_shell	*init_shell();
@@ -68,5 +68,12 @@ void	handle_env(t_shell *sh);
 void	handle_bin(t_shell *sh);
 void	handle_unset(t_shell *sh);
 void	handle_export(t_shell *sh);
+
+//PIPE
+void	close_pipes(int size, int *pipes);
+void	set_pipe(int j, int size ,int *pipes, char **arg);
+void	rec_pipe(int j, int size ,int *pipes, char ***args);
+void	ité_pipe(int j, int size ,int *pipes, char ***args);
+void	handle_pipe(t_shell *sh, int nb_task);
 
 #endif

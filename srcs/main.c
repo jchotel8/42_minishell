@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 02:12:08 by jchotel           #+#    #+#             */
-/*   Updated: 2020/02/21 07:48:35 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/02/23 20:30:12 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,45 +34,64 @@ void	handle_cmd(t_shell *sh)
 
 void	handle_line(t_shell *sh)
 {
-	int	pipefd[2];
-	pid_t son;
-	if (sh->tasks[sh->i_task])
+	int nb_task;
+
+	//while (sh->tasks && sh->tasks[sh->i_task])
+	if (sh->tasks)
 	{
-		parsing_task(sh);
-		debug_shell(sh);
-		if (sh->tasks[sh->i_task + 1])
-		{
-			pipe(pipefd);
-			if (!(son = fork()))
-			{
-				dup2(pipefd[1], 1);
-				handle_cmd(sh);
-				//close(pipefd[0]);
-				//close(pipefd[1]); utile ?
-						exit(1);
-			}
-			dup2(pipefd[0], 0);
-			close(pipefd[1]);
-			ft_printf("piping du resultat en cours...\n");
-			next_shell_task(sh);
-			handle_line(sh);
-			//kill(-wait(0),SIGKILL);
-			close(pipefd[0]);
-			//kill(son,0);
-			//kill(son,-1);
-			//kill(son2,SIGKILL);
-			//kill(son,-2);
+		if ((nb_task = ft_tabsize(sh->tasks)) > 1)
+		{//DANS LE CAS DE PIPE
+			handle_pipe(sh, nb_task);
 		}
 		else
+		{
+			parsing_task(sh);
+			debug_shell(sh);
 			handle_cmd(sh);
+		}
+		wait(NULL);
+		//next_shell_task(sh);
 	}
 }
 
+//void handle_line(t_shell *sh)
+//{
+//	parsing_task(sh);
+//	debug_shell(sh);
+	//int status;
+	//int i;
+
+//	static int j = -2;
+//	int nb = 4;
+//	int size = nb * 2 - 2;
+//	char *cat_args[] = {"cat", "/dev/random", NULL};
+//	char *grep_args[] = {"head", "-n", "10", NULL};
+//	char *grep_args2[] = {"head", "-n", "5", NULL};
+//	char *cut_args[] = {"cut", "-b", "1-10", NULL};
+//
+//	char ***args = NULL;
+//	args[0] = cat_args;
+//	args[1] = grep_args;
+//	args[2] = grep_args2;
+//	args[3] = cut_args;
+//
+//	int pipes[size];
+//	pipe(pipes); // sets up 1st pipe
+//	pipe(pipes + 2); // sets up 2nd pipe
+//	pipe(pipes + 4);
+//
+//
+//	rec_pipe(j, size, pipes, args);
+//	close_pipes(size, pipes);
+//	for (i = 0; i < 4; i++)
+//		wait(&status);
+//	ft_printf("hello\n");
+//}
+
 int		main(int ac, char **av, char **env)
 {
+//	test_utils();
 	t_shell	*sh;
-		int son;
-		int son2;
 	if (ac > 0)
 	{
 		av[1] = 0;
@@ -86,22 +105,10 @@ int		main(int ac, char **av, char **env)
 			while (sh->lines[sh->i_line])
 			{
 				parsing_line(sh);
-				if (!(son = fork()))
-				{
-					handle_line(sh);
-					exit(1);
-				}
-				son2 = son;
-				//printf("%d\n", son);
-
-				kill(wait(0),SIGKILL);
-				sh->i_task = 0;
+				handle_line(sh);
 				next_shell_line(sh);
-				//printf("%d\n", son2);
-
 			}
 			ft_printf(PROMPT, "MINISHELL", get_wd(sh));
-			kill(-son2,SIGKILL);
 		}
 		printf("last read : \"%s\"\n", sh->read);
 		free(sh->read);

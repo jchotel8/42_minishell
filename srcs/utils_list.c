@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 05:02:01 by jchotel           #+#    #+#             */
-/*   Updated: 2020/02/21 07:37:28 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/02/23 20:09:18 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,20 @@ void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)())
 		*begin_list = current->next;
 		free(current);
 	}
+}
+
+int ft_tabsize(char **tab)
+{
+	int i;
+
+	i = -1;
+	if (tab)
+		i = 0;
+	while (tab[i])
+	{
+		i++;
+	}
+	return (i);
 }
 
 int		ft_strncmp_auto(char *s1, char *s2)

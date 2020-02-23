@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 02:12:53 by jchotel           #+#    #+#             */
-/*   Updated: 2020/02/21 02:21:41 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/02/23 19:11:23 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	handle_echo(t_shell *sh)
 		i++;
 		flag_n = 1;
 	}
-	while (sh->arg[i])
+	while (sh->arg && sh->arg[i])
 	{
 		tmp = sh->arg[i];
 		sh->arg[i] = ft_strtrim(sh->arg[i], "\"");
