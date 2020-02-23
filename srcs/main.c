@@ -14,19 +14,19 @@
 
 void	handle_cmd(t_shell *sh)
 {
-	if (!ft_strcmp(sh->cmd, "echo"))
+	if (!ft_strcmp(sh->cmd[0], "echo"))
 		return (handle_echo(sh));
-	if (!ft_strcmp(sh->cmd, "cd"))
+	if (!ft_strcmp(sh->cmd[0], "cd"))
 		return (handle_cd(sh));
-	if (!ft_strcmp(sh->cmd, "pwd"))
+	if (!ft_strcmp(sh->cmd[0], "pwd"))
 		return (handle_pwd(sh));
-	if (!ft_strcmp(sh->cmd, "exit"))
+	if (!ft_strcmp(sh->cmd[0], "exit"))
 		return (exit(0));
-	if (!ft_strcmp(sh->cmd, "unset"))
+	if (!ft_strcmp(sh->cmd[0], "unset"))
 		return (handle_unset(sh));
-	if (!ft_strcmp(sh->cmd, "env"))
+	if (!ft_strcmp(sh->cmd[0], "env"))
 		return (handle_env(sh));
-	if (!ft_strcmp(sh->cmd, "export"))
+	if (!ft_strcmp(sh->cmd[0], "export"))
 		return handle_export(sh);
 	else
 		return (handle_bin(sh));
