@@ -23,13 +23,13 @@ char **ft_array_add_front(char **array, void *data)
 
 void	ft_exec_cmd(t_shell *sh, char *cmd)
 {
-	if (!fork())
-	{
-		ft_printf("\x1b[38;2;255;235;202m");
+//		pid_t son = 0;
+//	if((son = fork()))
+	//{
+		//ft_printf("\x1b[38;2;255;235;202m");
 		execve(cmd, sh->arg, ft_lst_to_array(sh->env));
-	}
-	/*if(sh->i_task)
-		close(sh->pipefd); je sais pas si c'est utile*/
+//	wait(&son);
+	//}
 }
 
 void	ft_find_cmd(t_shell *sh, char **paths)
@@ -50,7 +50,6 @@ void	ft_find_cmd(t_shell *sh, char **paths)
 	}
 	if (!paths[i])
 		ft_printf("\x1b[38;2;255;235;202mzsh: command not found: %s\n", sh->cmd);
-	wait(NULL);
 	ft_exec_cmd(sh, cmd);
 }
 

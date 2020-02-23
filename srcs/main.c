@@ -34,35 +34,48 @@ void	handle_cmd(t_shell *sh)
 
 void	handle_line(t_shell *sh)
 {
-	while (sh->tasks[sh->i_task])
+	int	pipefd[2];
+	pid_t son;
+	pid_t son2;
+	if (sh->tasks[sh->i_task])
 	{
 		parsing_task(sh);
 		debug_shell(sh);
 		if (sh->tasks[sh->i_task + 1])
 		{
-			pipe(sh->pipefd);
-			if (!(fork()))
+			pipe(pipefd);
+			if (!(son = fork()))
 			{
-				dup2(sh->pipefd[1], 1);
-				close(sh->pipefd[0]);
+				dup2(pipefd[1], 1);
 				handle_cmd(sh);
+				//close(pipefd[0]);
+				//close(pipefd[1]); utile ?
 				exit(1);
 			}
-			dup2(sh->pipefd[0], 0);
-			//close(sh->pipefd[1]);
+			dup2(pipefd[0], 0);
+			close(pipefd[1]);
 			ft_printf("piping du resultat en cours...\n");
+			next_shell_task(sh);
+			handle_line(sh);
+			close(pipefd[0]);
+			son2 = son;
+			wait(&son);
+			//kill(son,0);
+			//kill(son,-1);
+			//kill(son2,SIGKILL);
+			//kill(son,-2);
+
 		}
 		else
 			handle_cmd(sh);
-		wait(NULL);
-		next_shell_task(sh);
 	}
 }
 
 int		main(int ac, char **av, char **env)
 {
-//	test_utils();
 	t_shell	*sh;
+		pid_t son;
+		pid_t son2;
 	if (ac > 0)
 	{
 		av[1] = 0;
@@ -76,8 +89,19 @@ int		main(int ac, char **av, char **env)
 			while (sh->lines[sh->i_line])
 			{
 				parsing_line(sh);
-				handle_line(sh);
+				if (!(son = fork()))
+				{
+					handle_line(sh);
+					exit(1);
+				}
+				son2 = son;
+				//printf("%d\n", son);
+				wait(&son);
+				//kill(son2,SIGKILL);
+				sh->i_task = 0;
 				next_shell_line(sh);
+				//printf("%d\n", son2);
+
 			}
 			ft_printf(PROMPT, "MINISHELL", get_wd(sh));
 		}
