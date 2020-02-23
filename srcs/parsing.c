@@ -45,7 +45,7 @@ void	parsing_task(t_shell *sh)
 
 	i = 0;
 	len = 0;
-	sh->arg = ft_splitignore(sh->tasks[sh->i_task], ' ');
-	sh->cmd = sh->arg[0];
-	sh->arg = (sh->arg[1] ? &sh->arg[1] : NULL);
+	sh->cmd = ft_splitignore(sh->tasks[sh->i_task], ' ');
+	sh->arg = sh->cmd + 1;
+	//sh->arg = (sh->arg[1] ? &sh->arg[1] : NULL);
 }
