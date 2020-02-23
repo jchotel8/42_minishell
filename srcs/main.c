@@ -14,19 +14,19 @@
 
 void	handle_cmd(t_shell *sh)
 {
-	if (!ft_strcmp(sh->cmd, "echo"))
+	if (!ft_strcmp(sh->cmd[0], "echo"))
 		return (handle_echo(sh));
-	if (!ft_strcmp(sh->cmd, "cd"))
+	if (!ft_strcmp(sh->cmd[0], "cd"))
 		return (handle_cd(sh));
-	if (!ft_strcmp(sh->cmd, "pwd"))
+	if (!ft_strcmp(sh->cmd[0], "pwd"))
 		return (handle_pwd(sh));
-	if (!ft_strcmp(sh->cmd, "exit"))
+	if (!ft_strcmp(sh->cmd[0], "exit"))
 		return (exit(0));
-	if (!ft_strcmp(sh->cmd, "unset"))
+	if (!ft_strcmp(sh->cmd[0], "unset"))
 		return (handle_unset(sh));
-	if (!ft_strcmp(sh->cmd, "env"))
+	if (!ft_strcmp(sh->cmd[0], "env"))
 		return (handle_env(sh));
-	if (!ft_strcmp(sh->cmd, "export"))
+	if (!ft_strcmp(sh->cmd[0], "export"))
 		return handle_export(sh);
 	else
 		return (handle_bin(sh));
@@ -34,38 +34,45 @@ void	handle_cmd(t_shell *sh)
 
 void	handle_line(t_shell *sh)
 {
-	char	nomfichier[2];
-	nomfichier[1] = '\0';
-	nomfichier[0] = '0';
-	while (sh->tasks[sh->i_task])
+	int	pipefd[2];
+	pid_t son;
+	if (sh->tasks[sh->i_task])
 	{
 		parsing_task(sh);
-		if (sh->i_task)
-			sh->arg = ft_array_add_front(sh->arg, nomfichier);
 		debug_shell(sh);
-		nomfichier[0] = '0' + sh->i_task;
 		if (sh->tasks[sh->i_task + 1])
 		{
-			sh->pipefd = open(nomfichier, O_RDWR | O_TRUNC | O_CREAT, 00777);
-			if (!(fork()))
+			pipe(pipefd);
+			if (!(son = fork()))
 			{
-				dup2(sh->pipefd, 1);
+				dup2(pipefd[1], 1);
 				handle_cmd(sh);
-				exit(1);
+				//close(pipefd[0]);
+				//close(pipefd[1]); utile ?
+						exit(1);
 			}
+			dup2(pipefd[0], 0);
+			close(pipefd[1]);
 			ft_printf("piping du resultat en cours...\n");
+			next_shell_task(sh);
+			handle_line(sh);
+			//kill(-wait(0),SIGKILL);
+			close(pipefd[0]);
+			//kill(son,0);
+			//kill(son,-1);
+			//kill(son2,SIGKILL);
+			//kill(son,-2);
 		}
 		else
 			handle_cmd(sh);
-		wait(NULL);
-		next_shell_task(sh);
 	}
 }
 
 int		main(int ac, char **av, char **env)
 {
-//	test_utils();
 	t_shell	*sh;
+		int son;
+		int son2;
 	if (ac > 0)
 	{
 		av[1] = 0;
@@ -79,10 +86,22 @@ int		main(int ac, char **av, char **env)
 			while (sh->lines[sh->i_line])
 			{
 				parsing_line(sh);
-				handle_line(sh);
+				if (!(son = fork()))
+				{
+					handle_line(sh);
+					exit(1);
+				}
+				son2 = son;
+				//printf("%d\n", son);
+
+				kill(wait(0),SIGKILL);
+				sh->i_task = 0;
 				next_shell_line(sh);
+				//printf("%d\n", son2);
+
 			}
 			ft_printf(PROMPT, "MINISHELL", get_wd(sh));
+			kill(-son2,SIGKILL);
 		}
 		printf("last read : \"%s\"\n", sh->read);
 		free(sh->read);

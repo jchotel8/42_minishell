@@ -20,12 +20,12 @@ void	handle_echo(t_shell *sh)
 
 	i = 0;
 	flag_n = 0;
-	if (sh->arg && !ft_strcmp("-n", sh->arg[i]))
+	if (!ft_strcmp("-n", sh->arg[i]))
 	{
 		i++;
 		flag_n = 1;
 	}
-	while (sh->arg && sh->arg[i])
+	while (sh->arg[i])
 	{
 		tmp = sh->arg[i];
 		sh->arg[i] = ft_strtrim(sh->arg[i], "\"");

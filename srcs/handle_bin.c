@@ -23,13 +23,7 @@ char **ft_array_add_front(char **array, void *data)
 
 void	ft_exec_cmd(t_shell *sh, char *cmd)
 {
-	if (!fork())
-	{
-		ft_printf("\x1b[38;2;255;235;202m");
-		execve(cmd, sh->arg, ft_lst_to_array(sh->env));
-	}
-	/*if(sh->i_task)
-		close(sh->pipefd); je sais pas si c'est utile*/
+		execve(cmd, sh->cmd, ft_lst_to_array(sh->env));
 }
 
 void	ft_find_cmd(t_shell *sh, char **paths)
@@ -39,18 +33,16 @@ void	ft_find_cmd(t_shell *sh, char **paths)
 	struct stat	buf;
 
 	i = 0;
-	sh->arg = ft_array_add_front(sh->arg, sh->cmd);
 	while (paths[i])
 	{
 		cmd = ft_strjoin(paths[i], "/");
-		cmd = ft_strjoin(cmd, sh->cmd);
+		cmd = ft_strjoin(cmd, sh->cmd[0]);
 		if (!stat(cmd, &buf))	//stat = trouver le fichier && signal = verifier les droits
 			break ;
 		i++;
 	}
 	if (!paths[i])
-		ft_printf("\x1b[38;2;255;235;202mzsh: command not found: %s\n", sh->cmd);
-	wait(NULL);
+		ft_printf("\x1b[38;2;255;235;202mzsh: command not found: %s\n", sh->cmd[0]);
 	ft_exec_cmd(sh, cmd);
 }
 

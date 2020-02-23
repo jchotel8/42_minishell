@@ -25,13 +25,13 @@ typedef struct	s_shell
 	char		*read;
 	char		**lines;
 	char		**tasks;
-	char		*cmd;
+	char		**cmd;
 	char		**arg;
 	char		wd[PATH_MAX];
 	int			i_line;
 	int			i_task;
 	t_list		*env;
-	int			pipefd;
+	int			pipefd[2];
 
 }				t_shell;
 

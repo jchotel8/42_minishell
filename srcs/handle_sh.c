@@ -60,7 +60,7 @@ void	debug_shell(t_shell *sh)
 	printf("READ\t: %s.\n", sh->read);
 	ft_print_array(sh->lines, "LINES\t:", 1);
 	ft_print_array(sh->tasks, "TASKS\t:", 1);
-	printf("CMD\t: %s.\n", sh->cmd);
+	printf("CMD\t: %s.\n", sh->cmd[0]);
 	ft_print_array(sh->arg, "ARG\t:", 1);
 	printf("WD\t: %s.\n", sh->wd);
 	printf("LINE\t: %d.\n", sh->i_line);
