@@ -12,27 +12,43 @@
 
 #include "../includes/minishell.h"
 
+int						switch_inside(char *current, char new, int *inside)
+{
+	if ((new == '\'' || new == '"') && !*current)
+	{
+		*inside = 1;
+		*current = new;
+	}
+	else if ((new == '\'' || new == '"') && *current == new)
+	{
+		*inside = 0;
+		*current = 0;
+	}
+	return (*inside);
+}
+
 static size_t	ft_countignore(char *s, char c)
 {
 	size_t	count;
-	size_t	i;
+	char	*ptr;
 	int		inside;
+	char	current;
 
-	i = 0;
+	ptr = (char*)s;
+	current = 0;
 	inside = 0;
-	while (s[i] && s[i] == c)
-		i++;
-	if (s[i])
+	while (*s && *s == c)
+		s++;
+	if (*s)
 		count = 1;
 	else
 		count = 0;
-	while (s[i])
+	while (*s)
 	{
-		if (s[i] == '"')
-			inside = 1 - inside;
-		else if (!inside && s[i] == c && s[i + 1] && s[i + 1] != c)
+		switch_inside(&current, *s, &inside);
+		if (!inside && *s == c && *(s + 1) && *(s + 1) != c)
 			count++;
-		i++;
+		s++;
 	}
 	return (count);
 }
@@ -56,13 +72,15 @@ char			**ft_splitignore(char const *s, char c)
 	char	*ptr;
 	char	**splitted;
 	int		inside;
+	char	current;
 
+	current = 0;
 	if (!(splitted = prep_ignore(&inside, (char*)s, &nbwords, c)))
 		return (0);
 	ptr = (char*)s;
 	while (*s)
 	{
-		inside = (*s == '"' ? 1 - inside : inside);
+		switch_inside(&current, *s, &inside);
 		if (!inside && *s == c)
 		{
 			if (ptr != s)
