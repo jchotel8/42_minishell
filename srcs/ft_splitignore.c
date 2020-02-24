@@ -18,13 +18,15 @@ int						switch_inside(char *current, char new, int *inside)
 	{
 		*inside = 1;
 		*current = new;
+		return (1);
 	}
 	else if ((new == '\'' || new == '"') && *current == new)
 	{
 		*inside = 0;
 		*current = 0;
+		return (1);
 	}
-	return (*inside);
+	return (0);
 }
 
 static size_t	ft_countignore(char *s, char c)

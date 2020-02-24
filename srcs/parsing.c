@@ -16,7 +16,7 @@ void	prep_arg(t_shell *sh)
 {
 	char	*next;
 
-	while (ft_strcount(sh->read, '"') % 2)
+	while (ft_strcountignore(sh->read) % 2)
 	{
 		ft_printf("dquote>");
 		get_next_line(0, &next);

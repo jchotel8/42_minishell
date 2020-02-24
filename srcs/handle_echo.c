@@ -28,7 +28,7 @@ void	handle_echo(t_shell *sh)
 	while (sh->arg[i])
 	{
 		tmp = sh->arg[i];
-		sh->arg[i] = ft_strtrim(sh->arg[i], "\"");
+		sh->arg[i] = ft_strtrimignore(sh->arg[i]);
 		i >= 1 ? ft_printf(" ") : 0;
 		ft_printf("\x1b[38;2;255;235;202m%s", sh->arg[i]);
 		free(tmp);
