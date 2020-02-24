@@ -6,15 +6,15 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 18:30:13 by jchotel           #+#    #+#             */
-/*   Updated: 2020/02/23 21:01:59 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/02/24 16:22:37 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void init_pipes(int size, int pipes[size])
+void	init_pipes(int size, int pipes[size])
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < size)
@@ -24,7 +24,7 @@ void init_pipes(int size, int pipes[size])
 	}
 }
 
-void close_pipes(int size, int *pipes)
+void	close_pipes(int size, int *pipes)
 {
 	while (size--)
 	{
@@ -32,7 +32,7 @@ void close_pipes(int size, int *pipes)
 	}
 }
 
-void set_pipe(int j, int size ,int *pipes, char **arg)
+void	set_pipe(int j, int size, int *pipes, char **arg)
 {
 	if (j > 0)
 		dup2(pipes[j - 2], 0);
@@ -42,35 +42,34 @@ void set_pipe(int j, int size ,int *pipes, char **arg)
 	execvp(*arg, arg);
 }
 
-void rec_pipe(int j, int size ,int *pipes, char ***args)
+void	set_pipe_rec(int j, int size, int *pipes, char ***args)
 {
 	j += 2;
 	if (fork() == 0)
-		set_pipe(j, size,pipes, args[j / 2]);
+		set_pipe(j, size, pipes, args[j / 2]);
 	else if (j < size)
 		rec_pipe(j, size, pipes, args);
 }
 
-void ité_pipe(int j, int size ,int *pipes, char ***args)
+void	set_pipe_iter(int j, int size, int *pipes, char ***args)
 {
 	while (j <= size)
 	{
 		j += 2;
 		if (fork() == 0)
-			set_pipe(j, size,pipes, args[j / 2]);
+			set_pipe(j, size, pipes, args[j / 2]);
 	}
 }
 
-
-void handle_pipe(t_shell *sh, int nb_task)
+void	handle_pipe(t_shell *sh, int nb_task)
 {
-	int status;
-	int i = 0;
-	static int j = -2;
-	int size = nb_task * 2 - 2;
-	int pipes[size];
+	int			status;
+	int			i;
+	static int	j = -2;
+	int			size = nb_task * 2 - 2;
+	int			pipes[size];
+	char		**args[nb_task];
 
-	char **args[nb_task];
 	while (sh->tasks && sh->tasks[sh->i_task])
 	{
 		parsing_task(sh);
@@ -78,8 +77,12 @@ void handle_pipe(t_shell *sh, int nb_task)
 		next_shell_task(sh);
 	}
 	init_pipes(size, pipes);
-	rec_pipe(j, size, pipes, args);
+	set_pipe_rec(j, size, pipes, args);
 	close_pipes(size, pipes);
-	for (i = 0; i < nb_task; i++)
+	i = 0;
+	while (i < nb_task)
+	{
 		wait(&status);
+		i++;
+	}
 }

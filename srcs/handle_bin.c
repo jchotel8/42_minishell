@@ -29,7 +29,8 @@ void	ft_find_cmd(t_shell *sh, char **paths)
 		i++;
 	}
 	if (!paths[i])
-		ft_printf("\x1b[38;2;255;235;202mzsh: command not found: %s\n", sh->cmd[0]);
+		ft_printf("\x1b[38;2;255;235;202mzsh: command not found: %s\n",
+				sh->cmd[0]);
 	else
 	{
 		if (!(child = fork()))

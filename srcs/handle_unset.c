@@ -19,6 +19,5 @@ void	handle_unset(t_shell *sh)
 
 void	handle_export(t_shell *sh)
 {
-	ft_lstadd_back(&sh->env, ft_lstnew(sh->arg[0])); //questce qui se passe si sh->arg n'est pas au format MAVARIABLE="gheuhg"?
+	ft_lstadd_back(&sh->env, ft_lstnew(sh->arg[0])); //questce qui se passe si sh->arg n'est pas au format MAVARIABLE="blabla"?
 }//est-ce quil faut mettre les " ?
-

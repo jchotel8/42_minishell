@@ -15,7 +15,7 @@
 
 void	ft_list_print(t_list *ptr, int flag)
 {
-	int i = 0;
+	int	i = 0;
 
 	if (ptr)
 	{
@@ -33,7 +33,7 @@ void	ft_list_print(t_list *ptr, int flag)
 
 t_list	*ft_lstcrea(int i, ...)
 {
-	va_list va;
+	va_list		va;
 	t_list *first = NULL;
 
 	va_start(va, i);
@@ -47,8 +47,8 @@ t_list	*ft_lstcrea(int i, ...)
 
 t_list	*ft_array_to_lst(char **array)
 {
-	t_list *first = NULL;
-	int i;
+	t_list	*first = NULL;
+	int		i;
 
 	i = 0;
 	while (array && array[i])
@@ -61,8 +61,8 @@ t_list	*ft_array_to_lst(char **array)
 
 char	**ft_lst_to_array(t_list *lst)
 {
-	char **new;
-	int i;
+	char	**new;
+	int		i;
 
 	if (!(new = (char **)malloc(sizeof(char *) * ft_lstsize(lst) + 1)))
 		return(NULL);
@@ -80,7 +80,7 @@ char	**ft_lst_to_array(t_list *lst)
 
 void	ft_print_array(char **array, char *text, int flag)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (array && array[i])
@@ -117,9 +117,9 @@ void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)())
 	}
 }
 
-int ft_tabsize(char **tab)
+int	ft_tabsize(char **tab)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	if (tab)

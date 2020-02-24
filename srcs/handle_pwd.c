@@ -34,9 +34,6 @@ char	*get_wd(t_shell *sh)
 		printf("failed to init WD\n");
 	files = ft_split(sh->wd, '/');
 	while (files && files[i])
-	{
-		//i > 0 ? free(files[i - 1]) : 0;
-		i++;//qd je free, jai le meme problème que avant avec echo... ca affiche 2 fois
-	}
+		i++;
 	return (files[i - 1]);
 }

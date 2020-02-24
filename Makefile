@@ -24,6 +24,8 @@ SRCSC		= libs/gnl/get_next_line.c\
 			  srcs/parsing.c\
 			  srcs/pipe.c\
 			  srcs/ft_splitignore.c\
+				srcs/ft_strcountignore.c\
+				srcs/ft_strtrimignore.c\
 			  srcs/utils_list.c
 SRCSH		= includes/get_next_line.h\
 			  includes/minishell.h
