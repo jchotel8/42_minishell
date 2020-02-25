@@ -41,10 +41,13 @@ void	parsing_line(t_shell *sh)
 void	parsing_task(t_shell *sh)
 {
 	int	i;
-	int	len;
 
 	i = 0;
-	len = 0;
 	sh->cmd = ft_splitignore(sh->tasks[sh->i_task], ' ');
 	sh->arg = (sh->cmd[1] ? &sh->cmd[1] : NULL);
+	while (sh->arg && sh->arg[i])
+	{
+		sh->arg[i] = ft_strtrimignore(sh->arg[i]);
+		i++;
+	}
 }
