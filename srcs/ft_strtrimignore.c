@@ -24,7 +24,7 @@ char		*ft_strtrimignore(char *s)
 	j = 0;
 	while (s[i])
 	{
-		if (switch_inside(&current, s[i], &inside))
+		if(switch_inside(&current, s[i], &inside))
 			i++;
 		s[j] = s[i];
 		i++;

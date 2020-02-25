@@ -24,7 +24,7 @@ int	ft_strcountignore(char *s)
 	i = 0;
 	while (s[i])
 	{
-		if (switch_inside(&current, s[i], &inside))
+		if(switch_inside(&current, s[i], &inside))
 			count++;
 		i++;
 	}

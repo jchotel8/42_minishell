@@ -35,7 +35,14 @@ void	parsing_read(t_shell *sh)
 
 void	parsing_line(t_shell *sh)
 {
-	sh->tasks = ft_splitignore(sh->lines[sh->i_line], '|');
+	sh->redirs = ft_splitignore(sh->lines[sh->i_line], '>');
+	if (sh->redirs[1])
+		sh->redirs[1] = *ft_splitignore(sh->redirs[1], ' '); //gerer les cas d'erreurs : s'il y a plus d'un argument
+}
+
+void	parsing_redir(t_shell *sh)
+{
+	sh->tasks = ft_splitignore(sh->redirs[0], '|');
 }
 
 void	parsing_task(t_shell *sh)

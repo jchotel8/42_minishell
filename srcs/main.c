@@ -51,6 +51,25 @@ void	handle_line(t_shell *sh)
 	}
 }
 
+void	handle_redir(t_shell *sh)
+{
+	parsing_redir(sh);
+	if (sh->redirs[1])
+	{
+		if(!fork())
+		{
+			dup2(open(sh->redirs[1], O_RDWR | O_CREAT | O_TRUNC, 00777), 1);
+			handle_line(sh);
+			exit(1);
+		}
+		wait(0);
+	}
+	else
+	{
+		handle_line(sh);
+	}
+}
+
 int		main(int ac, char **av, char **env)
 {
 	t_shell	*sh;
@@ -68,7 +87,7 @@ int		main(int ac, char **av, char **env)
 			while (sh->lines[sh->i_line])
 			{
 				parsing_line(sh);
-				handle_line(sh);
+				handle_redir(sh);
 				next_shell_line(sh);
 			}
 			ft_printf(PROMPT, "MINISHELL", get_wd(sh));

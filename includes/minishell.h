@@ -24,6 +24,7 @@ typedef struct	s_shell
 {
 	char		*read;
 	char		**lines;
+	char		**redirs;
 	char		**tasks;
 	char		**cmd;
 	char		**arg;
@@ -61,6 +62,7 @@ void	start_shell_line(t_shell *sh); //->utilités ?
 //PARSING
 void	parsing_read(t_shell *sh);
 void	parsing_task(t_shell *sh);
+void	parsing_redir(t_shell *sh);
 void	parsing_line(t_shell *sh);
 
 //HANDLE
