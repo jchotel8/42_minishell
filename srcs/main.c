@@ -34,7 +34,7 @@ void	handle_cmd(t_shell *sh)
 
 void	handle_line(t_shell *sh)
 {
-	int nb_task;
+	int nb_task = 0;
 
 	if (sh->tasks)
 	{

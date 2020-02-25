@@ -27,6 +27,7 @@ typedef struct	s_shell
 	char		**tasks;
 	char		**cmd;
 	char		**arg;
+	char		***tab_arg;
 	char		wd[PATH_MAX];
 	int			i_line;
 	int			i_task;
@@ -64,6 +65,7 @@ void	parsing_line(t_shell *sh);
 
 //HANDLE
 char	*get_wd(t_shell *sh);
+void	handle_cmd(t_shell *sh);
 void	handle_pwd(t_shell *sh);
 void	handle_cd(t_shell *sh);
 void	handle_echo(t_shell *sh);
@@ -73,10 +75,6 @@ void	handle_unset(t_shell *sh);
 void	handle_export(t_shell *sh);
 
 //PIPE
-void	close_pipes(int size, int *pipes);
-void	set_pipe(int j, int size ,int *pipes, char **arg);
-void	rec_pipe(int j, int size ,int *pipes, char ***args);
-void	ité_pipe(int j, int size ,int *pipes, char ***args);
 void	handle_pipe(t_shell *sh, int nb_task);
 
 #endif

@@ -12,52 +12,53 @@
 
 #include "../includes/minishell.h"
 
-void	init_pipes(int size, int pipes[size])
+void	init_pipes(int nb_pipes, int *pipes)
 {
 	int	i;
 
 	i = 0;
-	while (i < size)
+	while (i < nb_pipes)
 	{
 		pipe(pipes + i);
 		i += 2;
 	}
 }
 
-void	close_pipes(int size, int *pipes)
+void	close_pipes(int nb_pipes, int *pipes)
 {
-	while (size--)
+	while (nb_pipes--)
 	{
-		close(pipes[size]);
+		close(pipes[nb_pipes]);
 	}
 }
 
-void	set_pipe(int j, int size, int *pipes, char **arg)
+void	set_pipe(int j, int nb_pipes, int *pipes, t_shell *sh)
 {
 	if (j > 0)
 		dup2(pipes[j - 2], 0);
-	if (j <= (size + 2) / 2)
+	if (j <= (nb_pipes + 2) / 2)
 		dup2(pipes[j + 1], 1);
-	close_pipes(size, pipes);
-	execvp(*arg, arg);
+	close_pipes(nb_pipes, pipes);
+	//handle_cmd(sh);
+	execvp(*sh->tab_arg[j / 2], sh->tab_arg[j / 2]);
 }
 
-void	set_pipe_rec(int j, int size, int *pipes, char ***args)
+void	set_pipe_rec(int j, int nb_pipes, int *pipes, t_shell *sh)
 {
 	j += 2;
 	if (fork() == 0)
-		set_pipe(j, size, pipes, args[j / 2]);
-	else if (j < size)
-		rec_pipe(j, size, pipes, args);
+		set_pipe(j, nb_pipes, pipes, sh);
+	else if (j < nb_pipes)
+		set_pipe_rec(j, nb_pipes, pipes, sh);
 }
 
-void	set_pipe_iter(int j, int size, int *pipes, char ***args)
+void	set_pipe_iter(int j, int nb_pipes, int *pipes, t_shell *sh)
 {
-	while (j <= size)
+	while (j <= nb_pipes)
 	{
 		j += 2;
 		if (fork() == 0)
-			set_pipe(j, size, pipes, args[j / 2]);
+			set_pipe(j, nb_pipes, pipes, sh);
 	}
 }
 
@@ -66,19 +67,21 @@ void	handle_pipe(t_shell *sh, int nb_task)
 	int			status;
 	int			i;
 	static int	j = -2;
-	int			size = nb_task * 2 - 2;
-	int			pipes[size];
+	int			nb_pipes = nb_task * 2 - 2;
+	int			pipes[nb_pipes];
 	char		**args[nb_task];
 
 	while (sh->tasks && sh->tasks[sh->i_task])
 	{
 		parsing_task(sh);
+		debug_shell(sh);
 		args[sh->i_task] = sh->cmd;
 		next_shell_task(sh);
 	}
-	init_pipes(size, pipes);
-	set_pipe_rec(j, size, pipes, args);
-	close_pipes(size, pipes);
+	sh->tab_arg = args;
+	init_pipes(nb_pipes, pipes);
+	set_pipe_rec(j, nb_pipes, pipes, sh);
+	close_pipes(nb_pipes, pipes);
 	i = 0;
 	while (i < nb_task)
 	{
