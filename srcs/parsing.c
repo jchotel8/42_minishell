@@ -15,13 +15,18 @@
 void	prep_read(t_shell *sh)
 {
 	char	*next;
+	char	*tmp;
 
 	while (ft_strcountignore(sh->read) % 2)
 	{
 		ft_printf("dquote>");
 		get_next_line(0, &next);
+		tmp = sh->read;
 		sh->read = ft_strjoin(sh->read, "\n");
+		free(tmp);
+		tmp = sh->read;
 		sh->read = ft_strjoin(sh->read, next);
+		free(tmp);
 		free(next);
 	}
 }
@@ -31,19 +36,20 @@ void	parsing_read(t_shell *sh)
 	prep_read(sh);
 	sh->lines = ft_splitignore(sh->read, ';');
 	free(sh->read);
+	sh->read = 0;
 }
 
 void	parsing_line(t_shell *sh)
 {
-	sh->tasks = ft_splitignore(sh->lines[sh->i_line], '|');
+	sh->pipes = ft_splitignore(sh->lines[sh->i_line], '|');
 }
 
-void	parsing_task(t_shell *sh)
+void	parsing_pipe(t_shell *sh)
 {
 	int	i;
 
 	i = 0;
-	sh->cmd = ft_splitignore(sh->tasks[sh->i_task], ' ');
+	sh->cmd = ft_splitignore(sh->pipes[sh->i_pipe], ' ');
 	sh->arg = (sh->cmd[1] ? &sh->cmd[1] : NULL);
 	while (sh->arg && sh->arg[i])
 	{

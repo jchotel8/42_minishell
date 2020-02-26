@@ -39,8 +39,9 @@ void	set_pipe(int j, int nb_pipes, int *pipes, t_shell *sh)
 	if (j <= (nb_pipes + 2) / 2)
 		dup2(pipes[j + 1], 1);
 	close_pipes(nb_pipes, pipes);
-	//handle_cmd(sh);
-	execvp(*sh->tab_arg[j / 2], sh->tab_arg[j / 2]);
+	sh->arg = sh->tab_arg[j / 2] + 1;
+	sh->cmd = sh->tab_arg[j / 2];
+	handle_cmd(sh);
 }
 
 void	set_pipe_rec(int j, int nb_pipes, int *pipes, t_shell *sh)
@@ -71,12 +72,12 @@ void	handle_pipe(t_shell *sh, int nb_task)
 	int			pipes[nb_pipes];
 	char		**args[nb_task];
 
-	while (sh->tasks && sh->tasks[sh->i_task])
+	while (sh->pipes && sh->pipes[sh->i_pipe])
 	{
-		parsing_task(sh);
-		debug_shell(sh);
-		args[sh->i_task] = sh->cmd;
-		next_shell_task(sh);
+		parsing_pipe(sh);
+		//debug_shell(sh);
+		args[sh->i_pipe] = sh->cmd;
+		next_shell_pipe(sh);
 	}
 	sh->tab_arg = args;
 	init_pipes(nb_pipes, pipes);

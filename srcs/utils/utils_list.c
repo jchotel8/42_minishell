@@ -10,26 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 //toutes ces fonctions pourront être rajoutées dans la libft
-
-void	ft_list_print(t_list *ptr, int flag)
-{
-	int	i = 0;
-
-	if (ptr)
-	{
-		flag == 1 ? printf("[%d] : %s\n", i, ptr->content) :
-		printf("%s\n", ptr->content);
-		while(ptr->next)
-		{
-			ptr = ptr->next;
-			i++;
-			flag == 1 ? printf("[%d] : %s\n", i, ptr->content) :
-			printf("%s\n", ptr->content);
-		}
-	}
-}
 
 t_list	*ft_lstcrea(int i, ...)
 {
@@ -93,6 +75,24 @@ void	ft_print_array(char **array, char *text, int flag)
 	}
 }
 
+void	ft_list_print(t_list *ptr, int flag)
+{
+	int	i = 0;
+
+	if (ptr)
+	{
+		flag == 1 ? printf("[%d] : %s\n", i, ptr->content) :
+		printf("%s\n", ptr->content);
+		while(ptr->next)
+		{
+			ptr = ptr->next;
+			i++;
+			flag == 1 ? printf("[%d] : %s\n", i, ptr->content) :
+			printf("%s\n", ptr->content);
+		}
+	}
+}
+
 void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)())
 {
 	t_list	*remove;
@@ -117,18 +117,26 @@ void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)())
 	}
 }
 
-int	ft_tabsize(char **tab)
+int	ft_arraysize(char **array)
 {
 	int	i;
 
 	i = -1;
-	if (tab)
+	if (array)
 		i = 0;
-	while (tab[i])
+	while (array[i])
 	{
 		i++;
 	}
 	return (i);
+}
+
+void ft_freearray(char **array, int i)
+{
+	while (i--)
+	{
+		free(array[i]);
+	}
 }
 
 int		ft_strncmp_auto(char *s1, char *s2)

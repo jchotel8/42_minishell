@@ -34,18 +34,17 @@ void	handle_cmd(t_shell *sh)
 
 void	handle_line(t_shell *sh)
 {
-	int nb_task = 0;
+	int nb_pipe = 0;
 
-	if (sh->tasks)
+	if (sh->pipes)
 	{
-		if ((nb_task = ft_tabsize(sh->tasks)) > 1)
-		{//est-ce que handle_pipe gère le cas de nb_task = 1 ?
-			handle_pipe(sh, nb_task);	//il faut utiliser handle_cmd(sh) à la place de simplement execve
+		if ((nb_pipe = ft_arraysize(sh->pipes)) > 0)
+		{//si > 0, sauf le exit et le mélange bin : a cause des forks... il ne faut pas fork si exit?
+			handle_pipe(sh, nb_pipe);
 		}
 		else
-		{
-			parsing_task(sh);
-			debug_shell(sh);
+		{//je veux absoluement supprimer ce else pour que handle_pipe gere tout correctement
+			parsing_pipe(sh);
 			handle_cmd(sh);
 		}
 	}
@@ -57,14 +56,16 @@ int		main(int ac, char **av, char **env)
 
 	if (ac > 0)
 	{
-		av[1] = 0;
+		av[1] = "bonjour\0";
+		//int fd;
+		//fd = open(av[1], O_RDWR | O_TRUNC | O_CREAT, 00777);
 		sh = init_shell();
 		ft_printf(PROMPT, "MINISHELL", get_wd(sh));
 		sh->env = ft_array_to_lst(env);
 		while (get_next_line(0, &sh->read) > 0)
 		{
 			parsing_read(sh);
-			start_shell_line(sh);
+			clean_shell(sh);
 			while (sh->lines[sh->i_line])
 			{
 				parsing_line(sh);
