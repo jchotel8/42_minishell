@@ -34,19 +34,20 @@ void	close_pipes(int nb_pipes, int *pipes)
 
 void	set_pipe(int j, int nb_pipes, int *pipes, t_shell *sh)
 {
+	sh->i_pipe = j / 2;
+	parsing_pipe(sh);
 	if (j > 0)
 		dup2(pipes[j - 2], 0);
 	if (j <= (nb_pipes + 2) / 2)
 		dup2(pipes[j + 1], 1);
 	close_pipes(nb_pipes, pipes);
-	sh->arg = sh->tab_arg[j / 2] + 1;
-	sh->cmd = sh->tab_arg[j / 2];
 	handle_cmd(sh);
 }
 
 void	set_pipe_rec(int j, int nb_pipes, int *pipes, t_shell *sh)
 {
 	j += 2;
+	sh->i_pipe = j;
 	if (fork() == 0)
 		set_pipe(j, nb_pipes, pipes, sh);
 	else if (j < nb_pipes)
@@ -70,16 +71,7 @@ void	handle_pipe(t_shell *sh, int nb_task)
 	static int	j = -2;
 	int			nb_pipes = nb_task * 2 - 2;
 	int			pipes[nb_pipes];
-	char		**args[nb_task];
 
-	while (sh->pipes && sh->pipes[sh->i_pipe])
-	{
-		parsing_pipe(sh);
-		//debug_shell(sh);
-		args[sh->i_pipe] = sh->cmd;
-		next_shell_pipe(sh);
-	}
-	sh->tab_arg = args;
 	init_pipes(nb_pipes, pipes);
 	set_pipe_rec(j, nb_pipes, pipes, sh);
 	close_pipes(nb_pipes, pipes);

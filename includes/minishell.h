@@ -25,9 +25,9 @@ typedef struct	s_shell
 	char		*read;
 	char		**lines;
 	char		**pipes;
+	char		**redir;
 	char		**cmd;
 	char		**arg;
-	char		***tab_arg;
 	char		wd[PATH_MAX];
 	int			i_line;
 	int			i_pipe;
@@ -64,8 +64,8 @@ void	free_shell(t_shell *sh);
 
 //PARSING
 void	parsing_read(t_shell *sh);
-void	parsing_pipe(t_shell *sh);
 void	parsing_line(t_shell *sh);
+void	parsing_pipe(t_shell *sh);
 
 //HANDLE
 char	*get_wd(t_shell *sh);

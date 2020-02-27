@@ -16,6 +16,7 @@ void	clean_shell(t_shell *sh)
 {
 	sh->cmd = 0;
 	sh->arg = 0;
+	sh->redir = 0;
 	if (!(getcwd(sh->wd, sizeof(sh->wd))))
 		printf("failed to init WD\n");
 	sh->i_pipe = 0;
@@ -39,6 +40,7 @@ void	next_shell_line(t_shell *sh)
 {
 	sh->cmd = 0;
 	sh->arg = 0;
+	sh->redir = 0;
 	if (!(getcwd(sh->wd, sizeof(sh->wd))))
 		printf("failed to init WD\n");
 	sh->i_line++;
@@ -49,6 +51,7 @@ void	next_shell_pipe(t_shell *sh)
 {
 	sh->cmd = 0;
 	sh->arg = 0;
+	sh->redir = 0;
 	if (!(getcwd(sh->wd, sizeof(sh->wd))))
 		printf("failed to init WD\n");
 	sh->i_pipe++;

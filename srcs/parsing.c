@@ -49,11 +49,18 @@ void	parsing_pipe(t_shell *sh)
 	int	i;
 
 	i = 0;
-	sh->cmd = ft_splitignore(sh->pipes[sh->i_pipe], ' ');
+	sh->redir = ft_splitignore(sh->pipes[sh->i_pipe], '>');
+	sh->cmd = ft_splitignore(sh->redir[0], ' ');
 	sh->arg = (sh->cmd[1] ? &sh->cmd[1] : NULL);
 	while (sh->arg && sh->arg[i])
 	{
 		sh->arg[i] = ft_strtrimignore(sh->arg[i]);
 		i++;
+	}
+	if (sh->redir[1])
+	{
+		int fd;
+		fd = open(sh->redir[1], O_CREAT | O_TRUNC, 0644);
+		
 	}
 }
