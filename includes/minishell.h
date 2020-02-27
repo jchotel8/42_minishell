@@ -23,6 +23,7 @@
 typedef struct	s_shell
 {
 	char		*read;
+	int			fd_redir;
 	char		**lines;
 	char		**tasks;
 	char		**cmd;

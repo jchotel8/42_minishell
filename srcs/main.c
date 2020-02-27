@@ -44,9 +44,18 @@ void	handle_line(t_shell *sh)
 		}
 		else
 		{
-			parsing_task(sh);
-			debug_shell(sh);
-			handle_cmd(sh);
+			if (!fork())
+			{
+				/*if(sh->fd_redir)
+					dup2(sh->fd_redir, 0);*/
+				parsing_task(sh);
+				debug_shell(sh);
+				if(sh->fd_redir)
+					dup2(sh->fd_redir, 1);
+				handle_cmd(sh);
+				exit(0);
+			}
+			wait(0);
 		}
 	}
 }

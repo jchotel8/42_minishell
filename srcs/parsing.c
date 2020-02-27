@@ -41,13 +41,27 @@ void	parsing_line(t_shell *sh)
 void	parsing_task(t_shell *sh)
 {
 	int	i;
+	int	found_chev = 0;
 
 	i = 0;
+	sh->fd_redir = 0;
 	sh->cmd = ft_splitignore(sh->tasks[sh->i_task], ' ');
-	sh->arg = (sh->cmd[1] ? &sh->cmd[1] : NULL);
-	while (sh->arg && sh->arg[i])
+	while (sh->cmd[i])
 	{
-		sh->arg[i] = ft_strtrimignore(sh->arg[i]);
+		sh->cmd[i] = ft_strtrimignore(sh->cmd[i]);
 		i++;
 	}
+	i = 0;
+	while (sh->cmd[i])
+	{
+		if (sh->cmd[i][0] == '>')
+		{
+			found_chev = 1 + (sh->cmd[i][1] == '\0');
+			sh->fd_redir = open(sh->cmd[i + found_chev - 1],
+				O_WRONLY | O_CREAT | O_TRUNC, 0777);
+		}
+		sh->cmd[i] = sh->cmd[i + found_chev];
+		i++;
+	}
+	sh->arg = (sh->cmd[1] ? &sh->cmd[1] : NULL);
 }

@@ -39,8 +39,8 @@ void	set_pipe(int j, int nb_pipes, int *pipes, t_shell *sh)
 	if (j <= (nb_pipes + 2) / 2)
 		dup2(pipes[j + 1], 1);
 	close_pipes(nb_pipes, pipes);
-	//handle_cmd(sh);
-	execvp(*sh->tab_arg[j / 2], sh->tab_arg[j / 2]);
+	handle_cmd(sh);
+	//execvp(*sh->tab_arg[j / 2], sh->tab_arg[j / 2]);
 }
 
 void	set_pipe_rec(int j, int nb_pipes, int *pipes, t_shell *sh)

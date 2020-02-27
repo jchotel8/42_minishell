@@ -19,6 +19,8 @@ char		*ft_strtrimignore(char *s)
 	int		inside;
 	char	current;
 
+	if (!s)
+		return (NULL);
 	current = 0;
 	i = 0;
 	j = 0;
