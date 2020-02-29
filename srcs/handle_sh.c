@@ -56,7 +56,7 @@ void	next_shell_task(t_shell *sh)
 
 void	debug_shell(t_shell *sh)
 {
-	printf("\x1b[38;2;70;70;70m..............\n");
+	printf("..............\n");
 	printf("READ\t: %s.\n", sh->read);
 	ft_print_array(sh->lines, "LINES\t:", 1);
 	ft_print_array(sh->tasks, "TASKS\t:", 1);
@@ -65,5 +65,4 @@ void	debug_shell(t_shell *sh)
 	printf("WD\t: %s.\n", sh->wd);
 	printf("LINE\t: %d.\n", sh->i_line);
 	printf("TASK\t: %d.\n", sh->i_task);
-	printf("\033[0;0m\x1b[38;2;255;235;202m");
 }
