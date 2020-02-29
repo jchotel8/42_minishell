@@ -34,12 +34,22 @@ void	close_pipes(int nb_pipes, int *pipes)
 
 void	set_pipe(int j, int nb_pipes, int *pipes, t_shell *sh)
 {
-	sh->i_pipe = j / 2;
-	parsing_pipe(sh);
 	if (j > 0)
 		dup2(pipes[j - 2], 0);
 	if (j <= (nb_pipes + 2) / 2)
 		dup2(pipes[j + 1], 1);
+	sh->i_pipe = j / 2;
+	parsing_pipe(sh);
+	int	out;
+	if (sh->redir[1])
+	{
+     	if (sh->type == 0)
+     		out = open(sh->redir[1], O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
+     	else
+     		out = open(sh->redir[1], O_WRONLY | O_APPEND | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
+     	pipes[j + 1] = out;
+     	dup2(pipes[j + 1], 1);
+   	}
 	close_pipes(nb_pipes, pipes);
 	handle_cmd(sh);
 }
@@ -64,19 +74,19 @@ void	set_pipe_iter(int j, int nb_pipes, int *pipes, t_shell *sh)
 	}
 }
 
-void	handle_pipe(t_shell *sh, int nb_task)
+void	handle_pipe(t_shell *sh)
 {
 	int			status;
 	int			i;
 	static int	j = -2;
-	int			nb_pipes = nb_task * 2 - 2;
+	int			nb_pipes = ft_arraysize(sh->pipes) * 2 - 2;
 	int			pipes[nb_pipes];
 
 	init_pipes(nb_pipes, pipes);
 	set_pipe_rec(j, nb_pipes, pipes, sh);
 	close_pipes(nb_pipes, pipes);
 	i = 0;
-	while (i < nb_task)
+	while (i < ft_arraysize(sh->pipes))
 	{
 		wait(&status);
 		i++;

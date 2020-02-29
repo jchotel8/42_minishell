@@ -3,18 +3,15 @@
 ************************************************************jchotel & fde-fram
 
 LAST STEPS DONE :
-- utiliser handle_cmd dans les pipes attentions
-	- /!\ l’utilisation des nouveaux buildins dans des pipes ne fait pas un dernier exit/wait
-	- à l’inverse l’utilisation des binaires standards sans pipes ne fork pas…
+- gestion des >> et >, reste à faire < et les cas particuliers (si le > n’est pas placé à la fin, sil y en a plusieurs à la suite (seul le dernier compte) etc)
 
 NEXT STEPS ON SCHEDULE :
-- commencer les >> <
 - traiter les cas particuliers pour chacune des commandes 
 	- /!\ echo dans ohmyzsh a un comportement diff (@llaurent, @fkorki-, @mbrignol)
-
-
-TIPS AVANT PUSH --------------------------------------------------------------
-	- Cat dev random, ctr c (demander à @mcraipea/maxime craipeau ou Jérome durand)
+- régler le pbm de buildins :
+	- /!\ l’utilisation des nouveaux buildins dans des pipes ne fait pas un dernier exit/wait
+	- à l’inverse l’utilisation des binaires standards sans pipes ne fork pas…
+	
 
 GENERAL INFOS ----------------------------------------------------------------
 . SUBJECT ....................................................................
@@ -58,11 +55,16 @@ GENERAL INFOS ----------------------------------------------------------------
 . PIPES ......................................................................
 	- https://stackoverflow.com/questions/43030966/pipe-chaining-in-my-own-shell-implementation
 
+. REDIR ......................................................................
+	- http://www.cs.loyola.edu/~jglenn/702/S2005/Examples/dup2.html
+
 CORRECTIONS TEST -------------------------------------------------------------
 	- les " doivent toujours être par deux
 	- les ' peuvent être seules si dans "
 	- le parsing ; ne doit pas se faire si compris entre "
-	- vérifier que dans les pipes, pas d’utilisation des buildins pour echo…
-	- cat /dev/random | cat | cat | head -n 5 | cut -b 1-10 | cat -e
-	- ctrl-c doit être géré pour ne pas faire d’interuption avec Signal
-	- Cat dev random, ctr c (demander à @mcraipea/maxime craipeau ou Jérome durand)
+	- vérifier que dans les pipes, pas d’utilisation des bin par défaut
+	- cat /dev/random | cat | cat | head -n 5 | cut -b 1-10 | cat -e > out1
+	- ctrl-c doit être géré pour ne pas faire d’interruption avec Signal
+	- cat /dev/random, ctr c (demander à @mcraipea/maxime craipeau ou Jérome durand)
+	/!\ pour tester dans bash (et non zsh), entrer la commande « bash »
+

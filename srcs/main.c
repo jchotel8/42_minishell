@@ -40,7 +40,7 @@ void	handle_line(t_shell *sh)
 	{
 		if ((nb_pipe = ft_arraysize(sh->pipes)) > 0)
 		{//si > 0, sauf le exit et le mélange bin : a cause des forks... il ne faut pas fork si exit?
-			handle_pipe(sh, nb_pipe);
+			handle_pipe(sh);
 		}
 		else
 		{//je veux absoluement supprimer ce else pour que handle_pipe gere tout correctement

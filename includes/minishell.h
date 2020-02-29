@@ -31,6 +31,7 @@ typedef struct	s_shell
 	char		wd[PATH_MAX];
 	int			i_line;
 	int			i_pipe;
+	int			type;
 	t_list		*env;
 
 }				t_shell;
@@ -39,7 +40,7 @@ typedef struct	s_shell
 int		switch_inside(char *current, char new, int *inside);
 int		ft_strcountignore(char *s);
 char	*ft_strtrimignore(char *s);
-char	**ft_splitignore(char const *s, char c);
+char	**ft_splitignore(char const *s, char c, int i);
 
 //ADD TO THE LIBFT
 void	ft_list_print(t_list *ptr, int flag);
@@ -77,6 +78,6 @@ void	handle_env(t_shell *sh);
 void	handle_bin(t_shell *sh);
 void	handle_unset(t_shell *sh);
 void	handle_export(t_shell *sh);
-void	handle_pipe(t_shell *sh, int nb_task);
+void	handle_pipe(t_shell *sh);
 
 #endif
