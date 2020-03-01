@@ -49,7 +49,7 @@ void	handle_line(t_shell *sh)
 				handle_cmd(sh);
 				//close(pipefd[0]);
 				//close(pipefd[1]); utile ?
-						exit(1);
+				exit(1);
 			}
 			dup2(pipefd[0], 0);
 			close(pipefd[1]);
@@ -68,11 +68,22 @@ void	handle_line(t_shell *sh)
 	}
 }
 
+int		check_exit(t_shell *sh)
+{
+	while (sh->tasks[sh->i_task])
+	{
+		parsing_task(sh);
+		if (!ft_strcmp(sh->cmd[0], "exit"))
+			return (1);
+		next_shell_task(sh);
+	}
+	sh->i_task = 0;
+	return(0);
+}
+
 int		main(int ac, char **av, char **env)
 {
 	t_shell	*sh;
-		int son;
-		int son2;
 	if (ac > 0)
 	{
 		av[1] = 0;
@@ -86,19 +97,16 @@ int		main(int ac, char **av, char **env)
 			while (sh->lines[sh->i_line])
 			{
 				parsing_line(sh);
+				if (check_exit(sh))
+					return (0);
 				if (!(son = fork()))
 				{
 					handle_line(sh);
 					exit(1);
 				}
-				son2 = son;
-				//printf("%d\n", son);
-
-				kill(wait(0),SIGKILL);
+				wait(0);
 				sh->i_task = 0;
 				next_shell_line(sh);
-				//printf("%d\n", son2);
-
 			}
 			ft_printf(PROMPT, "MINISHELL", get_wd(sh));
 			kill(-son2,SIGKILL);
