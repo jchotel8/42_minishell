@@ -60,6 +60,20 @@ void	handle_line(t_shell *sh)
 	}
 }
 
+int		check_exit(t_shell *sh)
+{
+	while (sh->tasks[sh->i_task])
+	{
+		parsing_task(sh);
+		if (!ft_strcmp(sh->cmd[0], "exit"))
+			return (1);
+		next_shell_task(sh);
+	}
+	sh->i_task = 0;
+	return(0);
+}
+
+
 int		main(int ac, char **av, char **env)
 {
 	t_shell	*sh;
@@ -77,6 +91,8 @@ int		main(int ac, char **av, char **env)
 			while (sh->lines[sh->i_line])
 			{
 				parsing_line(sh);
+				if (check_exit(sh))
+					return (0);
 				handle_line(sh);
 				next_shell_line(sh);
 			}
