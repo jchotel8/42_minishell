@@ -45,6 +45,7 @@ char	**ft_splitignore(char const *s, char c, int i);
 //ADD TO THE LIBFT
 void	ft_list_print(t_list *ptr, int flag);
 t_list	*ft_lstcrea(int i, ...);
+t_list	*ft_add_array_to_list(t_list *first, char **array);
 t_list	*ft_array_to_lst(char **array);
 char	**ft_lst_to_array(t_list *lst);
 void	ft_print_array(char **array, char *text, int flag);
@@ -53,7 +54,6 @@ int		ft_strncmp_auto(char *s1, char *s2);
 void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)());
 int		ft_arraysize(char **array);
 void	ft_freearray(char **array, int i);
-int		ft_strncmp_auto(char *s1, char *s2);
 
 //HANDLE_SH
 t_shell	*init_shell();

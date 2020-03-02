@@ -14,8 +14,8 @@
 
 void	handle_cmd(t_shell *sh)
 {
-	if (!ft_strcmp(sh->cmd[0], "echo"))
-		return (handle_echo(sh));
+	//if (!ft_strcmp(sh->cmd[0], "echo"))
+	//	return (handle_echo(sh));
 	if (!ft_strcmp(sh->cmd[0], "cd"))
 		return (handle_cd(sh));
 	if (!ft_strcmp(sh->cmd[0], "pwd"))
@@ -69,6 +69,7 @@ int		main(int ac, char **av, char **env)
 			while (sh->lines[sh->i_line])
 			{
 				parsing_line(sh);
+				//debug_shell(sh);
 				handle_line(sh);
 				next_shell_line(sh);
 			}

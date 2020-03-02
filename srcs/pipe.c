@@ -34,6 +34,9 @@ void	close_pipes(int nb_pipes, int *pipes)
 
 void	set_pipe(int j, int nb_pipes, int *pipes, t_shell *sh)
 {
+	int i;
+
+	i = 0;
 	if (j > 0)
 		dup2(pipes[j - 2], 0);
 	if (j <= (nb_pipes + 2) / 2)
@@ -41,14 +44,15 @@ void	set_pipe(int j, int nb_pipes, int *pipes, t_shell *sh)
 	sh->i_pipe = j / 2;
 	parsing_pipe(sh);
 	int	out;
-	if (sh->redir[1])
+	while (sh->redir[i])
 	{
      	if (sh->type == 0)
-     		out = open(sh->redir[1], O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
+     		out = open(sh->redir[i], O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
      	else
-     		out = open(sh->redir[1], O_WRONLY | O_APPEND | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
+     		out = open(sh->redir[i], O_WRONLY | O_APPEND | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
      	pipes[j + 1] = out;
      	dup2(pipes[j + 1], 1);
+     	i++;
    	}
 	close_pipes(nb_pipes, pipes);
 	handle_cmd(sh);

@@ -41,6 +41,19 @@ t_list	*ft_array_to_lst(char **array)
 	return (first);
 }
 
+t_list	*ft_add_array_to_list(t_list *first, char **array)
+{
+	int		i;
+
+	i = 0;
+	while (array && array[i])
+	{
+		ft_lstadd_back(&first, ft_lstnew(array[i]));
+		i++;
+	}
+	return (first);
+}
+
 char	**ft_lst_to_array(t_list *lst)
 {
 	char	**new;

@@ -46,24 +46,55 @@ void	parsing_line(t_shell *sh)
 
 void	parsing_pipe(t_shell *sh)
 {
-	int	i;
+	int		i;
+	char	**cmd_arg;
+	t_list	*lst;
 
 	i = 0;
+	lst = NULL;
 	sh->redir = ft_splitignore(sh->pipes[sh->i_pipe], '>', 0);
-	sh->cmd = ft_splitignore(sh->redir[0], ' ', 1);
+	while (sh->redir[i]) //si > attention il faut aussi verifier dans le cas ou > est placé au début donc !sh->redir[1]
+	{
+		if (ft_strcmp(">", sh->redir[i]) == 0)
+	 	{//cas ou sh->redir = ">"
+	 		sh->type = 1;
+	 		sh->redir[i] = "";
+	 		//printf("%d, %s, passage double >\n", i, sh->redir[i]);
+	 	}
+	 	else
+	 	{
+			cmd_arg = ft_splitignore(sh->redir[i], ' ', 1);
+			if (ft_strcmp(">", cmd_arg[0]) == 0)
+			{//type > out
+				sh->redir[i] = cmd_arg[1];
+				cmd_arg++;
+				cmd_arg++;	//skip > & cmd pour les args
+				//printf("%d, %s, passage > cmd\n", i, sh->redir[i]);
+			}
+			else if (cmd_arg[0][0] == '>')
+			{//type >out
+				sh->redir[i] = cmd_arg[0];
+				sh->redir[i] = ft_strtrim(sh->redir[i], ">");
+				cmd_arg++; //skip >cmd pour les args
+				//printf("%d, %s, passage >cmd\n", i, sh->redir[i]);
+			}
+			else
+			{
+				sh->redir[i] = "";
+				//printf("%d, %s, ...\n", i, sh->redir[i]);
+			}
+			lst = ft_add_array_to_list(lst, cmd_arg);
+		}
+		i++;
+	}
+	//ft_print_array(sh->redir, "REDIR\t:", 1);
+	sh->cmd = ft_lst_to_array(lst);
 	sh->arg = (sh->cmd[1] ? &sh->cmd[1] : NULL);
+	i = 0;
 	while (sh->arg && sh->arg[i])
 	{
 	 	sh->arg[i] = ft_strtrimignore(sh->arg[i]); //wesh pourquoi on utilise se ft_strtrim trop moche!?
 	 	i++;
 	}
-	if (sh->redir[1]) //si > attention il faut aussi verifier dans le cas ou > est placé au début donc !sh->redir[1]
-	{
-	 	if (ft_strcmp(">", sh->redir[1]) == 0)
-	 	{
-	 		sh->type = 1;
-	 		sh->redir[1] = sh->redir[2];
-	 	}
-	 	sh->redir[1] = ft_strtrim(sh->redir[1], "> ");
-	}
+	i = 0;
 }
