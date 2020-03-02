@@ -16,7 +16,6 @@ char		*ft_strtrimignore(char *s)
 {
 	int		i;
 	int		j;
-	int		inside;
 	char	current;
 
 	if (!s)
@@ -26,11 +25,14 @@ char		*ft_strtrimignore(char *s)
 	j = 0;
 	while (s[i])
 	{
-		if (switch_inside(&current, s[i], &inside))
+		if (switch_inside(&current, s[i]))
 			i++;
-		s[j] = s[i];
-		i++;
-		j++;
+		else
+		{
+			s[j] = s[i];
+			i++;
+			j++;
+		}
 	}
 	s[j] = '\0';
 	return (s);

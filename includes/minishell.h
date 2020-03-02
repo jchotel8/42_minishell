@@ -37,9 +37,10 @@ typedef struct	s_shell
 }				t_shell;
 
 //UTILITIES
-int		switch_inside(char *current, char new, int *inside);
+int		switch_inside(char *current, char new);
 int		ft_strcountignore(char *s);
 char	*ft_strtrimignore(char *s);
+char	*ft_strsearchignore(t_shell *sh, char *s);
 char	**ft_splitignore(char const *s, char c);
 void	ft_list_print(t_list *ptr, int flag);
 t_list	*ft_lstcrea(int i, ...);

@@ -48,7 +48,8 @@ void	parsing_task(t_shell *sh)
 	sh->cmd = ft_splitignore(sh->tasks[sh->i_task], ' ');
 	while (sh->cmd[i])
 	{
-		sh->cmd[i] = ft_strtrimignore(sh->cmd[i]);
+		//sh->cmd[i] = ft_strsearchignore(sh, sh->cmd[i]);
+		//sh->cmd[i] = ft_strtrimignore(sh->cmd[i]);
 		i++;
 	}
 	i = 0;

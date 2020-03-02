@@ -23,6 +23,7 @@ SRCSC		= libs/gnl/get_next_line.c\
 			  srcs/handle_unset.c\
 			  srcs/parsing.c\
 			  srcs/pipe.c\
+				srcs/ft_strsearchignore.c\
 			  srcs/ft_splitignore.c\
 				srcs/ft_strcountignore.c\
 				srcs/ft_strtrimignore.c\
