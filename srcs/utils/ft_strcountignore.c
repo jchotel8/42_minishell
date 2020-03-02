@@ -10,13 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int	ft_strcountignore(char *s)
 {
 	int		i;
 	int		count;
-	int		inside;
 	char	current;
 
 	current = 0;
@@ -24,7 +23,7 @@ int	ft_strcountignore(char *s)
 	i = 0;
 	while (s[i])
 	{
-		if (switch_inside(&current, s[i], &inside))
+		if (switch_inside(&current, s[i]))
 			count++;
 		i++;
 	}

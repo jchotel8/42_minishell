@@ -10,12 +10,26 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
+
+char *prolong(char *s2, char *s)
+{
+	char *s3;
+	int	lens2;
+	int	lens;
+
+	lens2 = ft_strlen(s2);
+	lens = ft_strlen(s);
+	s3 = calloc(lens2 + lens, sizeof(char));
+	memcpy(s3, s2, lens2);
+	free(s2);
+
+	return (s3);
+}
 
 int		ft_lookup(t_shell *sh, char *s, char **s2, int len)
 {
 	t_list	*tmp;
-	int		pad;
 
 	tmp = sh->env;
 	while (tmp)
@@ -23,10 +37,7 @@ int		ft_lookup(t_shell *sh, char *s, char **s2, int len)
 		if (!ft_strncmp(tmp->content, s, len))
 		{
 				*s2 = ft_strjoin(*s2, ((char*)tmp->content) + len + 1);
-				pad = ft_strlen(*s2);
-				*s2 = ft_strjoin(*s2, s);
-				(*s2)[pad] = '\0';
-				// ft_printf("%d\n",ft_strlen(((char*)tmp->content) + len + 1));
+				*s2 = prolong(*s2, s);
 				return (ft_strlen(((char*)tmp->content) + len + 1));
 		}
 		tmp = tmp->next;

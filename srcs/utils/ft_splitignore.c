@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int				switch_inside(char *current, char new)
 {
@@ -27,7 +27,7 @@ int				switch_inside(char *current, char new)
 	return (0);
 }
 
-static size_t	ft_countignore(char *s, char c)
+static size_t	ft_countignore(char *s, char c, int i)
 {
 	size_t	count;
 	char	*ptr;
@@ -35,7 +35,7 @@ static size_t	ft_countignore(char *s, char c)
 
 	ptr = (char*)s;
 	current = 0;
-	while (*s && *s == c)
+	while (i == 1 && *s && *s == c)
 		s++;
 	if (*s)
 		count = 1;
@@ -44,36 +44,38 @@ static size_t	ft_countignore(char *s, char c)
 	while (*s)
 	{
 		switch_inside(&current, *s);
-		if (!current && *s == c && *(s + 1) && *(s + 1) != c)
+		if (!current && *s == c && *(s + 1) && ((*(s + 1) != c && i == 1) || (i == 0)))
 			count++;
 		s++;
 	}
 	return (count);
 }
 
-char			**prep_ignore(char *s, size_t *nb_words, char c)
+char			**prep_ignore(char *s, char c, int i)
 {
 	char			**splitted;
+	int				nb_words;
 
 	if (!s)
 		return (0);
-	*nb_words = ft_countignore((char *)s, c);
-	if (!(splitted = (char **)malloc(sizeof(char *) * (*nb_words + 1))))
+	nb_words = ft_countignore((char *)s, c, i);
+	if (!(splitted = (char **)malloc(sizeof(char *) * (nb_words + 1))))
 		return (0);
 	return (splitted);
 }
 
-char			**ft_splitignore(char const *s, char c)
+char			**ft_splitignore(char const *s, char c, int i)
 {
-	size_t	nbwords;
-	char	*ptr;
+	char	*ptr;			//posi of beginning of word
 	char	**splitted;
-	char	current;
+	char	**start;
+	char	current;		//is type " or '
 
 	current = 0;
-	if (!(splitted = prep_ignore((char*)s, &nbwords, c)))
+	if (!(splitted = prep_ignore((char*)s, c, i)))
 		return (0);
 	ptr = (char*)s;
+	start = splitted;
 	while (*s)
 	{
 		switch_inside(&current, *s);
@@ -81,12 +83,12 @@ char			**ft_splitignore(char const *s, char c)
 		{
 			if (ptr != s)
 				*(splitted++) = ft_substr(ptr, 0, s - ptr);
-			ptr = (char *)s + 1;
+			ptr = (char *)s + i;
 		}
 		s++;
 	}
 	if (ptr != s)
 		*(splitted++) = ft_substr(ptr, 0, s - ptr);
 	*splitted = 0;
-	return (splitted - nbwords);
+	return (start);
 }

@@ -17,7 +17,7 @@ void	ft_find_cmd(t_shell *sh, char **paths)
 	int			i;
 	char		*cmd;
 	struct stat	buf;
-	pid_t		child;
+	//pid_t		child;
 
 	i = 0;
 	while (paths[i])
@@ -33,9 +33,9 @@ void	ft_find_cmd(t_shell *sh, char **paths)
 				sh->cmd[0]);
 	else
 	{
-		if (!(child = fork()))
+		//if (!(child = fork()))
 			execve(cmd, sh->cmd, ft_lst_to_array(sh->env));
-		wait(&child);
+		//wait(&child);
 	}
 }
 
@@ -51,6 +51,7 @@ void	handle_bin(t_shell *sh)
 		{
 			possible_paths = ft_split(tmp->content + 5, ':');
 			ft_find_cmd(sh, possible_paths);
+			//free_array(possible_paths);
 		}
 		tmp = tmp->next;
 	}
