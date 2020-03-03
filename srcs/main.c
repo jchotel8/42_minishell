@@ -50,31 +50,46 @@ void	handle_line(t_shell *sh)
 	}
 }
 
-int		main(int ac, char **av, char **env)
+void sigint_handler(int sig)
+{
+	(void)sig;
+	 printf("killing process %d\n",getpid());
+	 //main_loop();
+	 //exit(0);
+}
+
+void main_loop(t_shell *sh)
 {
 	t_shell	*sh;
 
+	sh = init_shell();
+	sh->env = ft_array_to_lst(env);
+	ft_printf(PROMPT, "MINISHELL", get_wd(sh));
+	while (get_next_line(0, &sh->read) > 0)
+	{
+		parsing_read(sh);
+		clean_shell(sh);
+		while (sh->lines[sh->i_line])
+		{
+			parsing_line(sh);
+			//debug_shell(sh);
+			handle_line(sh);
+			next_shell_line(sh);
+		}
+		ft_printf(PROMPT, "MINISHELL", get_wd(sh));
+	}
+}
+
+int		main(int ac, char **av, char **env)
+{
 	if (ac > 0)
 	{
 		av[1] = "bonjour\0";
 		//int fd;
 		//fd = open(av[1], O_RDWR | O_TRUNC | O_CREAT, 00777);
-		sh = init_shell();
-		ft_printf(PROMPT, "MINISHELL", get_wd(sh));
-		sh->env = ft_array_to_lst(env);
-		while (get_next_line(0, &sh->read) > 0)
-		{
-			parsing_read(sh);
-			clean_shell(sh);
-			while (sh->lines[sh->i_line])
-			{
-				parsing_line(sh);
-				//debug_shell(sh);
-				handle_line(sh);
-				next_shell_line(sh);
-			}
-			ft_printf(PROMPT, "MINISHELL", get_wd(sh));
-		}
+
+		signal(SIGINT, sigint_handler);
+		main_loop();
 		printf("last read : \"%s\"\n", sh->read);
 		free(sh->read);
 	}

@@ -81,4 +81,6 @@ void	handle_unset(t_shell *sh);
 void	handle_export(t_shell *sh);
 void	handle_pipe(t_shell *sh);
 
+void main_loop(void);
+
 #endif
