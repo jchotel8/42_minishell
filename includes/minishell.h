@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 16:05:57 by jchotel           #+#    #+#             */
-/*   Updated: 2020/02/23 20:17:12 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/03/03 12:27:12 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,11 @@ typedef struct	s_shell
 }				t_shell;
 
 //UTILITIES
-int		switch_inside(char *current, char new, int *inside);
-int		ft_strcountignore(char *s);
+int		switch_inside(char *current, char new);
+int		ft_countquoteignore(char *s);
 char	*ft_strtrimignore(char *s);
 char	**ft_splitignore(char const *s, char c, int i);
+char    *ft_replaceenvignore(t_shell *sh, char *s);
 
 //ADD TO THE LIBFT
 void	ft_list_print(t_list *ptr, int flag);

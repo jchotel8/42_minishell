@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 02:31:27 by jchotel           #+#    #+#             */
-/*   Updated: 2020/02/23 20:03:09 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/03/03 12:27:12 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	prep_read(t_shell *sh)
 	char	*next;
 	char	*tmp;
 
-	while (ft_strcountignore(sh->read) % 2)
+	while (ft_countquoteignore(sh->read) % 2)
 	{
 		ft_printf("dquote>");
 		get_next_line(0, &next);
@@ -55,11 +55,11 @@ void	parsing_pipe(t_shell *sh)
 	sh->redir = ft_splitignore(sh->pipes[sh->i_pipe], '>', 0);
 	while (sh->redir[i]) //si > attention il faut aussi verifier dans le cas ou > est placé au début donc !sh->redir[1]
 	{
+        sh->redir[i] = ft_replaceenvignore(sh, sh->redir[i]); 
 		if (ft_strcmp(">", sh->redir[i]) == 0)
 	 	{//cas ou sh->redir = ">"
 	 		sh->type = 1;
 	 		sh->redir[i] = "";
-	 		//printf("%d, %s, passage double >\n", i, sh->redir[i]);
 	 	}
 	 	else
 	 	{
@@ -69,25 +69,19 @@ void	parsing_pipe(t_shell *sh)
 				sh->redir[i] = cmd_arg[1];
 				cmd_arg++;
 				cmd_arg++;	//skip > & cmd pour les args
-				//printf("%d, %s, passage > cmd\n", i, sh->redir[i]);
 			}
 			else if (cmd_arg[0][0] == '>')
 			{//type >out
 				sh->redir[i] = cmd_arg[0];
 				sh->redir[i] = ft_strtrim(sh->redir[i], ">");
 				cmd_arg++; //skip >cmd pour les args
-				//printf("%d, %s, passage >cmd\n", i, sh->redir[i]);
 			}
 			else
-			{
 				sh->redir[i] = "";
-				//printf("%d, %s, ...\n", i, sh->redir[i]);
-			}
 			lst = ft_add_array_to_list(lst, cmd_arg);
 		}
 		i++;
 	}
-	//ft_print_array(sh->redir, "REDIR\t:", 1);
 	sh->cmd = ft_lst_to_array(lst);
 	sh->arg = (sh->cmd[1] ? &sh->cmd[1] : NULL);
 	i = 0;

@@ -12,17 +12,15 @@
 
 #include "../../includes/minishell.h"
 
-int				switch_inside(char *current, char new, int *inside)
+int				switch_inside(char *current, char new)
 {
 	if ((new == '\'' || new == '"') && !*current)
 	{
-		*inside = 1;
 		*current = new;
 		return (1);
 	}
 	else if ((new == '\'' || new == '"') && *current == new)
 	{
-		*inside = 0;
 		*current = 0;
 		return (1);
 	}
@@ -33,12 +31,10 @@ static size_t	ft_countignore(char *s, char c, int i)
 {
 	size_t	count;
 	char	*ptr;
-	int		inside;
 	char	current;
 
 	ptr = (char*)s;
 	current = 0;
-	inside = 0;
 	while (i == 1 && *s && *s == c)
 		s++;
 	if (*s)
@@ -47,20 +43,19 @@ static size_t	ft_countignore(char *s, char c, int i)
 		count = 0;
 	while (*s)
 	{
-		switch_inside(&current, *s, &inside);
-		if (!inside && *s == c && *(s + 1) && ((*(s + 1) != c && i == 1) || (i == 0)))
+		switch_inside(&current, *s);
+		if (!current && *s == c && *(s + 1) && ((*(s + 1) != c && i == 1) || (i == 0)))
 			count++;
 		s++;
 	}
 	return (count);
 }
 
-char			**prep_ignore(int *inside, char *s, char c, int i)
+char			**prep_ignore(char *s, char c, int i)
 {
 	char			**splitted;
 	int				nb_words;
 
-	*inside = 0;
 	if (!s)
 		return (0);
 	nb_words = ft_countignore((char *)s, c, i);
@@ -74,18 +69,17 @@ char			**ft_splitignore(char const *s, char c, int i)
 	char	*ptr;			//posi of beginning of word
 	char	**splitted;
 	char	**start;
-	int		inside;			//is inside
 	char	current;		//is type " or '
 
 	current = 0;
-	if (!(splitted = prep_ignore(&inside, (char*)s, c, i)))
+	if (!(splitted = prep_ignore((char*)s, c, i)))
 		return (0);
 	ptr = (char*)s;
 	start = splitted;
 	while (*s)
 	{
-		switch_inside(&current, *s, &inside);
-		if (!inside && *s == c)
+		switch_inside(&current, *s);
+		if (!current && *s == c)
 		{
 			if (ptr != s)
 				*(splitted++) = ft_substr(ptr, 0, s - ptr);
