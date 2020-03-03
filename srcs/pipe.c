@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 18:30:13 by jchotel           #+#    #+#             */
-/*   Updated: 2020/02/24 16:22:37 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/03/03 17:31:00 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,18 @@ void	set_pipe(int j, int nb_pipes, int *pipes, t_shell *sh)
 		dup2(pipes[j + 1], 1);
 	sh->i_pipe = j / 2;
 	parsing_pipe(sh);
-	int	out;
 	while (sh->redir[i])
 	{
      	if (sh->type == 0)
-     		out = open(sh->redir[i], O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
+			pipes[j + 1] = open(sh->redir[i], O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
      	else
-     		out = open(sh->redir[i], O_WRONLY | O_APPEND | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
-     	pipes[j + 1] = out;
+			pipes[j + 1] = open(sh->redir[i], O_WRONLY | O_APPEND | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
      	dup2(pipes[j + 1], 1);
      	i++;
    	}
 	close_pipes(nb_pipes, pipes);
 	handle_cmd(sh);
+	exit(0);
 }
 
 void	set_pipe_rec(int j, int nb_pipes, int *pipes, t_shell *sh)
@@ -84,6 +83,7 @@ void	handle_pipe(t_shell *sh)
 	int			i;
 	static int	j = -2;
 	int			nb_pipes = ft_arraysize(sh->pipes) * 2 - 2;
+	printf("nb_pipes %d\n", nb_pipes);
 	int			pipes[nb_pipes];
 
 	init_pipes(nb_pipes, pipes);

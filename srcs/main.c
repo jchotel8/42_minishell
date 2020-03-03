@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 02:12:08 by jchotel           #+#    #+#             */
-/*   Updated: 2020/03/03 12:27:12 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/03/03 20:03:33 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	handle_cmd(t_shell *sh)
 {
+	int status;
+
 	//if (!ft_strcmp(sh->cmd[0], "echo"))
 	//	return (handle_echo(sh));
 	if (!ft_strcmp(sh->cmd[0], "cd"))
@@ -28,6 +30,12 @@ void	handle_cmd(t_shell *sh)
 		return (handle_env(sh));
 	if (!ft_strcmp(sh->cmd[0], "export"))
 		return (handle_export(sh));
+	else if (ft_arraysize(sh->pipes) == 1) //il faut aussi verifier les redirections
+	{
+		if (fork() == 0)
+			return (handle_bin(sh));
+		wait(&status);
+	}
 	else
 		return (handle_bin(sh));
 }
@@ -39,11 +47,9 @@ void	handle_line(t_shell *sh)
 	if (sh->pipes)
 	{
 		if ((nb_pipe = ft_arraysize(sh->pipes)) > 0)
-		{//si > 0, sauf le exit et le mélange bin : a cause des forks... il ne faut pas fork si exit?
 			handle_pipe(sh);
-		}
 		else
-		{//je veux absoluement supprimer ce else pour que handle_pipe gere tout correctement
+		{
 			parsing_pipe(sh);
 			handle_cmd(sh);
 		}
@@ -56,9 +62,7 @@ int		main(int ac, char **av, char **env)
 
 	if (ac > 0)
 	{
-		av[1] = "bonjour\0";
-		//int fd;
-		//fd = open(av[1], O_RDWR | O_TRUNC | O_CREAT, 00777);
+		av[1] = "";
 		sh = init_shell();
 		ft_printf(PROMPT, "MINISHELL", get_wd(sh));
 		sh->env = ft_array_to_lst(env);

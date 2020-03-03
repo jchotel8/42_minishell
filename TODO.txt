@@ -3,15 +3,15 @@
 ************************************************************jchotel & fde-fram
 
 LAST STEPS DONE :
-- gestion des >> et >, reste à faire < et les cas particuliers (si le > n’est pas placé à la fin, sil y en a plusieurs à la suite (seul le dernier compte) etc)
 
 NEXT STEPS ON SCHEDULE :
-- traiter les cas particuliers pour chacune des commandes 
-	- /!\ echo dans ohmyzsh a un comportement diff (@llaurent, @fkorki-, @mbrignol)
-- régler le pbm de buildins :
-	- /!\ l’utilisation des nouveaux buildins dans des pipes ne fait pas un dernier exit/wait
-	- à l’inverse l’utilisation des binaires standards sans pipes ne fork pas…
-	
+- traiter les cas particuliers pour chacune des commandes
+- gérer les ctrl-C, ctrl-D, ctrl-\
+- /bin/echo à gerer correctement
+- gérer <
+- attention pour les redirs sans pipes finir de corriger
+- env : verfier que l'arg[0] ai un = à la fin pour pas enlever PATH qd unset PAT
+- $? à gerer : permet de garder en mémoire le résultat de la ligne précédente
 
 GENERAL INFOS ----------------------------------------------------------------
 . SUBJECT ....................................................................
@@ -67,4 +67,6 @@ CORRECTIONS TEST -------------------------------------------------------------
 	- ctrl-c doit être géré pour ne pas faire d’interruption avec Signal
 	- cat /dev/random, ctr c (demander à @mcraipea/maxime craipeau ou Jérome durand)
 	/!\ pour tester dans bash (et non zsh), entrer la commande « bash »
+	- cat | cat | cat | cat | ls
+        - gerger test > te
 

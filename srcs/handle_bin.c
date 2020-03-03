@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 20:36:01 by jchotel           #+#    #+#             */
-/*   Updated: 2020/03/03 12:27:12 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/03/03 20:03:04 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	ft_find_cmd(t_shell *sh, char **paths)
 	struct stat	buf;
 
 	i = 0;
+//	if (stat(cmd, &buf))
+//		execve(cmd, sh->cmd, ft_lst_to_array(sh->env));
 	while (paths[i])
 	{
 		cmd = ft_strjoin(paths[i], "/");
