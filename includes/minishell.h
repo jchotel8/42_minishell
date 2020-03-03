@@ -20,9 +20,6 @@
 
 #define PROMPT "\x1b[38;2;232;212;98m✦ %s \033[0;0m\x1b[38;2;232;72;119m(%s) ➜  \x1b[38;2;255;235;202m"
 
-char	**g_env;
-int fils;
-
 typedef struct	s_shell
 {
 	char		*read;
@@ -38,6 +35,8 @@ typedef struct	s_shell
 	t_list		*env;
 
 }				t_shell;
+
+t_shell *g_sh;
 
 //UTILITIES
 int		switch_inside(char *current, char new);

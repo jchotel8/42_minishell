@@ -53,10 +53,17 @@ void	handle_line(t_shell *sh)
 void sigint_handler(int sig)
 {
 	(void)sig;
+
+	//if(!g_sh->read)
+	//{
+			ft_printf("\n");
+	ft_printf("MINISHELL %s", get_wd(g_sh));
 	 //printf("killing process %d\n",getpid());
+ //}
 	 //exit(0);
-	 write(0, "\n", 1);
-	 kill(-fils, 0);
+	 //write(0, "\n", 1);
+	 //kill(-fils, 0);
+	 //main(1, av, g_env);
 	 //main(1, NULL, g_env);
 	 //main_loop(g_env);
 	 //exit(0);
@@ -69,19 +76,20 @@ void main_loop(char **env)
 
 int		main(int ac, char **av, char **env)
 {
-	g_env = env;
 	if (ac > 0)
 	{
 		av[1] = "bonjour\0";
 		//int fd;
 		//fd = open(av[1], O_RDWR | O_TRUNC | O_CREAT, 00777);
 		t_shell	*sh;
+
 		//signal(SIGINT, sigint_handler);
 		sh = init_shell();
+		g_sh = sh;
 		sh->env = ft_array_to_lst(env);
 		//signal(SIGINT, sigint_handler);
-		ft_printf(PROMPT, "MINISHELL", get_wd(sh));
-		//signal(SIGINT, sigint_handler);
+		//ft_printf(PROMPT, "MINISHELL", get_wd(sh));
+		signal(SIGINT, sigint_handler);
 		while (get_next_line(0, &sh->read) > 0)
 		{
 			//if(!(fils = fork()))
