@@ -20,7 +20,7 @@ char *prolong(char *s2, char *s)
 
 	lens2 = ft_strlen(s2);
 	lens = ft_strlen(s);
-	s3 = calloc(lens2 + lens, sizeof(char));
+	s3 = calloc(lens2 + lens + 1, sizeof(char));
 	memcpy(s3, s2, lens2);
 	free(s2);
 
@@ -83,5 +83,6 @@ char		*ft_strsearchignore(t_shell *sh, char *s)
 		else
 			s2[j++] = *((s++)+k);
 	}
+	s2[j] = 0;
 	return (s2);
 }
