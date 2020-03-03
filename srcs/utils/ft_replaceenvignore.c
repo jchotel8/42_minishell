@@ -17,13 +17,13 @@ char    *prolong(char *src, char *ref)
     char    *new;
     int     len_1;
     int     len_2;
-    
+
     len_1 = ft_strlen(src);
     len_2 = ft_strlen(ref);
-    new = ft_calloc(len_1 + len_2, sizeof(char));
+    new = ft_calloc(len_1 + len_2 + 1, sizeof(char));
     ft_memcpy(new, src, len_1);
     free(src);
-    
+
     return (new);
 }
 
@@ -31,7 +31,7 @@ int        ft_lookup(t_shell *sh, char *ref, char **new, int len)
 {
     t_list    *tmp;
     char       *tmp_str;
-    
+
     tmp = sh->env;
     while (tmp)
     {
@@ -66,8 +66,8 @@ char        *ft_replaceenvignore(t_shell *sh, char *s)
     int     k;
     char    current;
     char    *new;
-    
-    new = ft_calloc(ft_strlen(s), sizeof(char));
+
+    new = ft_calloc(ft_strlen(s) + 1, sizeof(char));
     current = 0;
     j = 0;
     k = 0;
@@ -76,15 +76,16 @@ char        *ft_replaceenvignore(t_shell *sh, char *s)
         switch_inside(&current, *s);
         if(*s == '$' && current != '\'')
         {
+						k = 0;
             s++;
             while (!ft_isend(*(s + k)))
                 k++;
             j += ft_lookup(sh, s, &new, k);
             s += k;
-            k = 0;
         }
         else
-            new[j++] = *((s++) + k);
+            new[j++] = *((s++));
     }
+		new[j] = 0;
     return (new);
 }
