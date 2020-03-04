@@ -83,7 +83,6 @@ void	handle_pipe(t_shell *sh)
 	int			i;
 	static int	j = -2;
 	int			nb_pipes = ft_arraysize(sh->pipes) * 2 - 2;
-	printf("nb_pipes %d\n", nb_pipes);
 	int			pipes[nb_pipes];
 
 	init_pipes(nb_pipes, pipes);

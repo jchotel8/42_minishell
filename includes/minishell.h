@@ -53,8 +53,10 @@ void	ft_print_array(char **array, char *text, int flag);
 char 	**ft_array_add_front(char **array, void *data);
 int		ft_strncmp_auto(char *s1, char *s2);
 void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)());
+t_list	*ft_list_sort(t_list *lst, int (*cmp)());
 int		ft_arraysize(char **array);
 void	ft_freearray(char **array, int i);
+void	test_utils(void);		//a supprimer
 
 //HANDLE_SH
 t_shell	*init_shell();

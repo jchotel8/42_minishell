@@ -157,28 +157,59 @@ int		ft_strncmp_auto(char *s1, char *s2)
 	return (ft_strncmp(s1, s2, strlen(s2)));
 }
 
+t_list	*ft_list_sort(t_list *lst, int (*cmp)())
+{
+	void	*tmp_data;
+	t_list	*tmp_lst;
+
+	tmp_lst = lst;
+	while (lst->next)
+	{
+		if (((*cmp)(lst->content, lst->next->content)) > 0)
+		{
+			tmp_data = lst->content;
+			lst->content = lst->next->content;
+			lst->next->content = tmp_data;
+			lst = tmp_lst;
+		}
+		else
+			lst = lst->next;
+	}
+	lst = tmp_lst;
+	return (lst);
+}
+
 void	test_utils(void)
 {
-	t_list *list = ft_lstcrea(3, "arg1", "pasarg2", "arg3");
+	t_list *list = ft_lstcrea(5, "arg1", "pasarg2", "arg3", "a", "arg0");
 	ft_printf("LIST W/ INFO.........\n");
 	ft_list_print(list, 1);
 	ft_printf("LIST.........\n");
 	ft_list_print(list, 0);
-	char **array = ft_lst_to_array(list);
+
 	ft_printf("ARRAY W/ INFO.........\n");
+	char **array = ft_lst_to_array(list);
 	ft_print_array(array, "array :", 1);
+
 	ft_printf("ARRAY.........\n");
 	ft_print_array(array, "", 0);
 	t_list *new = ft_array_to_lst(array);
+
 	ft_printf("LIST W/ INFO.........\n");
 	ft_list_print(new, 1);
 	ft_printf("LIST.........\n");
 	ft_list_print(new, 0);
+
+	ft_printf("LIST SORT .........\n");
+	ft_printf("strcmp.........\n");
+	ft_list_sort(new, ft_strcmp);
+	ft_list_print(new, 1);
+
 	ft_printf("LIST REMOVE IF.........\n");
 	ft_printf("strcmp.........\n");
-	printf("same : %d\tdiff : %d\n", ft_strcmp("arg", "arg"), ft_strcmp("arg1", "arg"));
-	ft_printf("strncmp.........\n");
-	printf("same : %d\tdiff : %d\n", ft_strncmp("arg", "arg", 2), ft_strncmp("arg1", "arg", 4));
+	//printf("same : %d\tdiff : %d\n", ft_strcmp("arg", "arg"), ft_strcmp("arg1", "arg"));
+	//ft_printf("strncmp.........\n");
+	//printf("same : %d\tdiff : %d\n", ft_strncmp("arg", "arg", 2), ft_strncmp("arg1", "arg", 4));
 	ft_list_remove_if(&list, &"arg", ft_strncmp_auto);
 	ft_list_print(list, 0);
 }

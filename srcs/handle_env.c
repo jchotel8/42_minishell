@@ -14,7 +14,6 @@
 
 void	handle_env(t_shell *sh)
 {
-	sh->i_line = sh->i_line;
 	ft_list_print(sh->env, 0);
 }
 
@@ -25,5 +24,14 @@ void	handle_unset(t_shell *sh)
 
 void	handle_export(t_shell *sh)
 {
-	ft_lstadd_back(&sh->env, ft_lstnew(sh->arg[0])); //questce qui se passe si sh->arg n'est pas au format MAVARIABLE="blabla"?
+	if (sh->arg && sh->arg[0])
+	{
+		ft_printf("arg : %s\n", sh->arg[0]);
+		ft_lstadd_back(&sh->env, ft_lstnew(sh->arg[0])); //questce qui se passe si sh->arg n'est pas au format MAVARIABLE="blabla"?
+	}
+	else
+	{
+		ft_list_sort(sh->env, ft_strcmp);
+		ft_list_print(sh->env, 0);
+	}
 }//est-ce quil faut mettre les " ?

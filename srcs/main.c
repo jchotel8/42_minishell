@@ -46,7 +46,7 @@ void	handle_line(t_shell *sh)
 
 	if (sh->pipes)
 	{
-		if ((nb_pipe = ft_arraysize(sh->pipes)) > 0)
+		if ((nb_pipe = ft_arraysize(sh->pipes)) > 1)
 			handle_pipe(sh);
 		else
 		{

@@ -39,18 +39,19 @@ GENERAL INFOS ----------------------------------------------------------------
 	errno
 
 . BIN ........................................................................
-	- path absolu ?
+	* path absolu ?
 
 . ECHO .......................................................................
-	- les caractères spéciaux ne sont pas correctement interprétés /!\ c'est à cause de ohmyzsh non?
-	- finir l'option -n
-	- caractères d’échappements
+	* les « \ » ne doivent pas être imprimés
+	* -n n’affiche pas le \n
+	* caractères d’échappements dans le cas des arg entre « 
 
 . UNSET ......................................................................
 	- del un maillon de env
 
 . EXPORT .....................................................................
 	- rajoute un maillon de env
+	* si pas d’arg, afficher env par ordre alpha
 
 . PIPES ......................................................................
 	- https://stackoverflow.com/questions/43030966/pipe-chaining-in-my-own-shell-implementation
