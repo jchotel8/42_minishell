@@ -18,8 +18,6 @@ char		*ft_strtrimignore(char *s)
 	int		j;
 	char	current;
 
-	if (!s)
-		return (NULL);
 	current = 0;
 	i = 0;
 	j = 0;
@@ -27,12 +25,12 @@ char		*ft_strtrimignore(char *s)
 	{
 		if (switch_inside(&current, s[i]))
 			i++;
-		else
-		{
-			s[j] = s[i];
-			i++;
-			j++;
-		}
+        else
+        {
+            s[j] = s[i];
+            i++;
+            j++;
+        }
 	}
 	s[j] = '\0';
 	return (s);

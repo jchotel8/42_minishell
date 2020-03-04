@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 16:05:52 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/21 16:43:52 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/03/03 12:27:12 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int		get_next_line(int fd, char **line)
 		buffer[ret] = 0;
 		rest[fd] = ft_strjoin(rest[fd], buffer);
 	}
-	free(buffer);
+	//free(buffer);
 	if (ret < 0)
 		return (ret);
 	*line = ft_substr(rest[fd], 0, get_next_char(rest[fd], '\n'));
@@ -56,7 +56,6 @@ int		get_next_line(int fd, char **line)
 	tmp = rest[fd];
 	rest[fd] = ft_substr(rest[fd], get_next_char(rest[fd], '\n')
 	+ 1, get_next_char(rest[fd], '\0'));
-	free(tmp);
+	//free(tmp);
 	return (1);
 }
-

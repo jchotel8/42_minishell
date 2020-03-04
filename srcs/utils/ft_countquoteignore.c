@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-int	ft_strcountignore(char *s)
+int	ft_countquoteignore(char *s)
 {
 	int		i;
 	int		count;

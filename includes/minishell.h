@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 16:05:57 by jchotel           #+#    #+#             */
-/*   Updated: 2020/02/23 20:17:12 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/03/03 12:27:12 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,17 @@ typedef struct	s_shell
 	int			i_pipe;
 	int			type;
 	t_list		*env;
-
+	int			ctrlc;
 }				t_shell;
 
 t_shell *g_sh;
 
 //UTILITIES
 int		switch_inside(char *current, char new);
-int		ft_strcountignore(char *s);
+int		ft_countquoteignore(char *s);
 char	*ft_strtrimignore(char *s);
-char	*ft_strsearchignore(t_shell *sh, char *s);
 char	**ft_splitignore(char const *s, char c, int i);
+char    *ft_replaceenvignore(t_shell *sh, char *s);
 
 //ADD TO THE LIBFT
 void	ft_list_print(t_list *ptr, int flag);
@@ -83,7 +83,8 @@ void	handle_unset(t_shell *sh);
 void	handle_export(t_shell *sh);
 void	handle_pipe(t_shell *sh);
 
-void main_loop(char **env);
-int		main(int ac, char **av, char **env);
+//MAIN
+void	main_loop2(t_shell *sh);
+void	main_loop(t_shell *sh, int ret);
 
 #endif

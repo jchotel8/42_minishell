@@ -6,7 +6,7 @@
 #    By: jchotel <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/04 11:15:39 by jchotel           #+#    #+#              #
-#    Updated: 2020/02/21 05:27:40 by jchotel          ###   ########.fr        #
+#    Updated: 2020/03/03 12:27:12 by jchotel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 #srcs/handle_bin.c
@@ -23,8 +23,8 @@ SRCSC		= libs/gnl/get_next_line.c\
 			  srcs/parsing.c\
 			  srcs/pipe.c\
 			  srcs/utils/ft_splitignore.c\
-				srcs/utils/ft_strsearchignore.c\
-			  srcs/utils/ft_strcountignore.c\
+			  srcs/utils/ft_countquoteignore.c\
+			  srcs/utils/ft_replaceenvignore.c\
 			  srcs/utils/ft_strtrimignore.c\
 			  srcs/utils/utils_list.c
 SRCSH		= includes/get_next_line.h\

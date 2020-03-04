@@ -56,6 +56,7 @@ void	set_pipe(int j, int nb_pipes, int *pipes, t_shell *sh)
    	}
 	close_pipes(nb_pipes, pipes);
 	handle_cmd(sh);
+	exit(0);
 }
 
 void	set_pipe_rec(int j, int nb_pipes, int *pipes, t_shell *sh)

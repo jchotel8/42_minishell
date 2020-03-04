@@ -6,12 +6,20 @@ LAST STEPS DONE :
 - gestion des >> et >, reste à faire < et les cas particuliers (si le > n’est pas placé à la fin, sil y en a plusieurs à la suite (seul le dernier compte) etc)
 
 NEXT STEPS ON SCHEDULE :
-- traiter les cas particuliers pour chacune des commandes 
+- traiter les cas particuliers pour chacune des commandes
 	- /!\ echo dans ohmyzsh a un comportement diff (@llaurent, @fkorki-, @mbrignol)
 - régler le pbm de buildins :
 	- /!\ l’utilisation des nouveaux buildins dans des pipes ne fait pas un dernier exit/wait
 	- à l’inverse l’utilisation des binaires standards sans pipes ne fork pas…
-	
+
+SIGNAUX :
+	ctrl \ quand pas dans le programme puis saut de ligne -> ctrl d : affiche un quit.
+	des fois cat /dev/random n'affiche pas de ctrl-c....
+	ctrl-d ne reagit pas apres des cat /dev/random/ (?)
+	ctrl-\ oublie ce qui a ete ecrit juste sur la ligne...
+	une ligne en trop de sautée des fois apres un ctrl-d
+
+
 
 GENERAL INFOS ----------------------------------------------------------------
 . SUBJECT ....................................................................
@@ -67,4 +75,3 @@ CORRECTIONS TEST -------------------------------------------------------------
 	- ctrl-c doit être géré pour ne pas faire d’interruption avec Signal
 	- cat /dev/random, ctr c (demander à @mcraipea/maxime craipeau ou Jérome durand)
 	/!\ pour tester dans bash (et non zsh), entrer la commande « bash »
-
