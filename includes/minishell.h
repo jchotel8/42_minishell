@@ -32,6 +32,7 @@ typedef struct	s_shell
 	int			i_line;
 	int			i_pipe;
 	int			type;
+	int			ret;
 	t_list		*env;
 
 }				t_shell;

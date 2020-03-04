@@ -33,11 +33,7 @@ void	ft_find_cmd(t_shell *sh, char **paths)
 		ft_printf("\x1b[38;2;255;235;202mzsh: command not found: %s\n",
 				sh->cmd[0]);
 	else
-	{
-		//if (!(child = fork()))
-			execve(cmd, sh->cmd, ft_lst_to_array(sh->env));
-		//wait(&child);
-	}
+		sh->ret = execve(cmd, sh->cmd, ft_lst_to_array(sh->env));
 }
 
 void	handle_bin(t_shell *sh)

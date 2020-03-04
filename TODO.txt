@@ -7,7 +7,7 @@ LAST STEPS DONE :
 NEXT STEPS ON SCHEDULE :
 - traiter les cas particuliers pour chacune des commandes
 - gérer les ctrl-C, ctrl-D, ctrl-\
-- /bin/echo à gerer correctement
+- /bin/echo à gerer correctement, (path absolu)
 - gérer <
 - attention pour les redirs sans pipes finir de corriger
 - env : verfier que l'arg[0] ai un = à la fin pour pas enlever PATH qd unset PAT
@@ -43,7 +43,7 @@ GENERAL INFOS ----------------------------------------------------------------
 
 . ECHO .......................................................................
 	* les « \ » ne doivent pas être imprimés
-	* -n n’affiche pas le \n
+	- -n n’affiche pas le \n
 	* caractères d’échappements dans le cas des arg entre « 
 
 . UNSET ......................................................................
@@ -51,7 +51,7 @@ GENERAL INFOS ----------------------------------------------------------------
 
 . EXPORT .....................................................................
 	- rajoute un maillon de env
-	* si pas d’arg, afficher env par ordre alpha
+	- si pas d’arg, afficher env par ordre alpha
 
 . PIPES ......................................................................
 	- https://stackoverflow.com/questions/43030966/pipe-chaining-in-my-own-shell-implementation
@@ -67,7 +67,7 @@ CORRECTIONS TEST -------------------------------------------------------------
 	- cat /dev/random | cat | cat | head -n 5 | cut -b 1-10 | cat -e > out1
 	- ctrl-c doit être géré pour ne pas faire d’interruption avec Signal
 	- cat /dev/random, ctr c (demander à @mcraipea/maxime craipeau ou Jérome durand)
-	/!\ pour tester dans bash (et non zsh), entrer la commande « bash »
+	- pour tester dans bash (et non zsh), entrer la commande « bash »
 	- cat | cat | cat | cat | ls
         - gerger test > te
 

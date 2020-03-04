@@ -16,8 +16,8 @@ void	handle_cmd(t_shell *sh)
 {
 	int status;
 
-	//if (!ft_strcmp(sh->cmd[0], "echo"))
-	//	return (handle_echo(sh));
+	if (!ft_strcmp(sh->cmd[0], "echo"))
+		return (handle_echo(sh));
 	if (!ft_strcmp(sh->cmd[0], "cd"))
 		return (handle_cd(sh));
 	if (!ft_strcmp(sh->cmd[0], "pwd"))

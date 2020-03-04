@@ -33,6 +33,7 @@ t_shell	*init_shell(void)
 	sh->read = 0;
 	sh->pipes = 0;
 	sh->lines = 0;
+	sh->ret = 0;
 	clean_shell(sh);
 	return (sh);
 }

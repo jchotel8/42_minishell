@@ -17,14 +17,19 @@ char		*ft_strtrimignore(char *s)
 	int		i;
 	int		j;
 	char	current;
+	int		inside;
 
 	current = 0;
+	inside = 0;
 	i = 0;
 	j = 0;
 	while (s[i])
 	{
-		if (switch_inside(&current, s[i]))
+		if (switch_inside(&current, s[i]) || (s[i] == '\\' && !inside))
+		{
 			i++;
+			inside = (inside == 0 ? 1 : 0);
+		}
         else
         {
             s[j] = s[i];
