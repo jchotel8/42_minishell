@@ -42,9 +42,19 @@ GENERAL INFOS ----------------------------------------------------------------
 	* path absolu ?
 
 . ECHO .......................................................................
-	* les « \ » ne doivent pas être imprimés
+	- les « \ » ne doivent pas être imprimés
 	- -n n’affiche pas le \n
 	* caractères d’échappements dans le cas des arg entre « 
+		- bonjour\toi		-> bonjourtoi	: rien + \	: sup le \
+		- bonjour\\toi		-> bonjour\toi	: rien + \\
+		- bonjour\"		-> bonjour"	: rien + \" 	: sup le \ + " pas compté
+		- bonjour\’		-> bonjour’	: rien + \’ 	: sup le \ + ‘ pas compté
+		- «bonjour\toi»		-> bonjour\toi : double + \	: garde le \
+		- «bonjour\"toi»	-> bonjour"toi	: double + \" 	: sup le \
+		- «bonjour\’toi»	-> bonjour"toi	: double + \’ 	: garde le \
+		- ‘bonjour\toi’		-> bonjour"toi	: simple + \	: garde le \
+		- 'bonjour\"toi'	-> bonjour\"toi: simple + \"	: garde le \
+		- ‘bonjour\’toi’	-> >		: simple + \’	: ‘ compté
 
 . UNSET ......................................................................
 	- del un maillon de env
@@ -69,5 +79,5 @@ CORRECTIONS TEST -------------------------------------------------------------
 	- cat /dev/random, ctr c (demander à @mcraipea/maxime craipeau ou Jérome durand)
 	- pour tester dans bash (et non zsh), entrer la commande « bash »
 	- cat | cat | cat | cat | ls
-        - gerger test > te
+        - not_cmd test > new
 

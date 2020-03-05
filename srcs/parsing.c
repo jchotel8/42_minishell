@@ -19,7 +19,7 @@ void	prep_read(t_shell *sh)
 
 	while (ft_countquoteignore(sh->read) % 2)
 	{
-		ft_printf("dquote>");
+		ft_printf(">");
 		get_next_line(0, &next);
 		tmp = sh->read;
 		sh->read = ft_strjoin(sh->read, "\n");
