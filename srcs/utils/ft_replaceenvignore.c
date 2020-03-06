@@ -6,7 +6,7 @@
 /*   By: jchotel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 22:16:01 by jchotel           #+#    #+#             */
-/*   Updated: 2020/03/03 16:54:27 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/03/05 19:56:41 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,17 @@ char        *ft_replaceenvignore(t_shell *sh, char *s)
     int     k;
     char    current;
     char    *new;
+    char    prev;
 
     new = ft_calloc(ft_strlen(s) + 1, sizeof(char));
     current = 0;
     j = 0;
     k = 0;
+    prev = 0;
     while (*s)
     {
-        switch_inside(&current, *s);
+        switch_inside(&current, *s, prev);
+        prev = *s;
         if(*s == '$' && current != '\'')
         {
 			k = 0;

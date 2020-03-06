@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 02:13:05 by jchotel           #+#    #+#             */
-/*   Updated: 2020/03/03 12:27:12 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/03/05 19:56:41 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,4 @@ void	handle_export(t_shell *sh)
 		ft_list_sort(sh->env, ft_strcmp);
 		ft_list_print(sh->env, 0);
 	}
-}//est-ce quil faut mettre les " ?
+}

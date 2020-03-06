@@ -3,13 +3,13 @@
 ************************************************************jchotel & fde-fram
 
 LAST STEPS DONE :
+- char d'échappement pour les arguments
+- gestions des redirections sans pipes, fixing bugs
 
 NEXT STEPS ON SCHEDULE :
-- traiter les cas particuliers pour chacune des commandes
 - gérer les ctrl-C, ctrl-D, ctrl-\
 - /bin/echo à gerer correctement, (path absolu)
-- gérer <
-- attention pour les redirs sans pipes finir de corriger
+- gérer les redirs de type <
 - env : verfier que l'arg[0] ai un = à la fin pour pas enlever PATH qd unset PAT
 - $? à gerer : permet de garder en mémoire le résultat de la ligne précédente
 
@@ -42,19 +42,24 @@ GENERAL INFOS ----------------------------------------------------------------
 	* path absolu ?
 
 . ECHO .......................................................................
-	- les « \ » ne doivent pas être imprimés
-	- -n n’affiche pas le \n
-	* caractères d’échappements dans le cas des arg entre « 
-		- bonjour\toi		-> bonjourtoi	: rien + \	: sup le \
-		- bonjour\\toi		-> bonjour\toi	: rien + \\
-		- bonjour\"		-> bonjour"	: rien + \" 	: sup le \ + " pas compté
-		- bonjour\’		-> bonjour’	: rien + \’ 	: sup le \ + ‘ pas compté
-		- «bonjour\toi»		-> bonjour\toi : double + \	: garde le \
+	- -n n’affiche pas le dernier \n
+	- caractères d’échappements dans le cas des arg entre « 
+		- bonjour\toi		-> bonjourtoi
+		- bonjour\\toi		-> bonjour\toi
+		- bonjour\"toi		-> bonjour"toi
+		- bonjour\’toi		-> bonjour’toi	: rien + \’ 	: sup le \ + ‘ pas compté
+
+		- «bonjour\toi»		-> bonjour\toi	: double + \	: garde le \
+		- "bonjour'toi"		-> bonjour'toi	: double + '	:
+		- «bonjour\\toi»	-> bonjour\toi 	: double + \\	: garde un seul \
 		- «bonjour\"toi»	-> bonjour"toi	: double + \" 	: sup le \
-		- «bonjour\’toi»	-> bonjour"toi	: double + \’ 	: garde le \
-		- ‘bonjour\toi’		-> bonjour"toi	: simple + \	: garde le \
-		- 'bonjour\"toi'	-> bonjour\"toi: simple + \"	: garde le \
-		- ‘bonjour\’toi’	-> >		: simple + \’	: ‘ compté
+		- «bonjour\’toi»	-> bonjour\'toi	: double + \’ 	: garde le \
+
+		- ‘bonjour\toi’		-> bonjour\toi	: simple + \	: garde le \
+		- 'bonjour"toi'		-> bonjour"toi	: simple + "
+		- ‘bonjour\\toi’	-> bonjour\\toi	: simple + \	: garde le \
+		- 'bonjour\"toi'	-> bonjour\"toi : simple + \"	: garde le \
+		- ‘bonjour\’toi’	-> >			: simple + \’	: ‘ compté
 
 . UNSET ......................................................................
 	- del un maillon de env
@@ -65,19 +70,20 @@ GENERAL INFOS ----------------------------------------------------------------
 
 . PIPES ......................................................................
 	- https://stackoverflow.com/questions/43030966/pipe-chaining-in-my-own-shell-implementation
+	- http://www.cs.loyola.edu/~jglenn/702/S2005/Examples/dup2.html
 
 . REDIR ......................................................................
 	- http://www.cs.loyola.edu/~jglenn/702/S2005/Examples/dup2.html
 
 CORRECTIONS TEST -------------------------------------------------------------
-	- les " doivent toujours être par deux
-	- les ' peuvent être seules si dans "
+	/!\ pour tester dans bash (et non zsh) à titre comparatif, entrer la commande « bash »
 	- le parsing ; ne doit pas se faire si compris entre "
 	- vérifier que dans les pipes, pas d’utilisation des bin par défaut
 	- cat /dev/random | cat | cat | head -n 5 | cut -b 1-10 | cat -e > out1
 	- ctrl-c doit être géré pour ne pas faire d’interruption avec Signal
-	- cat /dev/random, ctr c (demander à @mcraipea/maxime craipeau ou Jérome durand)
-	- pour tester dans bash (et non zsh), entrer la commande « bash »
-	- cat | cat | cat | cat | ls
-        - not_cmd test > new
+	- cat /dev/random, ctr-c (demander à @mcraipea/maxime craipeau ou Jérome durand)
+	* cat | cat | cat | cat | ls
+        * not_cmd test > new : attention pour l'instant "zsh : command not found : "
+
+	- conseil : sdunckel / tharchen / mpivet-p
 

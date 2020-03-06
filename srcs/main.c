@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 02:12:08 by jchotel           #+#    #+#             */
-/*   Updated: 2020/03/03 20:03:33 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/03/06 14:25:23 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,37 @@ void	handle_cmd(t_shell *sh)
 
 void	handle_line(t_shell *sh)
 {
-	int nb_pipe = 0;
+	int out;
+	int i = 0;
+	int status;
 
 	if (sh->pipes)
 	{
-		if ((nb_pipe = ft_arraysize(sh->pipes)) > 1)
+		if (ft_arraysize(sh->pipes) > 1)
 			handle_pipe(sh);
 		else
 		{
 			parsing_pipe(sh);
-			handle_cmd(sh);
+			if (fork() == 0)
+			{
+				while (sh->redir[i])
+				{
+					if (sh->type == 0)
+						out = open(sh->redir[i], O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
+					else
+						out = open(sh->redir[i], O_WRONLY | O_APPEND | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
+					dup2(out, 1);
+					close(out);
+					i++;
+				}
+				handle_cmd(sh);
+				exit(0);
+			}
+			wait(&status);
+			if (!ft_strcmp(sh->cmd[0], "exit"))
+				return (exit(0));
 		}
+
 	}
 }
 
@@ -65,7 +85,7 @@ int		main(int ac, char **av, char **env)
 		av[1] = "";
 		sh = init_shell();
 		ft_printf(PROMPT, "MINISHELL", get_wd(sh));
-		sh->env = ft_array_to_lst(env);
+		sh->env = ft_array_to_lst(env); //passer dans init_shell
 		while (get_next_line(0, &sh->read) > 0)
 		{
 			parsing_read(sh);
@@ -73,7 +93,6 @@ int		main(int ac, char **av, char **env)
 			while (sh->lines[sh->i_line])
 			{
 				parsing_line(sh);
-				//debug_shell(sh);
 				handle_line(sh);
 				next_shell_line(sh);
 			}

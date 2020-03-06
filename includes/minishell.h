@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 16:05:57 by jchotel           #+#    #+#             */
-/*   Updated: 2020/03/03 16:54:23 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/03/06 13:18:08 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,21 @@
 typedef struct	s_shell
 {
 	char		*read;
-	char		**lines;
-	char		**pipes;
-	char		**redir;
-	char		**cmd;
-	char		**arg;
+	char		**lines;   // line 0 : echo bonjour > out1 | cat -e   // line 1 : ls 			;
+	char		**pipes;   // pipe 0 : echo bonjour > out1 				// pipe 1 : cat -e		|
+	char		**redir;   // redir 0 : echo bonjour					// redir1 : out1 		>
+	char		**cmd;	   // cmd 0 : echo cmd1 : bonjour										' '
+	char		**arg;	   // cmd++ : cmd1 : bonjour cmd 2 ... cmd3
 	char		wd[PATH_MAX];
 	int			i_line;
 	int			i_pipe;
 	int			type;
 	int			ret;
 	t_list		*env;
-
 }				t_shell;
 
 //UTILITIES
-int		switch_inside(char *current, char new);
+int     switch_inside(char *current, char new, char prev);
 int		ft_countquoteignore(char *s);
 char	*ft_strtrimignore(char *s);
 char	**ft_splitignore(char const *s, char c, int i);
