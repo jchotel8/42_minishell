@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 02:31:27 by jchotel           #+#    #+#             */
-/*   Updated: 2020/03/05 19:56:41 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/03/06 15:30:52 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,16 @@ void	parsing_pipe(t_shell *sh)
 	i = 0;
 	lst = NULL;
 	sh->redir = ft_splitignore(sh->pipes[sh->i_pipe], '>', 0);
-	while (sh->redir[i]) //si > attention il faut aussi verifier dans le cas ou > est placé au début donc !sh->redir[1]
+	while (sh->redir[i])
 	{
-        //sh->redir[i] = ft_replaceenvignore(sh, sh->redir[i]); 
+		sh->redir[i] = ft_replaceenvignore(sh, sh->redir[i]);
 		if (ft_strcmp(">", sh->redir[i]) == 0)
-	 	{//cas ou sh->redir = ">"
-	 		sh->type = 1;
-	 		sh->redir[i] = "";
-	 	}
-	 	else
-	 	{
+		{//cas ou sh->redir = ">"
+			// sh->type = 1;
+			sh->redir[i] = "";
+		}
+		else
+		{
 			cmd_arg = ft_splitignore(sh->redir[i], ' ', 1);
 			if (ft_strcmp(">", cmd_arg[0]) == 0)
 			{//type > out
@@ -87,8 +87,8 @@ void	parsing_pipe(t_shell *sh)
 	i = 0;
 	while (sh->arg && sh->arg[i])
 	{
-	 	sh->arg[i] = ft_strtrimignore(sh->arg[i]); //wesh pourquoi on utilise se ft_strtrim trop moche!?
-	 	i++;
+		sh->arg[i] = ft_strtrimignore(sh->arg[i]);
+		i++;
 	}
 	i = 0;
 }

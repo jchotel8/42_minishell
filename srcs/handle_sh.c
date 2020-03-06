@@ -24,7 +24,7 @@ void	clean_shell(t_shell *sh)
 	sh->type = 0;
 }
 
-t_shell	*init_shell(void)
+t_shell	*init_shell(char **env)
 {
 	t_shell	*sh;
 
@@ -34,6 +34,7 @@ t_shell	*init_shell(void)
 	sh->pipes = 0;
 	sh->lines = 0;
 	sh->ret = 0;
+	sh->env = ft_array_to_lst(env);
 	clean_shell(sh);
 	return (sh);
 }
@@ -64,8 +65,8 @@ void	next_shell_pipe(t_shell *sh)
 void	free_shell(t_shell *sh)
 {
 	free(sh->read);
-	ft_freearray(sh->lines, ft_arraysize(sh->lines));
-	ft_freearray(sh->cmd, ft_arraysize(sh->cmd));
+	ft_freearray(sh->lines);
+	ft_freearray(sh->cmd);
 	ft_lstclear(&sh->env, free);
 	free(sh);
 }

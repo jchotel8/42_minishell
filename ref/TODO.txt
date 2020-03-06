@@ -5,13 +5,15 @@
 LAST STEPS DONE :
 - char d'échappement pour les arguments
 - gestions des redirections sans pipes, fixing bugs
+- début de ctrl-C
+- suppression d'une variable d'env seulement si exacte
 
 NEXT STEPS ON SCHEDULE :
 - gérer les ctrl-C, ctrl-D, ctrl-\
 - /bin/echo à gerer correctement, (path absolu)
 - gérer les redirs de type <
-- env : verfier que l'arg[0] ai un = à la fin pour pas enlever PATH qd unset PAT
 - $? à gerer : permet de garder en mémoire le résultat de la ligne précédente
+- FREE...
 
 GENERAL INFOS ----------------------------------------------------------------
 . SUBJECT ....................................................................
@@ -62,7 +64,7 @@ GENERAL INFOS ----------------------------------------------------------------
 		- ‘bonjour\’toi’	-> >			: simple + \’	: ‘ compté
 
 . UNSET ......................................................................
-	- del un maillon de env
+	- del les maillons spécifiés de env
 
 . EXPORT .....................................................................
 	- rajoute un maillon de env
@@ -74,6 +76,12 @@ GENERAL INFOS ----------------------------------------------------------------
 
 . REDIR ......................................................................
 	- http://www.cs.loyola.edu/~jglenn/702/S2005/Examples/dup2.html
+			O_WRONLY : 1				O_TRUNC : 1024
+			O_CREAT : 512				O_APPEND : 8
+		- 1537 pour la création, d'un fichier tronqué
+		- 521 pour un fichier append
+
+
 
 CORRECTIONS TEST -------------------------------------------------------------
 	/!\ pour tester dans bash (et non zsh) à titre comparatif, entrer la commande « bash »
@@ -83,7 +91,7 @@ CORRECTIONS TEST -------------------------------------------------------------
 	- ctrl-c doit être géré pour ne pas faire d’interruption avec Signal
 	- cat /dev/random, ctr-c (demander à @mcraipea/maxime craipeau ou Jérome durand)
 	* cat | cat | cat | cat | ls
-        * not_cmd test > new : attention pour l'instant "zsh : command not found : "
+        * not_cmd test > new : attention pour l'instant "Command not found : "
 
 	- conseil : sdunckel / tharchen / mpivet-p
 

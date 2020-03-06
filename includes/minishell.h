@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 16:05:57 by jchotel           #+#    #+#             */
-/*   Updated: 2020/03/06 13:18:08 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/03/06 16:43:18 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,10 @@ typedef struct	s_shell
 	t_list		*env;
 }				t_shell;
 
+int		ret;
+
 //UTILITIES
-int     switch_inside(char *current, char new, char prev);
+int		switch_inside(char *current, char new, char prev);
 int		ft_countquoteignore(char *s);
 char	*ft_strtrimignore(char *s);
 char	**ft_splitignore(char const *s, char c, int i);
@@ -55,11 +57,11 @@ int		ft_strncmp_auto(char *s1, char *s2);
 void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)());
 t_list	*ft_list_sort(t_list *lst, int (*cmp)());
 int		ft_arraysize(char **array);
-void	ft_freearray(char **array, int i);
+void	ft_freearray(char **array);
 void	test_utils(void);		//a supprimer
 
 //HANDLE_SH
-t_shell	*init_shell();
+t_shell	*init_shell(char **env);
 void	debug_shell(t_shell *sh);
 void	next_shell_pipe(t_shell *sh);
 void	next_shell_line(t_shell *sh);

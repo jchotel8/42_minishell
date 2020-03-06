@@ -6,7 +6,7 @@
 #    By: jchotel <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/04 11:15:39 by jchotel           #+#    #+#              #
-#    Updated: 2020/03/03 16:54:23 by jchotel          ###   ########.fr        #
+#    Updated: 2020/03/06 16:34:05 by jchotel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 #srcs/handle_bin.c
@@ -32,7 +32,7 @@ SRCSH		= includes/get_next_line.h\
 OBJS		= $(SRCSC:%.c=%.o)
 LIBS 		= ./libs/libft/libft.a\
 			  ./libs/ft_printf/printf.a
-FLAGS		= -Wall -Wextra -Werror
+FLAGS		= -Wall -Wextra -Werror -fsanitize=
 CC			= gcc
 
 all:		${NAME}

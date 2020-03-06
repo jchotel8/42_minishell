@@ -16,7 +16,6 @@ void	handle_echo(t_shell *sh)
 {
 	int		i;
 	int		flag_n;
-	//char	*tmp;
 
 	i = 0;
 	flag_n = 0;
@@ -27,13 +26,11 @@ void	handle_echo(t_shell *sh)
 	}
 	while (sh->arg && sh->arg[i])
 	{
-		//tmp = sh->arg[i];
 		i >= 1 ? ft_printf(" ") : 0;
 		if (!ft_strcmp(sh->arg[i], "$?"))
 			ft_printf("sh->ret : %d", sh->ret);
 		else
 			ft_printf("%s", sh->arg[i]);
-		//free(tmp);
 		i++;
 	}
 	if (!flag_n)

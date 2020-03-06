@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 05:02:01 by jchotel           #+#    #+#             */
-/*   Updated: 2020/03/05 19:56:41 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/03/06 16:32:05 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,12 +144,16 @@ int	ft_arraysize(char **array)
 	return (i);
 }
 
-void ft_freearray(char **array, int i)
+void ft_freearray(char **array)
 {
-	while (i--)
+	int i = 0;
+
+	while (array[i])
 	{
 		free(array[i]);
+		i++;
 	}
+	free(array[i]);
 }
 
 int		ft_strncmp_auto(char *s1, char *s2)
