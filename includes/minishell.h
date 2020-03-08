@@ -44,6 +44,7 @@ int		ft_countquoteignore(char *s);
 char	*ft_strtrimignore(char *s);
 char	**ft_splitignore(char const *s, char c, int i);
 char    *ft_replaceenvignore(t_shell *sh, char *s);
+char    *ft_leftredirignore(char *s);
 
 //ADD TO THE LIBFT
 void	ft_list_print(t_list *ptr, int flag);

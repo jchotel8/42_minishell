@@ -22,6 +22,7 @@ SRCSC		= libs/gnl/get_next_line.c\
 			  srcs/handle_bin.c\
 			  srcs/parsing.c\
 			  srcs/pipe.c\
+			  srcs/utils/ft_leftredirignore.c\
 			  srcs/utils/ft_splitignore.c\
 			  srcs/utils/ft_countquoteignore.c\
 			  srcs/utils/ft_replaceenvignore.c\
