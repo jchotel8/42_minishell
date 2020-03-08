@@ -56,7 +56,7 @@ void	parsing_pipe(t_shell *sh)
 	while (sh->redir[i]) //si > attention il faut aussi verifier dans le cas ou > est placé au début donc !sh->redir[1]
 	{
         sh->redir[i] = ft_replaceenvignore(sh, sh->redir[i]);
-				sh->redir[i] = ft_leftredirignore(sh->redir[i]); 
+				sh->redir[i] = ft_leftredirignore(sh->redir[i]);
 		if (ft_strcmp(">", sh->redir[i]) == 0)
 	 	{//cas ou sh->redir = ">"
 	 		sh->type = 1;

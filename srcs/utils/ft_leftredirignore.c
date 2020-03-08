@@ -12,42 +12,14 @@
 
 #include "../../includes/minishell.h"
 
-char    *prolongredir(char *src, char *ref)
-{
-    char    *new;
-    int     len_1;
-    int     len_2;
-
-    len_1 = ft_strlen(src);
-    len_2 = ft_strlen(ref);
-    new = ft_calloc(len_1 + len_2 + 1, sizeof(char));
-    ft_memcpy(new, src, len_1);
-    free(src);
-
-    return (new);
-}
-
 int        ft_lookupredir(char *ref/*, char **new*/)
 {
-	// char *line;
-	// char *oldnew = *new;
-	// char *tmp_str;
+  int fd;
 
-  int fd = open(ref, O_CREAT | O_RDWR, S_IREAD | S_IWRITE);
-	// int old_stdio =
+	fd = open(ref, O_RDONLY, S_IREAD | S_IWRITE);
 	dup(0);
 	dup2(fd, 0);
-
     close(fd);
-	// while (get_next_line(fd,&line))
-	// {
-	// 	tmp_str = *new;
-	// 	*new = ft_strjoin(*new, line);
-  //   free(tmp_str);
-	// }
-  // *new = prolongredir(*new, ref);
-	// close(fd);
-  // return (ft_strlen(*new) - ft_strlen(oldnew));
 	return(0);
 }
 
@@ -59,43 +31,43 @@ int        ft_isspaceredir(char c)  //a ajouter dans la libft
 
 int        ft_isendredir(char c)
 {
-    return (ft_isspaceredir(c) || !c || c == '"' || c == '\'' || c == '<');
+    return (ft_isspaceredir(c) || !c /*|| c == '"' || c == '\'' */|| c == '<');
 }
 
 
 char        *ft_leftredirignore(char *s)
 {
     int     j;
+		int			i;
     int     k;
     char    current;
-    char    *new;
-
-    new = ft_calloc(ft_strlen(s) + 1, sizeof(char));
     current = 0;
+		i = 0;
     j = 0;
     k = 0;
-    while (*s)
+    while (s[i])
     {
-        switch_inside(&current, *s);
-        if(*s == '<' && current != '\'')
+        switch_inside(&current, s[i]);
+        if(s[i] == '<' && !current)
         {
 						k = 0;
-						*s = ' ';
-            s++;
-						while (ft_isspaceredir(*(s + k)))
-                k++;
-            while (!ft_isendredir(*(s + k)))
-                k++;
-						char temp = *(s + k);
-						*(s + k) = '\0';
-            ft_lookupredir(s/*, &new*/);
-						*(s + k) = temp;
-            s += k;
+						s[i] = ' ';
+            i++;
+						while (ft_isspaceredir(s[i]))
+							i++;
+            while (!ft_isendredir(s[i + k]))
+              k++;
+						char temp = s[i + k];
+						s[i + k] = '\0';
+            ft_lookupredir(s + i);
+						s[i + k] = temp;
+						i += k;
         }
         else
-            new[j++] = *((s++));
+				{
+            s[j++] = s[i++];
+				}
     }
-		new[j] = 0;
-		ft_printf("[%s]\n", new);
-    return (new);
+		s[j] = 0;
+    return (s);
 }

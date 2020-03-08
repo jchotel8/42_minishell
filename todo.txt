@@ -19,6 +19,9 @@ SIGNAUX :
 	ctrl-\ oublie ce qui a ete ecrit juste sur la ligne...
 	une ligne en trop de sautée des fois apres un ctrl-d
 
+INPUT REDIRECTIONS:
+gerer le cas des " et des ''
+
 
 
 GENERAL INFOS ----------------------------------------------------------------
