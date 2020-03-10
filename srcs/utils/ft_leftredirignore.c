@@ -15,11 +15,12 @@
 int        ft_lookupredir(char *ref/*, char **new*/)
 {
   int fd;
+	char *trimmed;
 
-	fd = open(ref, O_RDONLY, S_IREAD | S_IWRITE);
-	dup(0);
+	trimmed = ft_strtrimignore(ref);
+	fd = open(trimmed, O_RDONLY, S_IREAD | S_IWRITE);
 	dup2(fd, 0);
-    close(fd);
+  close(fd);
 	return(0);
 }
 
@@ -41,6 +42,8 @@ char        *ft_leftredirignore(char *s)
 		int			i;
     int     k;
     char    current;
+		char		temp;
+
     current = 0;
 		i = 0;
     j = 0;
@@ -51,22 +54,18 @@ char        *ft_leftredirignore(char *s)
         if(s[i] == '<' && !current)
         {
 						k = 0;
-						s[i] = ' ';
-            i++;
+						s[i++] = ' ';
 						while (ft_isspaceredir(s[i]))
 							i++;
             while (!ft_isendredir(s[i + k]))
               k++;
-						char temp = s[i + k];
+						temp = s[i + k];
 						s[i + k] = '\0';
             ft_lookupredir(s + i);
-						s[i + k] = temp;
-						i += k;
+						s[(i = i + k)] = temp;
         }
         else
-				{
             s[j++] = s[i++];
-				}
     }
 		s[j] = 0;
     return (s);
