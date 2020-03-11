@@ -14,7 +14,7 @@
 
 void	handle_env(t_shell *sh)
 {
-	ft_list_print(sh->env, 0);
+	ft_list_print_if(sh->env, '=');
 }
 
 void	handle_unset(t_shell *sh)
@@ -33,16 +33,38 @@ void	handle_unset(t_shell *sh)
 	}
 }
 
+int (check_char(char *s))
+{
+	if (!((s[0] >= 'a' && s[0] <= 'z') || (s[0] >= 'A' && s[0] <= 'Z')
+	|| (s[0] == '_')))
+		return (0);
+	while (*s)
+	{
+		if (!((s[0] >= 'a' && s[0] <= 'z') || (s[0] >= 'A' && s[0] <= 'Z')
+		|| (s[0] >= '0' && s[0] <= '0') || (s[0] == '_')))
+			return (0);
+		s++;
+	}
+	return (1);
+}
+
 void	handle_export(t_shell *sh)
 {
 	if (sh->arg && sh->arg[0])
 	{
-		ft_printf("arg : %s\n", sh->arg[0]);
-		ft_lstadd_back(&sh->env, ft_lstnew(sh->arg[0]));
+		if (check_char(sh->arg[0]))
+		{
+			ft_printf("arg : %s\n", sh->arg[0]);
+			ft_lstadd_sorted(&sh->env, ft_lstnew(sh->arg[0]));
+		}
+		else
+		{
+			ft_printf("export: '%s': not a valid identifier\n", sh->arg[0]);
+		}
 	}
 	else
 	{
 		ft_list_sort(sh->env, ft_strcmp);
-		ft_list_print(sh->env, 0);
+		ft_list_print_quote(sh->env);
 	}
 }

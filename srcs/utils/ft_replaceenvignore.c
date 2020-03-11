@@ -17,25 +17,55 @@ char    *prolong(char *src, char *ref)
     char    *new;
     int     len_1;
     int     len_2;
-    
+
     len_1 = ft_strlen(src);
     len_2 = ft_strlen(ref);
     new = ft_calloc(len_1 + len_2 + 1, sizeof(char));
     ft_memcpy(new, src, len_1);
     free(src);
-    
+
     return (new);
+}
+
+char *ft_itoa(int i)
+{
+	long	n;
+	int		c;
+	char	*s;
+
+	c = i < 0;
+	n = c ? -(long)i : i;
+	while (i /= 10)
+		c++;
+	s = ft_calloc(c + 1, 1);
+	*s = '-';
+	while ((s[c] = n % 10 + '0') && (n /= 10))
+		c--;
+	return (s);
+}
+
+int        ft_questionmark(t_shell *sh, char *ref, char **new)
+{
+	char  *tmp_str;
+	char	*nbstr;
+
+	nbstr = ft_itoa(sh->ret);
+	tmp_str = *new;
+  *new = ft_strjoin(*new, nbstr);
+	free(tmp_str);
+	*new = prolong(*new, ref);
+	return (ft_strlen(nbstr));
 }
 
 int        ft_lookup(t_shell *sh, char *ref, char **new, int len)
 {
     t_list    *tmp;
     char       *tmp_str;
-    
+
     tmp = sh->env;
     while (tmp)
     {
-        if (!ft_strncmp(tmp->content, ref, len))
+        if (!ft_strncmp(tmp->content, ref, len) && ((char*)tmp->content)[len] == '=')
         {
             tmp_str = *new;
             *new = ft_strjoin(*new, ((char*)tmp->content) + len + 1);
@@ -79,16 +109,20 @@ char        *ft_replaceenvignore(t_shell *sh, char *s)
         prev = *s;
         if(*s == '$' && current != '\'')
         {
-			k = 0;
+						k = 0;
             s++;
-            while (!ft_isend(*(s + k)))
-                k++;
-            j += ft_lookup(sh, s, &new, k);
-            s += k;
-            k = 0;
+						if(*s == '?')
+							j += ft_questionmark(sh, s++, &new);
+						else
+						{
+	            while (!ft_isend(*(s + k)))
+	               k++;
+	            j += ft_lookup(sh, s, &new, k);
+	            s += k;
+					}
         }
         else
-            new[j++] = *((s++));
+          new[j++] = *((s++));
     }
     new[j] = 0;
     return (new);

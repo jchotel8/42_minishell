@@ -106,6 +106,76 @@ void	ft_list_print(t_list *ptr, int flag)
 	}
 }
 
+void	ft_list_print_quote(t_list *ptr)
+{
+	int	i = 0;
+	char **splitted;
+
+	if (ptr)
+	{
+		splitted = ft_split(ptr->content, '=');
+		ft_printf("declare -x %s", splitted[0]);
+		if (splitted[1])
+			ft_printf("=\"%s\"", splitted[1]);
+		ft_printf("\n");
+		while(ptr->next)
+		{
+			ptr = ptr->next;
+			i++;
+			splitted = ft_split(ptr->content, '=');
+			ft_printf("declare -x %s", splitted[0]);
+			if (splitted[1])
+				ft_printf("=\"%s\"", splitted[1]);
+			ft_printf("\n");
+		}
+	}
+}
+
+void	ft_list_print_if(t_list *ptr, int c)
+{
+	int	i = 0;
+
+	if (ptr)
+	{
+		if (ft_strchr(ptr->content, c))
+			printf("%s\n", ptr->content);
+		while(ptr->next)
+		{
+			ptr = ptr->next;
+			i++;
+			if (ft_strchr(ptr->content, c))
+				printf("%s\n", ptr->content);
+		}
+	}
+}
+
+void	ft_lstadd_sorted(t_list **alst, t_list *new)
+{
+	int cmp;
+	char *curvar;
+	char *newvar;
+	t_list *tmp;
+
+	if(!(*alst))
+		*alst = new;
+	else
+	{
+		curvar = ft_split((*alst)->content, '=')[0];
+		newvar = ft_split(new->content, '=')[0];
+		cmp = ft_strcmp(curvar, newvar);
+ 		if(cmp < 0)
+			ft_lstadd_sorted(&((*alst)->next), new);
+		else if (cmp > 0)
+		{
+			tmp = (*alst)->next;
+			(*alst)->next = new;
+			new->next = tmp;
+		}
+		else
+			(*alst)->content = new->content;
+	}
+}
+
 void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)())
 {
 	t_list	*remove;
