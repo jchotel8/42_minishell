@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 05:02:01 by jchotel           #+#    #+#             */
-/*   Updated: 2020/03/06 16:32:05 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/03/11 23:20:30 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,8 @@ void	ft_list_print(t_list *ptr, int flag)
 	}
 }
 
-void	ft_list_print_quote(t_list *ptr)
+void	ft_list_print_quotes(t_list *ptr)
 {
-	int	i = 0;
 	char **splitted;
 
 	if (ptr)
@@ -121,7 +120,6 @@ void	ft_list_print_quote(t_list *ptr)
 		while(ptr->next)
 		{
 			ptr = ptr->next;
-			i++;
 			splitted = ft_split(ptr->content, '=');
 			ft_printf("declare -x %s", splitted[0]);
 			if (splitted[1])
@@ -131,10 +129,8 @@ void	ft_list_print_quote(t_list *ptr)
 	}
 }
 
-void	ft_list_print_if(t_list *ptr, int c)
+void	ft_list_print_contains(t_list *ptr, int c)
 {
-	int	i = 0;
-
 	if (ptr)
 	{
 		if (ft_strchr(ptr->content, c))
@@ -142,7 +138,6 @@ void	ft_list_print_if(t_list *ptr, int c)
 		while(ptr->next)
 		{
 			ptr = ptr->next;
-			i++;
 			if (ft_strchr(ptr->content, c))
 				printf("%s\n", ptr->content);
 		}

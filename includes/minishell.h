@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 16:05:57 by jchotel           #+#    #+#             */
-/*   Updated: 2020/03/06 16:43:18 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/03/11 23:35:02 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ int		switch_inside(char *current, char new, char prev);
 int		ft_countquoteignore(char *s);
 char	*ft_strtrimignore(char *s);
 char	**ft_splitignore(char const *s, char c, int i);
-char    *ft_replaceenvignore(t_shell *sh, char *s);
+char	*ft_replaceenvignore(t_shell *sh, char *s);
+void	ft_list_print_contains(t_list *ptr, int c);
+void	ft_list_print_quotes(t_list *ptr);
 
 //ADD TO THE LIBFT
 void	ft_list_print(t_list *ptr, int flag);

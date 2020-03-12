@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 02:12:53 by jchotel           #+#    #+#             */
-/*   Updated: 2020/03/05 19:56:41 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/03/11 19:16:13 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	handle_echo(t_shell *sh)
 
 	i = 0;
 	flag_n = 0;
-	if (!ft_strcmp("-n", sh->arg[i]))
+	if (sh->arg && !ft_strcmp("-n", sh->arg[i]))
 	{
 		i++;
 		flag_n = 1;
