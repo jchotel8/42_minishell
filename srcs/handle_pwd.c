@@ -37,6 +37,6 @@ char	*get_wd(t_shell *sh)
 	while (files && files[i])
 		i++;
 	cpy = ft_strdup(files[i - 1]);
-	ft_freearray(files);
+	//ft_freearray(files);
 	return (cpy);
 }

@@ -6,7 +6,7 @@
 /*   By: jchotel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 22:16:01 by jchotel           #+#    #+#             */
-/*   Updated: 2020/03/12 01:54:45 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/03/12 03:32:45 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int		ft_questionmark(t_shell *sh, char *ref, char **new)
 {
 	char	*tmp_str;
 	char	*nbstr;
+	(void)	sh;
 
 	nbstr = ft_itoa(sh->ret);
 	tmp_str = *new;

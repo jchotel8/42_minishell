@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 16:05:57 by jchotel           #+#    #+#             */
-/*   Updated: 2020/03/11 23:35:02 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/03/12 03:30:21 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct	s_shell
 	t_list		*env;
 }				t_shell;
 
-int		ret;
+//extern  int		g_ret;
 
 //UTILITIES
 int		switch_inside(char *current, char new, char prev);
@@ -82,8 +82,8 @@ void	parsing_pipe(t_shell *sh);
 char	*get_wd(t_shell *sh);
 void	handle_cmd(t_shell *sh);
 void	handle_pwd(t_shell *sh);
-void	handle_cd(t_shell *sh);
-void	handle_echo(t_shell *sh);
+int		handle_cd(t_shell *sh);
+int		handle_echo(t_shell *sh);
 void	handle_env(t_shell *sh);
 void	handle_bin(t_shell *sh);
 void	handle_unset(t_shell *sh);

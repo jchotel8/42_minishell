@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 20:36:01 by jchotel           #+#    #+#             */
-/*   Updated: 2020/03/06 16:30:45 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/03/12 05:14:26 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@ void	ft_find_cmd(t_shell *sh, char **paths)
 	struct stat	buf;
 
 	i = 0;
-//	if (stat(cmd, &buf))
-//		execve(cmd, sh->cmd, ft_lst_to_array(sh->env));
+	if (!stat(sh->cmd[0], &buf))
+	{
+		execve(sh->cmd[0], sh->cmd, ft_lst_to_array(sh->env));
+		return ;
+	}
 	while (paths[i])
 	{
 		cmd = ft_strjoin(paths[i], "/");
@@ -30,7 +33,10 @@ void	ft_find_cmd(t_shell *sh, char **paths)
 		i++;
 	}
 	if (!paths[i])
+	{
 		ft_printf("\x1b[38;2;255;235;202mCommand not found: %s\n", sh->cmd[0]);
+		exit(0);
+	}
 	else
 		execve(cmd, sh->cmd, ft_lst_to_array(sh->env));
 }

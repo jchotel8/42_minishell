@@ -3,26 +3,22 @@
 ************************************************************jchotel & fde-fram
 
 LAST STEPS DONE :
-- char d'échappement pour les arguments
-- gestions des redirections sans pipes, fixing bugs
-- début de ctrl-C
-- suppression d'une variable d'env seulement si exacte
+- $? debut : il faut utiliser waitpid
+- /bin/echo géré correctement
 
 NEXT STEPS ON SCHEDULE :
 - gérer les ctrl-C, ctrl-D, ctrl-\
-- /bin/echo à gerer correctement, (path absolu)
 - gérer les redirs de type <
-- $? à gerer : permet de garder en mémoire le résultat de la ligne précédente
 - FREE...
 
 GENERAL INFOS ----------------------------------------------------------------
 . SUBJECT ....................................................................
 	fork -
 	wait,
-	waitpid,
+	waitpid - permet de transmettre une variable status
 	wait3,
 	wait4,
-	signal - autorise la manipulation d'un process
+	signal -
 	kill,
 	exit,
 	getcwd - récupérer le path du working directory (pwd)

@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 02:12:08 by jchotel           #+#    #+#             */
-/*   Updated: 2020/03/06 17:53:38 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/03/12 05:28:59 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,20 @@ void		handle_cmd(t_shell *sh)
 	int status;
 
 	if (!ft_strcmp(sh->cmd[0], "echo"))
-		return (handle_echo(sh));
-	if (!ft_strcmp(sh->cmd[0], "cd"))
-		return (handle_cd(sh));
-	if (!ft_strcmp(sh->cmd[0], "pwd"))
-		return (handle_pwd(sh));
-	if (!ft_strcmp(sh->cmd[0], "exit"))
-		return (exit(0));
-	if (!ft_strcmp(sh->cmd[0], "unset"))
-		return (handle_unset(sh));
-	if (!ft_strcmp(sh->cmd[0], "env"))
-		return (handle_env(sh));
-	if (!ft_strcmp(sh->cmd[0], "export"))
-		return (handle_export(sh));
-	if (ft_arraysize(sh->pipes) == 1)
+		handle_echo(sh);
+	else if (!ft_strcmp(sh->cmd[0], "cd"))
+		handle_cd(sh);
+	else if (!ft_strcmp(sh->cmd[0], "pwd"))
+		handle_pwd(sh);
+	else if (!ft_strcmp(sh->cmd[0], "exit"))
+		exit(0);
+	else if (!ft_strcmp(sh->cmd[0], "unset"))
+		handle_unset(sh);
+	else if (!ft_strcmp(sh->cmd[0], "env"))
+		handle_env(sh);
+	else if (!ft_strcmp(sh->cmd[0], "export"))
+		handle_export(sh);
+	else if (ft_arraysize(sh->pipes) == 1)
 	{
 		if (fork() == 0)
 			return (handle_bin(sh));
