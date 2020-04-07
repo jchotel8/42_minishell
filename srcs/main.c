@@ -26,37 +26,40 @@ void	sig_handler(int sig)
 
 void		handle_cmd(t_shell *sh)
 {
-	int status;
+	pid_t pid;
 
 	if (!ft_strcmp(sh->cmd[0], "echo"))
-		handle_echo(sh);
+		sh->ret = handle_echo(sh);
 	else if (!ft_strcmp(sh->cmd[0], "cd"))
-		handle_cd(sh);
+		sh->ret = handle_cd(sh);
 	else if (!ft_strcmp(sh->cmd[0], "pwd"))
-		handle_pwd(sh);
+		sh->ret = handle_pwd(sh);
 	else if (!ft_strcmp(sh->cmd[0], "exit"))
 		exit(0);
 	else if (!ft_strcmp(sh->cmd[0], "unset"))
-		handle_unset(sh);
+		sh->ret = handle_unset(sh);
 	else if (!ft_strcmp(sh->cmd[0], "env"))
-		handle_env(sh);
+		sh->ret = handle_env(sh);
 	else if (!ft_strcmp(sh->cmd[0], "export"))
-		handle_export(sh);
+		sh->ret = handle_export(sh);
 	else if (ft_arraysize(sh->pipes) == 1)
 	{
-		if (fork() == 0)
-			return (handle_bin(sh));
-		wait(&status);
+		if ((pid = fork()) == 0)
+			sh->ret = handle_bin(sh);
+		waitpid(pid, &sh->ret, 0);
 	}
 	else
-		return (handle_bin(sh));
+	{
+		sh->ret = handle_bin(sh);
+		return ;
+	}
 }
 
 void	handle_line(t_shell *sh)
 {
 	int	out;
 	int	i;
-	int	status;
+	pid_t pid = 0;
 
 	i = 0;
 	if (sh->pipes)
@@ -66,7 +69,7 @@ void	handle_line(t_shell *sh)
 		else
 		{
 			parsing_pipe(sh);
-			if (ft_arraysize(sh->redir) > 1 && fork() == 0)
+			if (ft_arraysize(sh->redir) > 1 && (pid = fork()) == 0)
 			{
 				while (sh->redir[i])
 				{
@@ -81,7 +84,7 @@ void	handle_line(t_shell *sh)
 				handle_cmd(sh);
 				exit(0);
 			}
-			wait(&status);
+			waitpid(pid, &sh->ret, 0);
 			if (ft_arraysize(sh->redir) == 1)
 				handle_cmd(sh);
 		}

@@ -12,16 +12,23 @@
 
 #include "../includes/minishell.h"
 
-void	handle_pwd(t_shell *sh)
+int	handle_pwd(t_shell *sh)
 {
 	if (!sh->arg)
 	{
 		if (!(getcwd(sh->wd, sizeof(sh->wd))))
+		{
 			printf("failed to init WD\n");
+			return (1);
+		}
 		ft_printf("\x1b[38;2;255;235;202m%s\n", sh->wd);
 	}
 	else
+	{
 		ft_printf("\x1b[38;2;255;235;202mpwd: too many arguments\n");
+		return (1);
+	}
+	return (0);
 }
 
 char	*get_wd(t_shell *sh)

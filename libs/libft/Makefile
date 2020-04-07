@@ -65,29 +65,50 @@ OBJS = ${SRCS:.c=.o}
 OBJS_B = ${SRCS_B:.c=.o}
 FLAGS = -Wall -Wextra -Werror
 
+# COLORS ********************************************************************* #
+CR			= "\r"$(CLEAR)
+CLEAR       = "\\033[0K"
+BLACK		= "\033[0;30m"
+RED			= "\033[1;31m"
+GREEN		= "\033[1;32m"
+YELLOW		= "\033[1;33m"
+DARKBLUE	= "\033[0;34m"
+VIOLET		= "\033[0;35m"
+BLUE		= "\033[0;36m"
+
+GREY		= "\033[0;2m"
+BOLDWHITE	= "\033[0;1m"
+WHITE		= "\033[0;0m"
+
+REDB		= "\033[0;41m"
+
+
+# RULES ********************************************************************** #
 all: ${NAME}
 
+
 .c.o: ${OBJS} ${OBJS_B}
-	@gcc ${FLAGS} -c $< -o ${<:.c=.o}
+	@printf $(CR)"[FILE : %s]" $@
+	@${CC} ${FLAGS} -c $< -o ${<:.c=.o}
 
 $(NAME): ${OBJS}
 	@ar rc ${NAME} ${OBJS}
-	@echo "\033[1;32mLibft : Making libft\033[0;0m"
+	@echo ${GREEN}${CR}"Libft : Making libft\033[0;0m"
 
 bonus: ${OBJS_B} ${OBJS}
 	@ar rc ${NAME} ${OBJS_B} ${OBJS}
-	@echo "\033[1;32mLibft : Making libft w/ bonus\033[0;0m"
+	@echo ${GREEN}${CR}"Libft : Making libft w/ bonus\033[0;0m"
 
 clean:
 	@rm -f ${OBJS} ${OBJS_B}
-	@echo "\033[1;31mLibft : Removing .o files\033[0;0m"
+	@echo ${RED}${CR}"Libft : Removing .o files\033[0;0m"
 
 bclean:
 	@rm -f ${NAME}
-	@echo "\033[1;31mLibft : Removing binary file\033[0;0m"
+	@echo ${RED}${CR}"Libft : Removing binary file\033[0;0m"
 
 fclean: clean
 	@rm -f ${NAME}
-	@echo "\033[1;31mLibft : Removing binary file\033[0;0m"
+	@echo ${RED}${CR}"Libft : Removing binary file\033[0;0m"
 
 re: fclean all

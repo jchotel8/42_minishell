@@ -12,12 +12,18 @@
 
 #include "../includes/minishell.h"
 
-void	handle_env(t_shell *sh)
+int	handle_env(t_shell *sh)
 {
+	if (sh->arg && sh->arg[0])
+	{
+		ft_printf("\x1b[38;2;255;235;202menv: %s: No sush file or directory\n", sh->arg[0]);
+		return (127);
+	}
 	ft_list_print_contains(sh->env, '=');
+	return (0);
 }
 
-void	handle_unset(t_shell *sh)
+int	handle_unset(t_shell *sh)
 {
 	int		i;
 	char	*tmp;
@@ -31,6 +37,7 @@ void	handle_unset(t_shell *sh)
 		ft_list_remove_if(&sh->env, sh->arg[i], *ft_strncmp_auto);
 		i++;
 	}
+	return (0);
 }
 
 int	check_export(char *s)
@@ -46,18 +53,22 @@ int	check_export(char *s)
 	return (1);
 }
 
-void	handle_export(t_shell *sh)
+int	handle_export(t_shell *sh)
 {
 	if (sh->arg && sh->arg[0])
 	{
 		if (check_export(sh->arg[0]))
 			ft_lstadd_back(&sh->env, ft_lstnew(sh->arg[0]));
 		else
+		{
 			ft_printf("export: '%s': not a valid identifier\n", sh->arg[0]);
+			return (1);
+		}
 	}
 	else
 	{
 		ft_list_sort(sh->env, ft_strcmp);
 		ft_list_print_quotes(sh->env);
 	}
+	return (0);
 }

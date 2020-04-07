@@ -27,14 +27,35 @@ SRCSH		= includes/printf.h
 OBJS		= $(SRCSC:%.c=%.o)
 FLAGS		= -Wall -Wextra -Werror
 
+# COLORS ********************************************************************* #
+CR			= "\r"$(CLEAR)
+CLEAR       = "\\033[0K"
+BLACK		= "\033[0;30m"
+RED			= "\033[1;31m"
+GREEN		= "\033[1;32m"
+YELLOW		= "\033[1;33m"
+DARKBLUE	= "\033[0;34m"
+VIOLET		= "\033[0;35m"
+BLUE		= "\033[0;36m"
+
+GREY		= "\033[0;2m"
+BOLDWHITE	= "\033[0;1m"
+WHITE		= "\033[0;0m"
+
+REDB		= "\033[0;41m"
+
+
+# RULES ********************************************************************** #
+
 all:		${NAME}
 
-.c.o: 		${OBJS}
-			@gcc ${FLAGS} -c $< -o ${<:.c=.o}
+.c.o: 		${OBJS} ${OBJS_B}
+			@printf $(CR)"[FILE : %s]" $@
+			@${CC} ${FLAGS} -c $< -o ${<:.c=.o}
 
 $(NAME):	${OBJS}
 			@ar rc ${NAME} ${OBJS} ${SRCSH}
-			@echo "\033[1;32mPrintf : Making printf\033[0;0m"
+			@echo ${GREEN}${CR}"Printf : Making printf\033[0;0m"
 
 bonus:		${NAME}
 
@@ -50,15 +71,15 @@ test:		all
 
 clean:
 			@rm -f ${OBJS}
-			@echo "\033[1;31mPrintf : Removing .o files\033[0;0m"
+			@echo ${RED}${CR}"Printf : Removing .o files\033[0;0m"
 
 bclean: 
 			@rm -f ${NAME}
-			@echo "\033[1;31mPrintf : Removing binary file\033[0;0m"
+			@echo ${RED}${CR}"Printf : Removing binary file\033[0;0m"
 
 fclean: 	clean
 			@rm -f ${NAME}
-			@echo "\033[1;31mPrintf : Removing binary file\033[0;0m"
+			@echo ${RED}${CR}"Printf : Removing binary file\033[0;0m"
 
 re:			fclean all
 

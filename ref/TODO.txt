@@ -9,7 +9,8 @@ LAST STEPS DONE :
 NEXT STEPS ON SCHEDULE :
 - gérer les ctrl-C, ctrl-D, ctrl-\
 - gérer les redirs de type <
-- FREE...
+- FREE... while 1 ; do leaks minishell ; sleep 1 ; done
+- dans le Makefile : faire un dossier dans lequel sont dirigés les .o
 
 GENERAL INFOS ----------------------------------------------------------------
 . SUBJECT ....................................................................
@@ -90,4 +91,20 @@ CORRECTIONS TEST -------------------------------------------------------------
         * not_cmd test > new : attention pour l'instant "Command not found : "
 
 	- conseil : sdunckel / tharchen / mpivet-p
+
+
+
+
+
+
+
+
+
+
+
+
+
+https://github.com/alexandregv/minishell.git
+SEGFAULT avec « echo $? »
+
 

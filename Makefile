@@ -9,8 +9,13 @@
 #    Updated: 2020/03/06 16:34:05 by jchotel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-#srcs/handle_bin.c
+
+# GENERAL ******************************************************************** #
 NAME		= minishell
+LIBS 		= ./libs/libft/libft.a\
+			  ./libs/ft_printf/printf.a
+
+# SOURCE ********************************************************************* #			  
 SRCSC		= libs/gnl/get_next_line.c\
 			  libs/gnl/get_next_line_utils.c\
 			  srcs/main.c\
@@ -27,46 +32,71 @@ SRCSC		= libs/gnl/get_next_line.c\
 			  srcs/utils/ft_replaceenvignore.c\
 			  srcs/utils/ft_strtrimignore.c\
 			  srcs/utils/utils_list.c
+
 SRCSH		= includes/get_next_line.h\
 			  includes/minishell.h
 OBJS		= $(SRCSC:%.c=%.o)
-LIBS 		= ./libs/libft/libft.a\
-			  ./libs/ft_printf/printf.a
-FLAGS		= -Wall -Wextra -Werror -fsanitize=
-CC			= gcc
 
+# COMMANDES ****************************************************************** #
+FLAGS		= -Wall -Wextra -Werror
+CC			= gcc
+MKDIR		= mkdir
+
+# COLORS ********************************************************************* #
+CR			= "\r"$(CLEAR)
+CLEAR       = "\\033[0K"
+BLACK		= "\033[0;30m"
+RED			= "\033[1;31m"
+GREEN		= "\033[1;32m"
+YELLOW		= "\033[1;33m"
+DARKBLUE	= "\033[0;34m"
+VIOLET		= "\033[0;35m"
+BLUE		= "\033[0;36m"
+
+GREY		= "\033[0;2m"
+BOLDWHITE	= "\033[0;1m"
+WHITE		= "\033[0;0m"
+
+REDB		= "\033[0;41m"
+
+# RULES ********************************************************************** #
 all:		${NAME}
 
-.c.o: ${OBJS}
-	@gcc ${FLAGS} -c $< -o ${<:.c=.o}
+.c.o:
+	@printf $(CR)"[FILE : %s]" $@
+	@${CC} ${FLAGS} -c $< -o $@
 
-$(NAME):	${OBJS} ${SRCSH}
+libs:		${SRCSH}
+			@printf $(CR)
 			@make bonus -C libs/libft
 			@make -C libs/ft_printf
-			@gcc ${FLAGS} ${OBJS} ${LIBS} -o ${NAME}
-			@echo "\033[1;32m┌─┐┬ ┬┌─┐┌─┐┌─┐┌─┐┌─┐"
-			@echo 			"└─┐│ ││  │  ├┤ └─┐└─┐"
-			@echo 			"└─┘└─┘└─┘└─┘└─┘└─┘└─┘"
-			@echo "minishell.a generated successfully.\033[0;0m"
+
+$(NAME):	libs ${OBJS}
+			@$(MKDIR) objs
+			@${CC} ${FLAGS} ${OBJS} ${LIBS} -o ${NAME}
+			@echo ${GREEN}${CR}"┌─┐┬ ┬┌─┐┌─┐┌─┐┌─┐┌─┐"
+			@echo 		  	   "└─┐│ ││  │  ├┤ └─┐└─┐"
+			@echo 		  	   "└─┘└─┘└─┘└─┘└─┘└─┘└─┘"
+			@echo ${NAME}".a generated successfully." ${WHITE}
 
 bonus:		${NAME}
 
 run:
 			@make
-			@./minishell
+			@./${NAME}
 
 clean:
 			@make clean -C libs/libft
 			@make clean -C libs/ft_printf
-			@rm -f ${OBJS}
-			@echo "\033[1;31mMinishell : Removing .o files\033[0;0m"
+			@rm -rf ${OBJS} objs
+			@echo ${RED}${NAME}" : Removing .o files" ${WHITE}
 
 fclean:		clean
 			@make bclean -C libs/libft
 			@make bclean -C libs/ft_printf
 			@rm -f ${NAME}
-			@echo "\033[1;31mMinishell : Removing binary file\033[0;0m"
+			@echo ${RED}${NAME}" : Removing binary file" ${WHITE}
 
 re:			fclean all
 
-.PHONY:		all clean fclean re
+.PHONY:		all clean fclean re bonus run

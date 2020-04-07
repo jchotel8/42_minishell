@@ -81,13 +81,13 @@ void	parsing_pipe(t_shell *sh);
 //HANDLE
 char	*get_wd(t_shell *sh);
 void	handle_cmd(t_shell *sh);
-void	handle_pwd(t_shell *sh);
+int 	handle_pwd(t_shell *sh);
 int		handle_cd(t_shell *sh);
 int		handle_echo(t_shell *sh);
-void	handle_env(t_shell *sh);
-void	handle_bin(t_shell *sh);
-void	handle_unset(t_shell *sh);
-void	handle_export(t_shell *sh);
+int 	handle_env(t_shell *sh);
+int 	handle_bin(t_shell *sh);
+int 	handle_unset(t_shell *sh);
+int 	handle_export(t_shell *sh);
 void	handle_pipe(t_shell *sh);
 
 #endif
