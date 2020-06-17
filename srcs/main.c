@@ -99,7 +99,7 @@ int		main(int ac, char **av, char **env)
 				parsing_line(sh);
 				if (check_exit(sh))
 					return (0);
-				if (!(son = fork()))
+				if (!fork())
 				{
 					handle_line(sh);
 					exit(1);
@@ -109,7 +109,6 @@ int		main(int ac, char **av, char **env)
 				next_shell_line(sh);
 			}
 			ft_printf(PROMPT, "MINISHELL", get_wd(sh));
-			kill(-son2,SIGKILL);
 		}
 		printf("last read : \"%s\"\n", sh->read);
 		free(sh->read);
